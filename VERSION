@@ -29,3 +29,11 @@ pipeline: strip_cruft -> fix_links -> fix_og -> rootrel_assets -> add_flagmaker_
     all current browsers; dead @font-face fallbacks were stripped from the CSS.
   Result: ~44 MB -> ~24 MB zipped. For byte-identical full-resolution assets,
   use the v1.0.0 package instead.
+
+1.0.1 (2026-09-02)
+  - Press-kit button now opens mailto:vincent@kaisercatcinema.com.
+  - Newsletter button hover icon fixed: was a FontAwesome codepoint
+    (rendered as an empty box); now the ETmodules right arrow.
+  - Vincent De Nil bio updated (KCC art-director framing, Flagmaker &
+    'more about' links) with vincentdenil.com + LinkedIn; JSON-LD Person
+    url/sameAs/jobTitle synced to match.
