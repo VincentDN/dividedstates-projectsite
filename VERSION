@@ -1,0 +1,31 @@
+The Divided States — static site for Cloudflare Pages
+version: 1.0.0
+build-date: 2026-09-02
+source: WordPress/Divi export (HTTrack mirror) of dividedstates-project.com
+pipeline: strip_cruft -> fix_links -> fix_og -> rootrel_assets -> add_flagmaker_nav -> inject_seo_schema
+
+1.0.0 (2026-09-02)
+  - Removed dead WordPress/HTTrack cruft (mirror comments, xmlrpc, wp-json,
+    oEmbed/RSD/shortlink, RSS feeds, generator metas, Jetpack stats).
+  - Converted all asset paths to root-relative; fixed a 404-ing Connect-page
+    mobile background image present in the original export.
+  - Normalised internal links to clean URLs; fixed one broken menu anchor.
+  - Installed full SEO layer per page: title, meta description, canonical,
+    absolute OG/Twitter tags, and JSON-LD @graph (Organization, WebSite,
+    Person, WebPage, BreadcrumbList; CreativeWorkSeries on home).
+  - Added Flagmaker & Print: "Flags" nav item on all pages + Person->Flagmaker
+    in schema + CTA on the 404 page.
+  - Added _headers, _redirects, robots.txt, sitemap.xml, branded 404.html,
+    root favicon.ico.
+
+1.0.0-optimized (2026-09-02)
+  Size-optimized variant of v1.0.0 for size-constrained uploads (e.g. GitHub
+  web uploader's 25 MB cap). Visible pages are unchanged.
+  - 5 lightbox-only film stills (Strife-Selected-Still-1..5), which were 4K
+    PNGs totalling ~22 MB, re-encoded to quality-90 JPEG (~2.75 MB). These are
+    click-to-enlarge targets on /episodes/; on-page thumbnails are untouched.
+  - Removed deprecated icon-font formats (.svg/.eot, and .ttf where a .woff2
+    exists). Every icon font retains woff2/woff, so rendering is unchanged in
+    all current browsers; dead @font-face fallbacks were stripped from the CSS.
+  Result: ~44 MB -> ~24 MB zipped. For byte-identical full-resolution assets,
+  use the v1.0.0 package instead.

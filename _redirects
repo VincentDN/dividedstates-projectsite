@@ -1,0 +1,5 @@
+# Legacy HTTrack .html paths -> clean URLs
+/index.html                 /                301
+/episodes/index.html        /episodes/       301
+/connect/index.html         /connect/        301
+/patreon-cameo/index.html   /patreon-cameo/  301
