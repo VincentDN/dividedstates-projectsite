@@ -47,6 +47,76 @@
     if (choice) playVideo(choice);
   }));
 
+  // Native scrolling keeps every biography available without JavaScript.
+  const crewTrack = document.querySelector('#crew-track');
+  const crewPrevious = document.querySelector('.crew-prev');
+  const crewNext = document.querySelector('.crew-next');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function updateCrewControls() {
+    const end = crewTrack.scrollWidth - crewTrack.clientWidth;
+    crewPrevious.disabled = crewTrack.scrollLeft <= 2;
+    crewNext.disabled = crewTrack.scrollLeft >= end - 2;
+  }
+  function scrollCrew(direction) {
+    const card = crewTrack.querySelector('.crew-card');
+    const gap = parseFloat(getComputedStyle(crewTrack).columnGap) || 0;
+    crewTrack.scrollBy({
+      left: direction * (card.getBoundingClientRect().width + gap),
+      behavior: reducedMotion.matches ? 'instant' : 'smooth'
+    });
+  }
+  crewPrevious.addEventListener('click', () => scrollCrew(-1));
+  crewNext.addEventListener('click', () => scrollCrew(1));
+  crewTrack.addEventListener('scroll', updateCrewControls, { passive: true });
+  window.addEventListener('resize', updateCrewControls);
+  crewTrack.addEventListener('keydown', event => {
+    if (event.target !== crewTrack) return;
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollCrew(event.key === 'ArrowRight' ? 1 : -1);
+    } else if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      crewTrack.scrollTo({ left: event.key === 'Home' ? 0 : crewTrack.scrollWidth, behavior: 'instant' });
+    }
+  });
+  // Leave touch gestures to the browser; add dragging for a mouse or pen.
+  let crewDrag = null;
+  let suppressCrewClick = false;
+  crewTrack.addEventListener('pointerdown', event => {
+    suppressCrewClick = false;
+    if (event.pointerType === 'touch' || event.button !== 0 || event.target.closest('a,button')) return;
+    crewDrag = { id: event.pointerId, x: event.clientX, left: crewTrack.scrollLeft, moved: false };
+  });
+  crewTrack.addEventListener('pointermove', event => {
+    if (!crewDrag || event.pointerId !== crewDrag.id) return;
+    const distance = event.clientX - crewDrag.x;
+    if (!crewDrag.moved && Math.abs(distance) < 6) return;
+    crewDrag.moved = true;
+    crewTrack.setPointerCapture(event.pointerId);
+    crewTrack.classList.add('is-dragging');
+    crewTrack.scrollLeft = crewDrag.left - distance;
+  });
+  function endCrewDrag(event) {
+    if (!crewDrag || event.pointerId !== crewDrag.id) return;
+    suppressCrewClick = crewDrag.moved;
+    crewDrag = null;
+    crewTrack.classList.remove('is-dragging');
+    if (crewTrack.hasPointerCapture(event.pointerId)) crewTrack.releasePointerCapture(event.pointerId);
+    updateCrewControls();
+  }
+  window.addEventListener('pointerup', endCrewDrag);
+  window.addEventListener('pointercancel', endCrewDrag);
+  crewTrack.addEventListener('lostpointercapture', endCrewDrag);
+  crewTrack.addEventListener('dragstart', event => event.preventDefault());
+  crewTrack.addEventListener('click', event => {
+    if (!suppressCrewClick) return;
+    event.preventDefault();
+    suppressCrewClick = false;
+  }, true);
+  crewTrack.classList.add('is-draggable');
+  document.querySelector('.crew-controls').hidden = false;
+  updateCrewControls();
+
   const gallery = [...document.querySelectorAll('.gallery-item')];
   const dialog = document.querySelector('#gallery-dialog');
   const image = dialog.querySelector('img');

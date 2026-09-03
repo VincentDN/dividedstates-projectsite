@@ -1,6 +1,6 @@
 # The Divided States
 
-Version 2.0.3 · 3 September 2026
+Version 2.0.4 · 3 September 2026
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
 framework, database, build process, or server-side application is required.
@@ -10,7 +10,7 @@ The homepage preserves the original artwork, principal copy and section order.
 
 - `index.html`: all content, navigation and the JSON-LD entity graph.
 - `styles.css`: layout, responsive rules, colours and typography.
-- `main.js`: mobile menu, click-to-load video player and accessible gallery.
+- `main.js`: mobile menu, crew carousel, click-to-load video player and accessible gallery.
 - `assets/`: only the homepage's images, video thumbnails and self-hosted fonts.
 - `_redirects`: old page addresses redirect to homepage sections or KCC.
 - `_headers`: Cloudflare Pages security and cache headers.
@@ -68,6 +68,11 @@ Contact details are not repeated beneath the copyright, and only one top divider
 separates the footer from the newsletter section. The video-loading note is removed.
 
 - Edit the labelled sections in `index.html` to change copy.
+- The Crew section is a horizontal carousel with arrow buttons, mouse dragging,
+  native touch swiping and keyboard navigation (Left/Right, Home/End). It never
+  auto-rotates and respects reduced-motion preferences. Add members by copying a
+  `crew-card` article inside `#crew-track`; all biographies remain readable and
+  crawlable in the HTML, including without JavaScript. Printing shows every card.
 - Add a gallery `button.gallery-item` using the existing examples, its image
   dimensions, caption and `data-full` path. The script discovers all items.
 - Add a `button.video-choice` with the YouTube ID, full title and a local thumbnail

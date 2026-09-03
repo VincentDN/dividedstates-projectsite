@@ -96,10 +96,19 @@ section{scroll-margin-top:20px}
 .project-card h3{margin-bottom:18px}
 .project-card p{line-height:1.8}
 .project-card .project-link{display:inline-block;margin-top:20px;color:#eee}
-.crew-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
-.crew-card img{width:100%;aspect-ratio:1;object-fit:cover;margin-bottom:26px}
-.crew-card h3{font-size:20px;margin-bottom:16px}
-.crew-card p{font-size:14px;line-height:1.8}
+.crew-heading{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:32px}
+.crew-heading .section-title{margin:0;text-align:left}
+.crew-controls{display:flex;gap:10px}
+.crew-controls button{display:grid;place-items:center;width:46px;height:46px;padding:0;border:1px solid #666;background:transparent;color:#eee;font-size:30px;line-height:1}
+.crew-controls button:hover:not(:disabled){background:#292929;border-color:#eee}
+.crew-controls button:disabled{opacity:.3}
+.crew-track{display:grid;grid-auto-flow:column;grid-auto-columns:320px;gap:24px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#777 #222;padding-bottom:18px}
+.crew-track.is-draggable{cursor:grab}
+.crew-track.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.crew-card{min-width:0;background:#151515;border:1px solid #333;scroll-snap-align:start}
+.crew-card img{width:100%;aspect-ratio:1;object-fit:cover;margin-bottom:24px}
+.crew-card h3{font-size:20px;margin:0 22px 16px}
+.crew-card p{font-size:14px;line-height:1.8;margin:0 22px 26px}
 .crew-card a{color:#ddd}
 
 .contact{padding:68px 0 64px;background:#111 url("assets/contact-background.jpg") center/cover;text-align:center}
@@ -150,7 +159,6 @@ section{scroll-margin-top:20px}
   .story-copy,.hero .story-copy{width:48%}
   .hero{background-position:35% center}
   .gallery{columns:2}
-  .crew-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:45px 30px}
   .contact-photo{width:85%}
   .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 40px}
 }
@@ -183,9 +191,10 @@ section{scroll-margin-top:20px}
   .gallery-heading h2{font-size:27px}
   .gallery-section{padding:42px 0 54px}
   .press-button{padding:13px 24px}
-  .project-grid,.crew-grid{grid-template-columns:1fr;gap:44px}
+  .project-grid{grid-template-columns:1fr;gap:44px}
   .projects,.crew{padding:50px 0}
-  .crew-card{max-width:430px;margin:auto}
+  .crew-heading{gap:16px;margin-bottom:24px}
+  .crew-track{grid-auto-columns:min(85%,320px);gap:18px}
   .crew-card p{font-size:15px}
   .contact{padding-top:50px}
   .contact-photo{width:100%}
@@ -208,5 +217,8 @@ section{scroll-margin-top:20px}
   .story .wrap{min-height:0;padding-block:30px}
   .story-copy,.hero .story-copy{width:100%;max-width:none}
   .dream .wrap{display:block}
+  .crew-controls{display:none!important}
+  .crew-track{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
+  .crew-card{background:none;break-inside:avoid}
   .gallery{columns:3}
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The Divided States v2.0.3 — single-page static rebuild, 2026-09-03. -->
+  <!-- The Divided States v2.0.4 — single-page static rebuild, 2026-09-03. -->
   <title>The Divided States | A Second American Civil War Animatic Anthology</title>
   <meta name="description" content="What if Germany had won the Great War? The Divided States is an animatic anthology following ordinary citizens through a Second American Civil War in the Kaiserreich alt-history world.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -418,8 +418,16 @@
 
     <section id="crew" class="crew texture" aria-labelledby="crew-title">
       <div class="wrap">
-        <h2 id="crew-title" class="section-title">Crew</h2>
-        <div class="crew-grid">
+        <div class="crew-heading">
+          <h2 id="crew-title" class="section-title">Crew</h2>
+          <div class="crew-controls" hidden>
+            <button class="crew-prev" type="button" aria-label="Previous crew members" aria-controls="crew-track" disabled><span aria-hidden="true">‹</span></button>
+            <button class="crew-next" type="button" aria-label="Next crew members" aria-controls="crew-track"><span aria-hidden="true">›</span></button>
+          </div>
+        </div>
+        <p id="crew-help" class="sr-only">Scroll horizontally to meet the crew. Use the left and right arrow keys when this row is focused.</p>
+        <!-- Add members by copying a crew-card article. All biographies remain in the HTML. -->
+        <div id="crew-track" class="crew-track" role="group" aria-roledescription="carousel" aria-label="Crew members" aria-describedby="crew-help" tabindex="0">
         <article class="crew-card">
           <img src="assets/crew/vincent-de-nil.jpg" alt="Vincent De Nil" width="500" height="500" loading="lazy" decoding="async">
           <h3>Vincent De Nil</h3>
