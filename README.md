@@ -1,6 +1,6 @@
 # The Divided States
 
-Version 2.0.0 · 3 September 2026
+Version 2.0.3 · 3 September 2026
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
 framework, database, build process, or server-side application is required.
@@ -60,19 +60,32 @@ The homepage does not require Python in production.
 
 ## Edit the homepage
 
+The footer is a single block with Contact, Explore and Vincent De Nil columns,
+with regular-weight headings. It uses three columns on desktop, two on tablets
+and stacks on phones. The KCC social icons are centered below the newsletter
+button. The larger eagle is centered above the copyright in the footer.
+Contact details are not repeated beneath the copyright, and only one top divider
+separates the footer from the newsletter section. The video-loading note is removed.
+
 - Edit the labelled sections in `index.html` to change copy.
 - Add a gallery `button.gallery-item` using the existing examples, its image
   dimensions, caption and `data-full` path. The script discovers all items.
 - Add a `button.video-choice` with the YouTube ID, full title and a local thumbnail
   to extend the video list. Only one iframe is created, after the visitor clicks.
 - Use homepage anchors or relevant `kaisercatcinema.com` / `flagmaker-print.com`
-  pages for visible web links. Email uses `mailto:`. Video playback uses YouTube;
+  pages for content links. The newsletter section links directly to the KCC
+  social profiles; the footer links to Vincent's LinkedIn/GitHub. Email uses `mailto:`. Video playback uses YouTube;
   schema identity URLs deliberately retain their canonical external domains.
 - The press-kit button says "Request the press kit" and points to Contact: there was no downloadable
   press-kit file in the source repository. Add a real press-kit asset and update
   that button if a direct download becomes available.
-- The Webtoons mention is retained as text, without an unrelated link. This keeps
-  visible web navigation within the homepage, KCC and Flagmaker & Print.
+- The Webtoons mention is retained as text, without an unrelated link.
+- The large player poster is the 1280 × 720 YouTube original, stored separately
+  from the small video-choice thumbnails. Actual playback quality is controlled
+  by YouTube, not this static poster.
+- KCC social links were fetched from `https://kaisercatcinema.com/pages/connect`.
+  Its Reddit link leads to the Kaiserreich community, not a dedicated KCC profile.
+  Vincent's profile links match the canonical identity in the schema.
 
 ## SEO and shared identities
 
@@ -105,10 +118,14 @@ together. Do not change the shared person/company IDs.
 ## Maintenance notes
 
 - No animations, automatic video playback, trackers or external font requests.
-- All 26 visible gallery works, six video choices, two project posters and four
-  crew profiles are retained.
+- There are 25 gallery works, six video choices, two project posters and four
+  crew profiles. The New York image was removed from the gallery at the owner's
+  request but remains in use as the homepage hero background.
 - Editable HTML/CSS/JS revalidate; assets have a one-day cache, not immutable
   one-year caching. Rename an asset or purge its cache for an immediate update.
 - Local fonts include their original SIL Open Font License texts.
+- Local brand icons are Font Awesome Free SVGs by Fonticons, Inc., licensed under
+  CC BY 4.0. Original SVG attribution comments and `assets/icons/LICENSE.txt` are
+  included. Source: https://github.com/FortAwesome/Font-Awesome/tree/6.x/svgs/brands
 - Keep Git repositories outside Synology/Dropbox sync folders where possible.
   Synchronisation can interfere with Git's lock files; it is unrelated to HTML.
