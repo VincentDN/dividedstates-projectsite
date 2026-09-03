@@ -1,5 +1,21 @@
-# Legacy HTTrack .html paths -> clean URLs
-/index.html                 /                301
-/episodes/index.html        /episodes/       301
-/connect/index.html         /connect/        301
-/patreon-cameo/index.html   /patreon-cameo/  301
+# Former pages now have one destination: the homepage or the KCC programme.
+# No catch-all redirect: image, font, CSS and script requests must remain intact.
+/index.html                /                                                  301
+/episodes                  /#episodes                                         301
+/episodes/                 /#episodes                                         301
+/episodes/index.html       /#episodes                                         301
+/episodes.html             /#episodes                                         301
+/connect                   /#contact                                          301
+/connect/                  /#contact                                          301
+/connect/index.html        /#contact                                          301
+/connect.html              /#contact                                          301
+/patreon-cameo             https://kaisercatcinema.com/pages/patreon-programme  301
+/patreon-cameo/            https://kaisercatcinema.com/pages/patreon-programme  301
+/patreon-cameo/index.html  https://kaisercatcinema.com/pages/patreon-programme  301
+/patreon-cameo.html        https://kaisercatcinema.com/pages/patreon-programme  301
+/gallery                   /#gallery                                          301
+/gallery/                  /#gallery                                          301
+/projects                  /#projects                                         301
+/projects/                 /#projects                                         301
+/crew                      /#crew                                             301
+/crew/                     /#crew                                             301

@@ -1,0 +1,197 @@
+/* The Divided States — plain, dependency-free presentation. */
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/open-sans-regular.ttf") format("truetype")}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/open-sans-bold.ttf") format("truetype")}
+@font-face{font-family:"Open Sans";font-style:italic;font-weight:400;font-display:swap;src:url("assets/fonts/open-sans-italic.ttf") format("truetype")}
+@font-face{font-family:Barlow;font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/barlow-bold.ttf") format("truetype")}
+
+:root{color-scheme:dark;--background:#000;--surface:#191919;--menu:#565656;--text:#c4c4c4;--heading:#fff;--accent:#ab3232;--line:#474747;--body-font:"Open Sans",Arial,sans-serif;--display-font:Barlow,Arial,sans-serif;--content:1080px}
+*{box-sizing:border-box}
+html{scroll-behavior:auto;scrollbar-gutter:stable}
+body{margin:0;background:var(--background);color:var(--text);font:400 16px/1.8 var(--body-font)}
+body.dialog-open{overflow:hidden}
+button,a,input{touch-action:manipulation}
+button{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-underline-offset:.22em}
+a:hover{color:#fff}
+button{cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid #ee8686;outline-offset:5px}
+img{display:block;max-width:100%;height:auto}
+button img{pointer-events:none}
+h1,h2,h3{color:var(--heading);margin:0 0 24px;font-weight:700}
+h1,.story h2{font-size:29px;line-height:1.8}
+h2{font-size:27px;line-height:1.35}
+h3{font-size:22px;line-height:1.4}
+p{margin:0 0 1.2em}
+p:last-child{margin-bottom:0}
+[hidden]{display:none!important}
+section{scroll-margin-top:20px}
+.wrap{width:min(80%,var(--content));margin-inline:auto}
+.texture{background:#080808 url("assets/backdrop.png") center/cover}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:16px;top:12px;z-index:10;padding:8px 16px;background:#fff;color:#000;transform:translateY(-160%)}
+.skip-link:focus{transform:none;color:#000}
+.masthead{padding:54px 0 50px}
+.brand{display:block;width:47%;max-width:508px;margin:0 auto 55px}
+.brand img{width:100%}
+.navigation{background:var(--menu)}
+.nav-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 22px;list-style:none;margin:0;padding:0 18px}
+.nav-links a{display:block;min-height:34px;padding:5px 0;color:#fff;text-decoration:none;font-size:14px;line-height:24px}
+.nav-links a:hover{text-decoration:underline}
+.menu-toggle{display:none;width:100%;padding:12px 18px;color:#fff;background:none;border:0;text-align:left;font-weight:700}
+.menu-toggle span{float:right;font-size:23px;line-height:25px}
+
+/* Original full-bleed story artwork and alternating text positions. */
+.story{background-color:#000;background-repeat:no-repeat;background-position:center;background-size:cover}
+.story .wrap{display:flex;align-items:flex-start;min-height:634px;padding-block:68px 80px}
+.story-copy{width:42%;max-width:470px}
+.story-copy p{font-style:italic}
+.story-copy a{text-decoration:none;border-bottom:1px solid #858585}
+.hero{background-image:url("assets/gallery/new-york-ablaze.png")}
+.hero .wrap{min-height:537px;padding-top:60px}
+.hero .story-copy{margin-left:auto;width:37%}
+.hero h1{margin-bottom:28px}
+.divided{background-image:url("assets/chicago-flag-raise.jpg")}
+.dream{background-image:url("assets/kingfish-march.jpg");background-position:right top}
+.dream .wrap{min-height:620px}
+.kansas{background-image:url("assets/economic-collapse.jpg")}
+.kansas .story-copy{margin-left:auto}
+
+/* One player replaces the six eager YouTube embeds and Divi carousel. */
+.episodes{padding:70px 0}
+.video-wrap{width:min(80%,1080px);margin:auto}
+.player{position:relative;aspect-ratio:16/9;background:#111;overflow:hidden}
+.video-cover{width:100%;height:100%;object-fit:cover}
+.play-video{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:12px;width:100%;border:0;background:#0003;color:#fff;font-weight:700;text-shadow:0 1px 4px #000}
+.play-video:hover{background:#0006}
+.play-symbol{display:grid;place-items:center;width:78px;height:58px;border-radius:12px;background:#ab3232;font-size:30px;text-shadow:none}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-caption{margin:14px 0;color:#eee;font-size:14px}
+.video-list{display:grid;grid-template-columns:repeat(6,minmax(135px,1fr));gap:10px;overflow-x:auto;padding:4px 4px 12px;scrollbar-color:#777 #222}
+.video-choice{padding:0;border:2px solid transparent;background:#151515;color:#ccc;text-align:left}
+.video-choice[aria-pressed="true"]{border-color:#c65c5c;color:#fff}
+.video-choice:hover{background:#292929}
+.video-choice img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.video-choice span{display:block;padding:9px;font-size:12px;line-height:1.45}
+.video-note{margin-top:12px;font-size:12px;color:#aaa}
+
+.gallery-section{padding:58px 0 74px}
+.gallery-heading{text-align:center;margin:0 auto 24px;padding-inline:20px}
+.gallery-heading h2{font:700 34px/1.1 var(--display-font);margin-bottom:8px}
+.gallery-heading p{font-size:16px}
+.gallery{max-width:1240px;margin:auto;padding-inline:20px;columns:3;column-gap:14px}
+.gallery-item{display:block;width:100%;padding:0;margin:0 0 14px;border:0;border-radius:3px;background:#222;break-inside:avoid;overflow:hidden}
+.gallery-item img{width:100%;height:auto}
+.gallery-item:hover img{opacity:.86}
+.gallery-action{text-align:center;margin-top:28px;padding-inline:20px}
+.button{display:inline-block;padding:13px 34px;background:var(--accent);color:#fff;border:0;text-decoration:none;font:700 14px/1.6 var(--display-font);letter-spacing:2px;text-transform:uppercase}
+.button:hover{background:#c13d3d;color:#fff}
+.press-button{padding-inline:92px}
+
+.projects,.crew{padding:72px 0}
+.section-title{text-align:center;margin-bottom:40px}
+.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:60px}
+.project-card img{width:100%;margin-bottom:28px}
+.project-card h3{margin-bottom:18px}
+.project-card p{line-height:1.8}
+.project-card .project-link{display:inline-block;margin-top:20px;color:#eee}
+.crew-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.crew-card img{width:100%;aspect-ratio:1;object-fit:cover;margin-bottom:26px}
+.crew-card h3{font-size:20px;margin-bottom:16px}
+.crew-card p{font-size:14px;line-height:1.8}
+.crew-card a{color:#ddd}
+
+.contact{padding:68px 0 54px;border-block:1px solid var(--line);background:#111 url("assets/contact-background.jpg") center/cover;text-align:center}
+.contact h2{font-size:26px;margin-bottom:30px}
+.contact-photo{width:66%;margin:0 auto 30px}
+.contact-copy{max-width:900px;margin:0 auto 28px}
+.newsletter-button{background:#c93229;letter-spacing:0;font:400 17px/1.5 var(--body-font);text-transform:none}
+.inquiries{margin:28px 0 26px;font-size:15px;color:#d6d6d6;overflow-wrap:anywhere}
+.contact hr{margin:28px 0;border:0;border-top:2px solid var(--line)}
+.support-copy{font-size:15px}
+.channel-links{display:flex;align-items:center;justify-content:center;gap:35px;margin:26px 0}
+.channel-links a{display:block;max-width:170px}
+.channel-links img{max-height:50px;width:auto}
+.channel-links a:hover{opacity:.65}
+.social-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;font-size:14px}
+.footer{padding:50px 0 38px;text-align:center}
+.footer .wrap{border-top:1px solid #5e5e5e;padding-top:24px}
+.footer p{font-size:10px}
+.footer img{width:96px;margin:28px auto 0}
+
+.lightbox{position:fixed;inset:0;max-width:none;max-height:none;width:100%;height:100%;margin:0;padding:60px 70px 35px;border:0;background:transparent;color:#fff;overflow:hidden}
+.lightbox::backdrop{background:#000f}
+.lightbox[open]{display:flex;align-items:center;justify-content:center}
+.lightbox figure{margin:0;max-width:100%;text-align:center}
+.lightbox img{max-height:calc(100dvh - 150px);max-width:100%;width:auto;margin:auto;object-fit:contain}
+.lightbox figcaption{padding:14px 0 0;font-size:14px}
+.lightbox button{position:absolute;display:grid;place-items:center;min-width:48px;min-height:48px;border:1px solid #666;border-radius:4px;background:#151515;color:#fff;font-size:32px;line-height:1}
+.lightbox button:hover{background:#444}
+.lightbox-close{top:12px;right:16px}
+.lightbox-prev{top:calc(50% - 24px);left:12px}
+.lightbox-next{top:calc(50% - 24px);right:12px}
+
+@media(min-width:1440px){.video-wrap{width:65%}}
+@media(max-width:980px){
+  .wrap{width:88%}
+  .masthead{padding:38px 0}
+  .brand{width:60%;margin-bottom:35px}
+  .nav-links{gap:0 18px}
+  .story .wrap{min-height:580px}
+  .story-copy,.hero .story-copy{width:48%}
+  .hero{background-position:35% center}
+  .gallery{columns:2}
+  .crew-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:45px 30px}
+  .contact-photo{width:85%}
+}
+@media(max-width:600px){
+  body{font-size:15px}
+  .wrap{width:90%}
+  .masthead{padding:24px 0}
+  .brand{width:90%;margin-bottom:25px}
+  .enhanced .menu-toggle{display:block}
+  .nav-links{gap:0 16px;padding-block:8px}
+  .enhanced .nav-links:not(.is-open){display:none}
+  .nav-links a{min-height:44px;padding-block:10px}
+  .enhanced .nav-links{display:block;padding:6px 18px 14px}
+  .story .wrap,.hero .wrap{min-height:580px;padding:60px 0}
+  .story-copy,.hero .story-copy{width:100%;max-width:none;margin:0}
+  .story h2,h1{font-size:27px;line-height:1.55}
+  .story-copy p{line-height:1.85}
+  .hero{background-image:linear-gradient(#0002,#0007),url("assets/new-york-mobile.jpg");background-position:center top}
+  .divided{background-image:linear-gradient(#0005,#0008),url("assets/chicago-mobile.jpg")}
+  .dream{background-image:linear-gradient(#0005,#000a),url("assets/kingfish-march.jpg");background-position:center}
+  .kansas{background-image:linear-gradient(#0006,#000b),url("assets/economic-collapse.jpg");background-position:left}
+  .episodes{padding:42px 0}
+  .video-wrap{width:92%}
+  .video-list{grid-template-columns:repeat(6,145px)}
+  .play-symbol{width:62px;height:46px;font-size:24px}
+  .play-video{font-size:13px}
+  .gallery{columns:1;padding-inline:16px}
+  .gallery-heading h2{font-size:27px}
+  .gallery-section{padding:42px 0 54px}
+  .press-button{padding:13px 24px}
+  .project-grid,.crew-grid{grid-template-columns:1fr;gap:44px}
+  .projects,.crew{padding:50px 0}
+  .crew-card{max-width:430px;margin:auto}
+  .crew-card p{font-size:15px}
+  .contact{padding-top:50px}
+  .contact-photo{width:100%}
+  .channel-links{gap:25px}
+  .channel-links a{max-width:135px}
+  .lightbox{padding:65px 12px 90px}
+  .lightbox img{max-height:calc(100dvh - 205px)}
+  .lightbox-prev,.lightbox-next{top:auto;bottom:22px}
+  .lightbox-prev{left:calc(50% - 62px)}
+  .lightbox-next{right:calc(50% - 62px)}
+}
+@media print{
+  .navigation,.video-list,.play-video,.lightbox,.gallery-action,.skip-link{display:none!important}
+  body{background:#fff;color:#111}
+  h1,h2,h3{color:#111}
+  .story,.texture,.contact{background:none}
+  .story .wrap{min-height:0;padding-block:30px}
+  .story-copy,.hero .story-copy{width:100%;max-width:none}
+  .gallery{columns:3}
+}
