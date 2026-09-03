@@ -1,5 +1,7 @@
 # The Divided States — static site (Cloudflare Pages)
 
+Vincent Edit
+
 Clean static build of **dividedstates-project.com**, refactored from the old
 WordPress/Divi export (originally mirrored with HTTrack) into a lean package
 ready to deploy on Cloudflare Pages. The rendered look and functionality are
