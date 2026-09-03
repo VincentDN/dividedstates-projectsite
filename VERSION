@@ -37,3 +37,41 @@ pipeline: strip_cruft -> fix_links -> fix_og -> rootrel_assets -> add_flagmaker_
   - Vincent De Nil bio updated (KCC art-director framing, Flagmaker &
     'more about' links) with vincentdenil.com + LinkedIn; JSON-LD Person
     url/sameAs/jobTitle synced to match.
+
+1.0.2 (2026-09-02)
+  - Newsletter button hover icon: forced the :after pseudo-element to the
+    ETmodules font (it was pinned to FontAwesome, which is not loaded), so the
+    right-arrow glyph now renders instead of a box / literal '$'.
+  - Rebuilt JSON-LD to the canonical founder-entity graph (shared @id registry):
+    WebSite + WebPage + BreadcrumbList + Person(#vincent) + CreativeWorkSeries(#project).
+    Person references worksFor #atelier and affiliation KCC #org; project creator
+    -> #vincent, productionCompany -> KCC #org. One graph per page; org nodes are
+    referenced by @id (defined on their own sites), not redefined here.
+  - PENDING (see message): confirm/replace canonical founder photo URL, add
+    ArtStation/GitHub/personal-YouTube to Person.sameAs, verify FMP about-vincent
+    page exists, and ensure KCC/#atelier/#org nodes ship on their own domains.
+
+1.0.3 (2026-09-03)
+  - Schema: Person node updated to canonical values pulled from vincentdenil.com
+    and kaisercatcinema.com/pages/about-vincent (founder photo assets/vincent.jpg,
+    real sameAs set: LinkedIn vincentdn, ArtStation, GitHub, personal YouTube, X,
+    Reddit, KCC about-vincent; workLocation Stockholm + Raleigh; knowsAbout list).
+  - Gallery: replaced the Divi slider with a responsive masonry mosaic (22 works)
+    and a dependency-free lightbox (click to enlarge, prev/next, Esc, arrow keys).
+    The old Divi gallery module is hidden, not deleted.
+  - Removed all CSS animations and transitions site-wide (global override; Divi
+    scroll-entrance elements forced visible so nothing stays hidden).
+
+1.0.4 (2026-09-03)
+  - Gallery now shows painted/concept art only: the five live-action Strife film
+    stills are hidden, along with two title-card thumbnails and text-heavy webcomic
+    panels. Expanded the painted selection to 26 works.
+  - Added a styled section header ('Gallery') and intro line ('Art and concepts from
+    the world of The Divided States') using the site's Barlow heading + Open Sans body.
+
+1.0.5 (2026-09-03)
+  - Fixed the Press Kit button crossing the gallery/next-section boundary. The
+    #gallery section kept fixed sizing from the old full-width slider (min-height
+    ~986px) plus negative margins (section margin-bottom -50px, button row
+    margin-top -34px) that pulled the next section up over the button. Scoped
+    override sets the section to fit its content and removes the overlap.

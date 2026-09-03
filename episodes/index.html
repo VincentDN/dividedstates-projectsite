@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-<!-- The Divided States — static build v1.0.1 (2026-09-02): WordPress/Divi export refactored for Cloudflare Pages; dead cruft removed, full SEO schema + JSON-LD, Flagmaker nav + schema. -->
+<!-- The Divided States — static build v1.0.5 (2026-09-02): WordPress/Divi export refactored for Cloudflare Pages; dead cruft removed, full SEO schema + JSON-LD, Flagmaker nav + schema. -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<script type="text/javascript">
@@ -6597,85 +6597,35 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	<meta property="og:image:alt" content="The Divided States" />
 	<meta name="twitter:site" content="@kaisercatcinema" />
 	<meta name="twitter:creator" content="@kaisercatcinema" />
-	<script type="application/ld+json">
+
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://dividedstates-project.com/#organization",
-      "name": "The Divided States",
-      "url": "https://dividedstates-project.com/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://dividedstates-project.com/wp-content/uploads/2020/10/cropped-Divided-States-Website-Favicon-270x270.png",
-        "width": 270,
-        "height": 270
-      },
-      "sameAs": [
-        "https://www.youtube.com/c/KaiserCatCinema",
-        "https://www.youtube.com/channel/UCmkp7Rg6GtSBmExot-v68XQ",
-        "https://twitter.com/kaisercatcinema",
-        "https://www.facebook.com/kaisercatcinema/",
-        "https://www.instagram.com/kaisercat.cinema/",
-        "https://www.pinterest.com/kaisercatcinema/",
-        "https://www.reddit.com/user/KR-VincentDN",
-        "https://www.webtoons.com/en/challenge/the-divided-states/list?title_no=486469",
-        "https://www.patreon.com/kaisercatcinema",
-        "https://discord.com/invite/bfDaxhk"
-      ],
-      "parentOrganization": {
-        "@type": "Organization",
-        "name": "Kaiser Cat Cinema",
-        "url": "https://kaisercatcinema.com/"
-      }
-    },
-    {
       "@type": "WebSite",
       "@id": "https://dividedstates-project.com/#website",
-      "name": "The Divided States",
       "url": "https://dividedstates-project.com/",
-      "description": "What if there was a Second American Civil War? The Divided States is an anthology animatic project, following the stories of everyday American citizens in a dark, strange world altered forever by German victory in the Great War. The Divided States encompasses several animatic and live-action projects based on the world of ‘Kaiserreich’, the world’s most comprehensive fan-built alt-history IP.",
-      "inLanguage": "en-US",
+      "name": "The Divided States",
       "publisher": {
-        "@id": "https://dividedstates-project.com/#organization"
-      }
-    },
-    {
-      "@type": "Person",
-      "@id": "https://dividedstates-project.com/#vincent",
-      "name": "Vincent De Nil",
-      "alternateName": "The Vehement Vexillographer",
-      "url": "https://vincentdenil.com/",
-      "jobTitle": "Founder & Art Director",
-      "worksFor": {
-        "@id": "https://dividedstates-project.com/#organization"
+        "@id": "https://kaisercatcinema.com/#org"
       },
-      "sameAs": [
-        "https://vincentdenil.com/",
-        "https://www.linkedin.com/in/vincentdn/",
-        "https://flagmaker-print.com/",
-        "https://kaisercatcinema.com/pages/about-vincent",
-        "https://www.reddit.com/user/KR-VincentDN"
-      ]
+      "inLanguage": "en-US"
     },
     {
       "@type": "WebPage",
       "@id": "https://dividedstates-project.com/episodes/#webpage",
       "url": "https://dividedstates-project.com/episodes/",
       "name": "Episodes | The Divided States",
-      "description": "Watch the animatic episodes of The Divided States — a Second American Civil War anthology series set in the Kaiserreich alternate-history timeline.",
       "isPartOf": {
         "@id": "https://dividedstates-project.com/#website"
       },
       "about": {
-        "@id": "https://dividedstates-project.com/#organization"
+        "@id": "https://dividedstates-project.com/#project"
       },
       "primaryImageOfPage": {
         "@type": "ImageObject",
-        "url": "https://dividedstates-project.com/wp-content/uploads/2021/12/Website-social-media-1200-open-graph.jpg",
-        "width": 1200,
-        "height": 630
+        "url": "https://dividedstates-project.com/wp-content/uploads/2021/12/Website-social-media-1200-open-graph.jpg"
       },
       "breadcrumb": {
         "@id": "https://dividedstates-project.com/episodes/#breadcrumb"
@@ -6699,10 +6649,98 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
           "item": "https://dividedstates-project.com/episodes/"
         }
       ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://vincentdenil.com/#vincent",
+      "name": "Vincent De Nil",
+      "alternateName": "VincentDN",
+      "url": "https://vincentdenil.com/",
+      "jobTitle": [
+        "Founder",
+        "Art Director"
+      ],
+      "image": "https://vincentdenil.com/assets/vincent.jpg",
+      "description": "Belgian founder and art director, working between Stockholm and Raleigh, NC. He creates alt-history worlds including The Divided States, WW2044 and American Kingdoms, and builds the companies that fund and grow them: the Kaiser Cat Collective and Flagmaker & Print.",
+      "nationality": {
+        "@type": "Country",
+        "name": "Belgium"
+      },
+      "workLocation": [
+        {
+          "@type": "Place",
+          "name": "Stockholm, Sweden"
+        },
+        {
+          "@type": "Place",
+          "name": "Raleigh, North Carolina, USA"
+        }
+      ],
+      "knowsAbout": [
+        "Alternate-history worldbuilding",
+        "Art direction",
+        "Concept art",
+        "Vexillography",
+        "Flag design",
+        "Animation"
+      ],
+      "worksFor": {
+        "@id": "https://vincentdenil.com/#atelier"
+      },
+      "affiliation": {
+        "@id": "https://kaisercatcinema.com/#org"
+      },
+      "sameAs": [
+        "https://vincentdenil.com/",
+        "https://www.linkedin.com/in/vincentdn/",
+        "https://www.artstation.com/vincentdn",
+        "https://github.com/VincentDN",
+        "https://www.youtube.com/channel/UCoqMfyTcyPwd3zMx0-wZc9w",
+        "https://x.com/vincentdnil",
+        "https://www.reddit.com/user/KR-VincentDN",
+        "https://kaisercatcinema.com/pages/about-vincent"
+      ]
+    },
+    {
+      "@type": "CreativeWorkSeries",
+      "@id": "https://dividedstates-project.com/#project",
+      "name": "The Divided States",
+      "url": "https://dividedstates-project.com/",
+      "description": "An animatic and graphic-novel anthology set during a Second American Civil War, produced by the Kaiser Cat Collective.",
+      "genre": [
+        "Alternate history",
+        "Animation",
+        "Graphic novel"
+      ],
+      "inLanguage": "en-US",
+      "creator": {
+        "@id": "https://vincentdenil.com/#vincent"
+      },
+      "author": {
+        "@id": "https://vincentdenil.com/#vincent"
+      },
+      "productionCompany": {
+        "@id": "https://kaisercatcinema.com/#org"
+      },
+      "publisher": {
+        "@id": "https://kaisercatcinema.com/#org"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dividedstates-project.com/wp-content/uploads/2021/02/Divided-States-Strife-Poster.jpg"
+      },
+      "sameAs": [
+        "https://www.webtoons.com/en/challenge/the-divided-states/list?title_no=486469"
+      ]
     }
   ]
 }
 </script>
+<style id="tds-no-animations">
+*,*::before,*::after{animation:none!important;-webkit-animation:none!important;transition:none!important;-webkit-transition:none!important;scroll-behavior:auto!important;}
+[class*="et_pb_animation_"]{opacity:1!important;transform:none!important;}
+.et-waypoint,.et_animated,.et-animated,.et_pb_animation_top,.et_pb_animation_bottom,.et_pb_animation_left,.et_pb_animation_right,.et_pb_animation_fade{opacity:1!important;transform:none!important;}
+</style>
 </head>
 
 <body

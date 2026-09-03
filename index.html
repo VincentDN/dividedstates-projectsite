@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-<!-- The Divided States — static build v1.0.1 (2026-09-02): WordPress/Divi export refactored for Cloudflare Pages; dead cruft removed, full SEO schema + JSON-LD, Flagmaker nav + schema. -->
+<!-- The Divided States — static build v1.0.5 (2026-09-02): WordPress/Divi export refactored for Cloudflare Pages; dead cruft removed, full SEO schema + JSON-LD, Flagmaker nav + schema. -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<script type="text/javascript">
@@ -6748,90 +6748,44 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	<meta property="og:image:alt" content="The Divided States" />
 	<meta name="twitter:site" content="@kaisercatcinema" />
 	<meta name="twitter:creator" content="@kaisercatcinema" />
-	<script type="application/ld+json">
+<style id="tds-newsletter-icon-fix">a.et_pb_button[href*="kaisercatcinema.com/newsletter"]:after{font-family:"ETmodules"!important;}</style>
+
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://dividedstates-project.com/#organization",
-      "name": "The Divided States",
-      "url": "https://dividedstates-project.com/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://dividedstates-project.com/wp-content/uploads/2020/10/cropped-Divided-States-Website-Favicon-270x270.png",
-        "width": 270,
-        "height": 270
-      },
-      "sameAs": [
-        "https://www.youtube.com/c/KaiserCatCinema",
-        "https://www.youtube.com/channel/UCmkp7Rg6GtSBmExot-v68XQ",
-        "https://twitter.com/kaisercatcinema",
-        "https://www.facebook.com/kaisercatcinema/",
-        "https://www.instagram.com/kaisercat.cinema/",
-        "https://www.pinterest.com/kaisercatcinema/",
-        "https://www.reddit.com/user/KR-VincentDN",
-        "https://www.webtoons.com/en/challenge/the-divided-states/list?title_no=486469",
-        "https://www.patreon.com/kaisercatcinema",
-        "https://discord.com/invite/bfDaxhk"
-      ],
-      "parentOrganization": {
-        "@type": "Organization",
-        "name": "Kaiser Cat Cinema",
-        "url": "https://kaisercatcinema.com/"
-      }
-    },
-    {
       "@type": "WebSite",
       "@id": "https://dividedstates-project.com/#website",
-      "name": "The Divided States",
       "url": "https://dividedstates-project.com/",
-      "description": "What if there was a Second American Civil War? The Divided States is an anthology animatic project, following the stories of everyday American citizens in a dark, strange world altered forever by German victory in the Great War. The Divided States encompasses several animatic and live-action projects based on the world of ‘Kaiserreich’, the world’s most comprehensive fan-built alt-history IP.",
-      "inLanguage": "en-US",
+      "name": "The Divided States",
       "publisher": {
-        "@id": "https://dividedstates-project.com/#organization"
-      }
-    },
-    {
-      "@type": "Person",
-      "@id": "https://dividedstates-project.com/#vincent",
-      "name": "Vincent De Nil",
-      "alternateName": "The Vehement Vexillographer",
-      "url": "https://vincentdenil.com/",
-      "jobTitle": "Founder & Art Director",
-      "worksFor": {
-        "@id": "https://dividedstates-project.com/#organization"
+        "@id": "https://kaisercatcinema.com/#org"
       },
-      "sameAs": [
-        "https://vincentdenil.com/",
-        "https://www.linkedin.com/in/vincentdn/",
-        "https://flagmaker-print.com/",
-        "https://kaisercatcinema.com/pages/about-vincent",
-        "https://www.reddit.com/user/KR-VincentDN"
-      ]
+      "inLanguage": "en-US"
     },
     {
       "@type": "WebPage",
       "@id": "https://dividedstates-project.com/#webpage",
       "url": "https://dividedstates-project.com/",
       "name": "The Divided States | A Second American Civil War Animatic Anthology",
-      "description": "What if Germany had won the Great War? The Divided States is an animatic anthology following ordinary citizens through a Second American Civil War in the Kaiserreich alt-history world.",
       "isPartOf": {
         "@id": "https://dividedstates-project.com/#website"
       },
       "about": {
-        "@id": "https://dividedstates-project.com/#organization"
+        "@id": "https://dividedstates-project.com/#project"
       },
       "primaryImageOfPage": {
         "@type": "ImageObject",
-        "url": "https://dividedstates-project.com/wp-content/uploads/2021/12/Website-social-media-1200-open-graph.jpg",
-        "width": 1200,
-        "height": 630
+        "url": "https://dividedstates-project.com/wp-content/uploads/2021/12/Website-social-media-1200-open-graph.jpg"
       },
       "breadcrumb": {
         "@id": "https://dividedstates-project.com/#breadcrumb"
       },
-      "inLanguage": "en-US"
+      "inLanguage": "en-US",
+      "mainEntity": {
+        "@id": "https://dividedstates-project.com/#project"
+      }
     },
     {
       "@type": "BreadcrumbList",
@@ -6846,31 +6800,118 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
       ]
     },
     {
+      "@type": "Person",
+      "@id": "https://vincentdenil.com/#vincent",
+      "name": "Vincent De Nil",
+      "alternateName": "VincentDN",
+      "url": "https://vincentdenil.com/",
+      "jobTitle": [
+        "Founder",
+        "Art Director"
+      ],
+      "image": "https://vincentdenil.com/assets/vincent.jpg",
+      "description": "Belgian founder and art director, working between Stockholm and Raleigh, NC. He creates alt-history worlds including The Divided States, WW2044 and American Kingdoms, and builds the companies that fund and grow them: the Kaiser Cat Collective and Flagmaker & Print.",
+      "nationality": {
+        "@type": "Country",
+        "name": "Belgium"
+      },
+      "workLocation": [
+        {
+          "@type": "Place",
+          "name": "Stockholm, Sweden"
+        },
+        {
+          "@type": "Place",
+          "name": "Raleigh, North Carolina, USA"
+        }
+      ],
+      "knowsAbout": [
+        "Alternate-history worldbuilding",
+        "Art direction",
+        "Concept art",
+        "Vexillography",
+        "Flag design",
+        "Animation"
+      ],
+      "worksFor": {
+        "@id": "https://vincentdenil.com/#atelier"
+      },
+      "affiliation": {
+        "@id": "https://kaisercatcinema.com/#org"
+      },
+      "sameAs": [
+        "https://vincentdenil.com/",
+        "https://www.linkedin.com/in/vincentdn/",
+        "https://www.artstation.com/vincentdn",
+        "https://github.com/VincentDN",
+        "https://www.youtube.com/channel/UCoqMfyTcyPwd3zMx0-wZc9w",
+        "https://x.com/vincentdnil",
+        "https://www.reddit.com/user/KR-VincentDN",
+        "https://kaisercatcinema.com/pages/about-vincent"
+      ]
+    },
+    {
       "@type": "CreativeWorkSeries",
-      "@id": "https://dividedstates-project.com/#series",
+      "@id": "https://dividedstates-project.com/#project",
       "name": "The Divided States",
       "url": "https://dividedstates-project.com/",
-      "description": "What if there was a Second American Civil War? The Divided States is an anthology animatic project, following the stories of everyday American citizens in a dark, strange world altered forever by German victory in the Great War. The Divided States encompasses several animatic and live-action projects based on the world of ‘Kaiserreich’, the world’s most comprehensive fan-built alt-history IP.",
+      "description": "An animatic and graphic-novel anthology set during a Second American Civil War, produced by the Kaiser Cat Collective.",
       "genre": [
         "Alternate history",
         "Animation",
-        "Web series"
+        "Graphic novel"
       ],
-      "image": "https://dividedstates-project.com/wp-content/uploads/2021/12/Website-social-media-1200-open-graph.jpg",
+      "inLanguage": "en-US",
       "creator": {
-        "@id": "https://dividedstates-project.com/#vincent"
+        "@id": "https://vincentdenil.com/#vincent"
+      },
+      "author": {
+        "@id": "https://vincentdenil.com/#vincent"
+      },
+      "productionCompany": {
+        "@id": "https://kaisercatcinema.com/#org"
       },
       "publisher": {
-        "@id": "https://dividedstates-project.com/#organization"
+        "@id": "https://kaisercatcinema.com/#org"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://dividedstates-project.com/wp-content/uploads/2021/02/Divided-States-Strife-Poster.jpg"
       },
       "sameAs": [
-        "https://www.youtube.com/c/KaiserCatCinema",
         "https://www.webtoons.com/en/challenge/the-divided-states/list?title_no=486469"
       ]
     }
   ]
 }
 </script>
+<style id="tds-mosaic-css">
+.et_pb_gallery_0{display:none!important;}
+.tds-mosaic-wrap{max-width:1240px;margin:0 auto;padding:10px 20px 0;}
+.tds-mosaic{column-count:3;column-gap:14px;}
+@media(max-width:980px){.tds-mosaic{column-count:2;}}
+@media(max-width:600px){.tds-mosaic{column-count:1;}}
+.tds-tile{display:block;margin:0 0 14px;break-inside:avoid;cursor:pointer;outline:none;position:relative;}
+.tds-tile img{width:100%;height:auto;display:block;border-radius:3px;}
+.tds-tile:hover img,.tds-tile:focus img{opacity:.86;}
+.tds-tile:focus{box-shadow:0 0 0 2px #c0392b;}
+.tds-lb{position:fixed;inset:0;background:rgba(8,8,8,.95);z-index:100000;display:none;align-items:center;justify-content:center;}
+.tds-lb.open{display:flex;}
+.tds-lb .tds-stage{max-width:92vw;max-height:88vh;display:flex;align-items:center;justify-content:center;}
+.tds-lb img{max-width:92vw;max-height:82vh;object-fit:contain;border-radius:2px;}
+.tds-lb .tds-cap{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#e8e8e8;font:400 14px/1.5 "Open Sans",Arial,sans-serif;padding:0 24px;}
+.tds-lb button{position:absolute;background:none;border:0;color:#fff;cursor:pointer;line-height:1;padding:14px 18px;font-size:34px;}
+.tds-lb .tds-close{top:8px;right:12px;font-size:30px;}
+.tds-lb .tds-prev{left:6px;top:50%;transform:translateY(-50%);}
+.tds-lb .tds-next{right:6px;top:50%;transform:translateY(-50%);}
+@media(max-width:600px){.tds-lb button{font-size:26px;padding:10px 12px;}}
+</style><style id="tds-no-animations">
+*,*::before,*::after{animation:none!important;-webkit-animation:none!important;transition:none!important;-webkit-transition:none!important;scroll-behavior:auto!important;}
+[class*="et_pb_animation_"]{opacity:1!important;transform:none!important;}
+.et-waypoint,.et_animated,.et-animated,.et_pb_animation_top,.et_pb_animation_bottom,.et_pb_animation_left,.et_pb_animation_right,.et_pb_animation_fade{opacity:1!important;transform:none!important;}
+</style>
+<style id="tds-gallery-head-css">.tds-gallery-head{max-width:1240px;margin:0 auto;padding:6px 20px 0;text-align:center;}.tds-gallery-head .tds-gh-title{font-family:'Barlow',Helvetica,Arial,sans-serif;font-weight:700;color:#fff;font-size:34px;line-height:1.1;margin:0 0 8px;letter-spacing:.01em;}.tds-gallery-head .tds-gh-intro{font-family:'Open Sans',Arial,sans-serif;color:#c4c4c4;font-size:16px;line-height:1.6;margin:0 auto 22px;max-width:62ch;}@media(max-width:600px){.tds-gallery-head .tds-gh-title{font-size:27px;}}</style>
+<style id="tds-gallery-section-fix">#gallery.et_pb_section_4,#gallery.et_pb_section{min-height:0!important;margin-top:0!important;margin-bottom:0!important;padding-bottom:74px!important;}#gallery .et_pb_row_6.et_pb_row{margin-top:20px!important;min-height:0!important;}.tds-mosaic-wrap{padding-bottom:8px;}</style>
 </head>
 
 <body
@@ -7259,7 +7300,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 
-										<div
+										<div class="tds-gallery-head"><h2 class="tds-gh-title">Gallery</h2><p class="tds-gh-intro">Art and concepts from the world of The Divided States</p></div><div class="tds-mosaic-wrap"><div class="tds-mosaic"><a class="tds-tile" data-i="0" href="/wp-content/uploads/2021/02/NewYorkBurning-Website.png" role="button" aria-label="New York ablaze"><img loading="lazy" src="/wp-content/uploads/2021/02/NewYorkBurning-Website.png" alt="New York ablaze"></a><a class="tds-tile" data-i="1" href="/wp-content/uploads/2021/12/2-WashingtonTank-1080.jpg" role="button" aria-label="Tanks before the Capitol"><img loading="lazy" src="/wp-content/uploads/2021/12/2-WashingtonTank-1080.jpg" alt="Tanks before the Capitol"></a><a class="tds-tile" data-i="2" href="/wp-content/uploads/2021/12/1-FlagRaiseChicago-1080.jpg" role="button" aria-label="Raising the flag over Chicago"><img loading="lazy" src="/wp-content/uploads/2021/12/1-FlagRaiseChicago-1080.jpg" alt="Raising the flag over Chicago"></a><a class="tds-tile" data-i="3" href="/wp-content/uploads/2021/12/3-kingfishrallylong-1080.jpg" role="button" aria-label="The Kingfish rally"><img loading="lazy" src="/wp-content/uploads/2021/12/3-kingfishrallylong-1080.jpg" alt="The Kingfish rally"></a><a class="tds-tile" data-i="4" href="/wp-content/uploads/2023/05/E01SCXX-Battle-For-Brooklyn-Bridge-Corner-Tank.jpg" role="button" aria-label="Battle for the Brooklyn Bridge"><img loading="lazy" src="/wp-content/uploads/2023/05/E01SCXX-Battle-For-Brooklyn-Bridge-Corner-Tank.jpg" alt="Battle for the Brooklyn Bridge"></a><a class="tds-tile" data-i="5" href="/wp-content/uploads/2021/12/3-StadiumExterior-1080.jpg" role="button" aria-label="The stadium"><img loading="lazy" src="/wp-content/uploads/2021/12/3-StadiumExterior-1080.jpg" alt="The stadium"></a><a class="tds-tile" data-i="6" href="/wp-content/uploads/2021/12/11-HueyLongSpeech-1080.jpg" role="button" aria-label="The Kingfish speaks"><img loading="lazy" src="/wp-content/uploads/2021/12/11-HueyLongSpeech-1080.jpg" alt="The Kingfish speaks"></a><a class="tds-tile" data-i="7" href="/wp-content/uploads/2022/01/Board-Of-Trade-Collapse-PROMOTIONAL-STILL.jpg" role="button" aria-label="Collapse of the Board of Trade"><img loading="lazy" src="/wp-content/uploads/2022/01/Board-Of-Trade-Collapse-PROMOTIONAL-STILL.jpg" alt="Collapse of the Board of Trade"></a><a class="tds-tile" data-i="8" href="/wp-content/uploads/2021/12/2-GreyhoundsChicago-1080.jpg" role="button" aria-label="Greyhounds in Chicago"><img loading="lazy" src="/wp-content/uploads/2021/12/2-GreyhoundsChicago-1080.jpg" alt="Greyhounds in Chicago"></a><a class="tds-tile" data-i="9" href="/wp-content/uploads/2023/05/SCXX-AA-Position.jpg" role="button" aria-label="Anti-air position"><img loading="lazy" src="/wp-content/uploads/2023/05/SCXX-AA-Position.jpg" alt="Anti-air position"></a><a class="tds-tile" data-i="10" href="/wp-content/uploads/2022/01/Wall-Street-Jumper-PROMOTIONAL-STILL.jpg" role="button" aria-label="Wall Street"><img loading="lazy" src="/wp-content/uploads/2022/01/Wall-Street-Jumper-PROMOTIONAL-STILL.jpg" alt="Wall Street"></a><a class="tds-tile" data-i="11" href="/wp-content/uploads/2021/12/5-ReedAddress-1080.jpg" role="button" aria-label="Reed's address"><img loading="lazy" src="/wp-content/uploads/2021/12/5-ReedAddress-1080.jpg" alt="Reed's address"></a><a class="tds-tile" data-i="12" href="/wp-content/uploads/2022/01/highway-of-death-topdown-PROMOTIONAL-STILL.jpg" role="button" aria-label="Highway of death"><img loading="lazy" src="/wp-content/uploads/2022/01/highway-of-death-topdown-PROMOTIONAL-STILL.jpg" alt="Highway of death"></a><a class="tds-tile" data-i="13" href="/wp-content/uploads/2023/05/BP-SCXX-CSA-Sniper-Position-VD.jpg" role="button" aria-label="Sniper in the ruins"><img loading="lazy" src="/wp-content/uploads/2023/05/BP-SCXX-CSA-Sniper-Position-VD.jpg" alt="Sniper in the ruins"></a><a class="tds-tile" data-i="14" href="/wp-content/uploads/2021/12/7-Execution-1080.jpg" role="button" aria-label="Reprisal"><img loading="lazy" src="/wp-content/uploads/2021/12/7-Execution-1080.jpg" alt="Reprisal"></a><a class="tds-tile" data-i="15" href="/wp-content/uploads/2022/01/Bomb-Explode-PROMOTIONAL-STILL.jpg" role="button" aria-label="Detonation"><img loading="lazy" src="/wp-content/uploads/2022/01/Bomb-Explode-PROMOTIONAL-STILL.jpg" alt="Detonation"></a><a class="tds-tile" data-i="16" href="/wp-content/uploads/2023/05/BP-SCXX-Patreon-On-Greyhound-v1-58.jpg" role="button" aria-label="Aboard the Greyhound"><img loading="lazy" src="/wp-content/uploads/2023/05/BP-SCXX-Patreon-On-Greyhound-v1-58.jpg" alt="Aboard the Greyhound"></a><a class="tds-tile" data-i="17" href="/wp-content/uploads/2022/01/Denver-Crowd-Running-PROMOTIONAL-STILL.jpg" role="button" aria-label="Denver rises"><img loading="lazy" src="/wp-content/uploads/2022/01/Denver-Crowd-Running-PROMOTIONAL-STILL.jpg" alt="Denver rises"></a><a class="tds-tile" data-i="18" href="/wp-content/uploads/2021/12/1-HighwayOfDeath-1080-1.jpg" role="button" aria-label="Armour on the highway"><img loading="lazy" src="/wp-content/uploads/2021/12/1-HighwayOfDeath-1080-1.jpg" alt="Armour on the highway"></a><a class="tds-tile" data-i="19" href="/wp-content/uploads/2021/12/6-WorkersMartExterior-1080.jpg" role="button" aria-label="The Workers' Mart"><img loading="lazy" src="/wp-content/uploads/2021/12/6-WorkersMartExterior-1080.jpg" alt="The Workers' Mart"></a><a class="tds-tile" data-i="20" href="/wp-content/uploads/2022/01/plane-fly-over-PROMOTIONAL-STILL.jpg" role="button" aria-label="Flyover"><img loading="lazy" src="/wp-content/uploads/2022/01/plane-fly-over-PROMOTIONAL-STILL.jpg" alt="Flyover"></a><a class="tds-tile" data-i="21" href="/wp-content/uploads/2022/01/Violent-Strike-Molotov-Throw-PROMOTIONAL-STILL.jpg" role="button" aria-label="The strike turns violent"><img loading="lazy" src="/wp-content/uploads/2022/01/Violent-Strike-Molotov-Throw-PROMOTIONAL-STILL.jpg" alt="The strike turns violent"></a><a class="tds-tile" data-i="22" href="/wp-content/uploads/2021/12/1-LincolnDefaced-1080.jpg" role="button" aria-label="Under new banners"><img loading="lazy" src="/wp-content/uploads/2021/12/1-LincolnDefaced-1080.jpg" alt="Under new banners"></a><a class="tds-tile" data-i="23" href="/wp-content/uploads/2022/01/Emily-Sawyer-Car-Sitting-PROMOTIONAL-STILL.jpg" role="button" aria-label="On the road"><img loading="lazy" src="/wp-content/uploads/2022/01/Emily-Sawyer-Car-Sitting-PROMOTIONAL-STILL.jpg" alt="On the road"></a><a class="tds-tile" data-i="24" href="/wp-content/uploads/2022/01/Scientist-Utah-4-PROMOTIONAL-STILL.jpg" role="button" aria-label="The Utah road"><img loading="lazy" src="/wp-content/uploads/2022/01/Scientist-Utah-4-PROMOTIONAL-STILL.jpg" alt="The Utah road"></a><a class="tds-tile" data-i="25" href="/wp-content/uploads/2022/01/Knock-Knock-PROMOTIONAL-STILL-copy.jpg" role="button" aria-label="A knock at the door"><img loading="lazy" src="/wp-content/uploads/2022/01/Knock-Knock-PROMOTIONAL-STILL-copy.jpg" alt="A knock at the door"></a></div></div>
+<div
 											class="et_pb_module et_pb_gallery et_pb_gallery_0  et_pb_bg_layout_light et_pb_slider et_pb_gallery_fullwidth">
 											<div class="et_pb_gallery_items et_post_gallery clearfix" data-per_page="4">
 												<div class="et_pb_gallery_item et_pb_bg_layout_light et_pb_gallery_item_0_0">
@@ -8469,6 +8511,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 		id="et-core-common-js"></script>
 	<script type="text/javascript" src="/wp-content/uploads/wtfdivi/wp_footer109c.js?ver=6.6.2"
 		id="wtfdivi-user-js-js"></script>
+<div class="tds-lb" id="tdsLightbox" role="dialog" aria-modal="true" aria-label="Gallery image">
+<button class="tds-close" aria-label="Close">&times;</button>
+<button class="tds-prev" aria-label="Previous">&#8249;</button>
+<div class="tds-stage"><img alt=""></div>
+<button class="tds-next" aria-label="Next">&#8250;</button>
+<div class="tds-cap"></div></div>
+<script id="tds-lightbox-js">(function(){var tiles=[].slice.call(document.querySelectorAll(".tds-tile"));var G=tiles.map(function(a){return [a.getAttribute("href"),a.getAttribute("aria-label")||""];});var lb=document.getElementById("tdsLightbox");if(!lb||!G.length)return;var img=lb.querySelector("img"),cap=lb.querySelector(".tds-cap"),i=0;function show(){img.src=G[i][0];img.alt=G[i][1];cap.textContent=G[i][1];}function open(n){i=n;show();lb.classList.add("open");document.body.style.overflow="hidden";}function close(){lb.classList.remove("open");document.body.style.overflow="";img.src="";}function nav(d){i=(i+d+G.length)%G.length;show();}tiles.forEach(function(a,n){a.addEventListener("click",function(e){e.preventDefault();open(n);});});lb.querySelector(".tds-close").addEventListener("click",close);lb.querySelector(".tds-prev").addEventListener("click",function(){nav(-1);});lb.querySelector(".tds-next").addEventListener("click",function(){nav(1);});lb.addEventListener("click",function(e){if(e.target===lb)close();});document.addEventListener("keydown",function(e){if(!lb.classList.contains("open"))return;if(e.key==="Escape")close();else if(e.key==="ArrowRight")nav(1);else if(e.key==="ArrowLeft")nav(-1);});})();</script>
 </body>
 
 
