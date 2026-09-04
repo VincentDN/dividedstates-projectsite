@@ -193,9 +193,11 @@
   const videoList = document.querySelector('.video-list');
   if (videoList) {
     const shorts = [
-      { id: 'fLonhsbW4B8', title: 'Strife' },
-      { id: 'qiyC9opmoVM', title: 'Victoria' },
-      { id: 'i1ZbyGbnAVw', title: 'George' }
+      { id: 'jQD4olEGjiQ', title: 'The Revolution' },
+      { id: 'eUPUEBbYSxg', title: 'What is The Divided States?' },
+      { id: 'YkHB0frg7x0', title: 'Pacific States Lore' },
+      { id: 'TuJLcqTqN_k', title: 'Federal States Lore' },
+      { id: '0ZTv1G9I45o', title: 'Strife: Behind the Scenes' }
     ];
     const shortsSection = document.createElement('section');
     shortsSection.className = 'tds-shorts';
@@ -208,7 +210,7 @@
       card.href = 'https://www.youtube.com/watch?v=' + short.id;
       card.target = '_blank';
       card.rel = 'noopener noreferrer';
-      card.innerHTML = '<img src="assets/videos/' + short.id + '.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><span>' + short.title + '</span>';
+      card.innerHTML = '<img src="https://i.ytimg.com/vi/' + short.id + '/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><span>' + short.title + '</span>';
       shortsTrack.append(card);
     });
     videoList.after(shortsSection);
@@ -262,11 +264,12 @@
     .tds-newsletter-popup[hidden]{display:none!important}
     .tds-newsletter-popup{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px}
     .tds-newsletter-backdrop{position:absolute;inset:0;background:#000d}
-    .tds-newsletter-card{position:relative;z-index:1;width:min(760px,94vw);max-height:90dvh;overflow:auto;background:#111;border:1px solid #555;box-shadow:0 18px 60px #000;color:#d3d3d3}
-    .tds-newsletter-card>img{width:100%;aspect-ratio:1.91/1;object-fit:cover}
-    .tds-newsletter-copy{padding:30px 34px 34px;text-align:center}
-    .tds-newsletter-copy h2{font:700 30px/1.18 var(--display-font);margin-bottom:16px;color:#fff}
-    .tds-newsletter-copy p{max-width:620px;margin:0 auto 24px;line-height:1.7}
+    .tds-newsletter-card{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);width:min(980px,94vw);max-height:calc(100dvh - 32px);overflow:hidden;background:#111;border:1px solid #555;box-shadow:0 18px 60px #000;color:#d3d3d3}
+    .tds-newsletter-card>img{width:100%;height:100%;min-height:0;object-fit:cover;object-position:center}
+    .tds-newsletter-copy{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:clamp(28px,4vw,48px);text-align:left}
+    .tds-newsletter-copy h2{font:700 clamp(28px,3.2vw,40px)/1.08 var(--display-font);margin-bottom:16px;color:#fff}
+    .tds-newsletter-copy p{max-width:620px;margin:0 0 24px;line-height:1.6}
+    .tds-newsletter-copy .button{align-self:flex-start}
     .tds-newsletter-close{position:absolute;top:10px;right:10px;z-index:2;width:44px;height:44px;border:1px solid #777;background:#111e;color:#fff;font-size:30px;line-height:1}
     .tds-newsletter-close:hover{background:#333}
     body.newsletter-popup-open{overflow:hidden}
@@ -277,8 +280,11 @@
       .tds-shorts-track{grid-auto-columns:78%}
       .tds-shorts-controls{display:none}
       .tds-newsletter-popup{padding:12px}
-      .tds-newsletter-copy{padding:24px 20px 28px}
-      .tds-newsletter-copy h2{font-size:25px}
+      .tds-newsletter-card{grid-template-columns:1fr;grid-template-rows:minmax(150px,30dvh) auto;width:min(94vw,560px);max-height:calc(100dvh - 24px)}
+      .tds-newsletter-card>img{height:100%;min-height:0}
+      .tds-newsletter-copy{padding:clamp(18px,4dvh,25px) 20px;text-align:center}
+      .tds-newsletter-copy h2{font-size:clamp(22px,6.5vw,28px);line-height:1.05;margin-bottom:10px}
+      .tds-newsletter-copy p{font-size:clamp(13px,3.7vw,15px);line-height:1.45;margin-bottom:16px}
       .tds-newsletter-copy .button{width:100%;padding-inline:18px}
     }
     @media print{.gallery-reveal,.tds-shorts,.tds-newsletter-popup{display:none!important}}
