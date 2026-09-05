@@ -289,7 +289,7 @@
       popup.hidden = false;
       document.body.classList.add('newsletter-popup-open');
       popup.querySelector('.tds-newsletter-close').focus();
-    }, 12000);
+    }, 40000);
   }
 
   const enhancements = document.createElement('style');
