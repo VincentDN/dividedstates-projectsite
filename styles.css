@@ -62,9 +62,9 @@ section{scroll-margin-top:20px}
 /* One player replaces the six eager YouTube embeds and Divi carousel. */
 .episodes{padding:70px 0}
 .video-wrap{width:min(80%,1080px);margin:auto}
-.episodes-heading{margin:0 0 28px;text-align:left}
+.episodes-heading{margin:0 0 28px;text-align:center}
 .episodes-heading h2{margin:0 0 8px;font:700 34px/1.1 var(--display-font)}
-.episodes-heading p{max-width:720px;margin:0;color:var(--text)}
+.episodes-heading p{max-width:720px;margin:0 auto;color:var(--text)}
 .player{position:relative;aspect-ratio:16/9;background:#111;overflow:hidden}
 .video-cover{width:100%;height:100%;object-fit:cover}
 .play-video{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:12px;width:100%;border:0;background:#0003;color:#fff;font-weight:700;text-shadow:0 1px 4px #000}
@@ -96,28 +96,20 @@ section{scroll-margin-top:20px}
 .tds-short-video:focus-visible{outline:3px solid #ee8686;outline-offset:-4px}
 .tds-short-video img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.78) contrast(1.06)}
 .tds-short-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.tds-short-play{position:absolute;z-index:1;inset:0;display:grid;place-items:center;color:#fff}
+.tds-short-play{position:absolute;z-index:1;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;font:700 14px/1.2 var(--display-font);letter-spacing:1.8px;text-transform:uppercase;text-shadow:0 2px 8px #000}
 .tds-short-disc{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--accent);box-shadow:0 8px 24px #0008}
 .tds-short-disc svg{width:21px;height:21px;fill:#fff;transform:translateX(2px)}
 .tds-short-card figcaption{min-height:5.2em;padding:18px 20px 20px;font-weight:700;font-size:17px;line-height:1.45}
 
 .gallery-section{padding:58px 0 74px}
-.gallery-heading{max-width:1240px;text-align:left;margin:0 auto 24px;padding-inline:20px}
+.gallery-heading{text-align:center;margin:0 auto 24px;padding-inline:20px}
 .gallery-heading h2{font:700 34px/1.1 var(--display-font);margin-bottom:8px}
 .gallery-heading p{font-size:16px}
-.gallery-shell{position:relative;max-width:1240px;margin:auto}
-.gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding-inline:20px}
-.gallery-item{display:block;grid-column:span 2;width:100%;aspect-ratio:16/9;padding:0;border:0;border-radius:3px;background:#222;overflow:hidden}
-.gallery-item:last-child:nth-child(3n + 1){grid-column:1/-1}
-.gallery-item:nth-last-child(2):nth-child(3n + 1),.gallery-item:last-child:nth-child(3n + 2){grid-column:span 3}
-.gallery-item img{width:100%;height:100%;object-fit:cover}
+.gallery{max-width:1240px;margin:auto;padding-inline:20px;columns:3;column-gap:14px}
+.gallery-item{display:block;width:100%;padding:0;margin:0 0 14px;border:0;border-radius:3px;background:#222;break-inside:avoid;overflow:hidden}
+.gallery-item img{width:100%;height:auto}
 .gallery-item:hover img{opacity:.86}
-.gallery-reveal{display:none}
-.enhanced .gallery:not(.gallery-expanded) .gallery-item:nth-child(n+13){display:none}
-.enhanced .gallery-shell::after{content:"";position:absolute;z-index:1;right:20px;bottom:0;left:20px;height:min(180px,34%);background:linear-gradient(180deg,transparent,#080808e8 82%,#080808);pointer-events:none}
-.enhanced .gallery-reveal{position:absolute;z-index:2;left:50%;bottom:20px;display:block;min-width:132px;padding:10px 24px;border:1px solid #777;background:#111d;color:#eee;transform:translateX(-50%);font:700 13px/1.4 var(--display-font);letter-spacing:1.2px;text-transform:uppercase}
-.enhanced .gallery-reveal:hover{border-color:#aaa;background:#242424;color:#fff}
-.gallery-action{text-align:center;margin-top:38px;padding-inline:20px}
+.gallery-action{text-align:center;margin-top:28px;padding-inline:20px}
 .button{display:inline-block;padding:13px 34px;background:var(--accent);color:#fff;border:0;text-decoration:none;font:700 14px/1.6 var(--display-font);letter-spacing:2px;text-transform:uppercase}
 .button:hover{background:#c13d3d;color:#fff}
 .press-button{padding-inline:92px}
@@ -191,8 +183,7 @@ section{scroll-margin-top:20px}
   .story .wrap{min-height:580px}
   .story-copy,.hero .story-copy{width:48%}
   .hero{background-position:35% center}
-  .gallery-item{grid-column:span 3}
-  .gallery-item:last-child:nth-child(odd){grid-column:1/-1}
+  .gallery{columns:2}
   .contact-photo{width:85%}
   .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 40px}
 }
@@ -209,19 +200,20 @@ section{scroll-margin-top:20px}
   .enhanced .nav-links{display:block;padding:0 18px 14px}
   .enhanced .nav-links a{text-align:center;border-top:1px solid #ffffff1f}
   .story .wrap{min-height:580px;padding:60px 0}
-  .hero,.divided,.dream,.kansas{display:block;min-height:0;background:#000}
-  .hero::before,.divided::before,.dream::before,.kansas::before{content:"";display:block;width:100%;aspect-ratio:4/3;background-position:center;background-size:cover;background-repeat:no-repeat}
-  .hero::before{background-image:linear-gradient(180deg,transparent 58%,#000 100%),url("assets/gallery/raising-the-flag-over-chicago.jpg")}
-  .divided::before{background-image:linear-gradient(180deg,transparent 58%,#000 100%),url("assets/gallery/raising-the-flag-over-chicago.jpg")}
-  .dream::before{background-image:linear-gradient(180deg,transparent 58%,#000 100%),url("assets/gallery/the-kingfish-rally.jpg")}
-  .kansas::before{background-image:linear-gradient(180deg,transparent 58%,#000 100%),url("assets/gallery/collapse-of-the-board-of-trade.jpg")}
-  .hero .wrap,.divided .wrap,.dream .wrap,.kansas .wrap{display:block;min-height:0;padding:0 0 58px;margin-top:-4px}
+  .hero{display:block;min-height:0;background:#000}
+  .hero::before{content:"";display:block;width:100%;aspect-ratio:4/3;background:linear-gradient(180deg,transparent 58%,#000 100%),url("assets/gallery/raising-the-flag-over-chicago.jpg") center/cover no-repeat}
+  .hero .wrap{display:block;min-height:0;padding:0 0 58px;margin-top:-4px}
   .story-copy,.hero .story-copy{width:100%;max-width:none;margin:0}
   .hero .story-copy{padding-top:0}
   .hero h1{margin-bottom:24px;font-size:clamp(31px,9vw,43px);line-height:1.18;letter-spacing:-.02em}
   .hero .story-copy p{font-size:17px;line-height:1.8;color:#d0d0d0}
   .story h2,h1{font-size:27px;line-height:1.55}
   .story-copy p{line-height:1.85}
+  .divided{background-image:linear-gradient(#0005,#0008),url("assets/gallery/under-new-banners.jpg");background-position:center}
+  .dream{background-image:linear-gradient(#0005,#000a),url("assets/kingfish-march.jpg");background-position:center}
+  .dream .wrap{grid-template-columns:1fr;gap:0}
+  .dream .story-copy{grid-column:auto}
+  .kansas{background-image:linear-gradient(#0006,#000b),url("assets/economic-collapse.jpg");background-position:left}
   .episodes{padding:42px 0}
   .video-wrap{width:92%}
   .video-list{grid-template-columns:repeat(6,145px)}
@@ -233,9 +225,7 @@ section{scroll-margin-top:20px}
   .tds-shorts-track{grid-auto-columns:minmax(190px,72vw);gap:18px}
   .play-symbol{width:62px;height:46px;font-size:24px}
   .play-video{font-size:13px}
-  .gallery-heading,.gallery{padding-inline:16px}
-  .gallery-item,.gallery-item:last-child:nth-child(n){grid-column:1/-1}
-  .enhanced .gallery-shell::after{right:16px;left:16px}
+  .gallery{columns:1;padding-inline:16px}
   .gallery-heading h2{font-size:27px}
   .gallery-section{padding:42px 0 54px}
   .press-button{padding:13px 24px}
