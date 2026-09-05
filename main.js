@@ -171,20 +171,17 @@
     if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
   }, { passive: true });
 
-  // Mobile gallery: keep roughly half the artwork visible until requested.
+  // Keep roughly half the artwork visible until the visitor asks to expand it.
   const galleryContainer = document.querySelector('.gallery');
-  if (galleryContainer && gallery.length > 13) {
-    const galleryToggle = document.createElement('button');
-    galleryToggle.type = 'button';
-    galleryToggle.className = 'gallery-reveal';
-    galleryToggle.setAttribute('aria-expanded', 'false');
-    galleryToggle.textContent = 'See more artwork';
-    document.querySelector('.gallery-action')?.before(galleryToggle);
+  const galleryShell = document.querySelector('.gallery-shell');
+  const galleryToggle = document.querySelector('.gallery-reveal');
+  if (galleryContainer && galleryShell && galleryToggle && gallery.length > 12) {
     galleryToggle.addEventListener('click', () => {
       const expanded = galleryToggle.getAttribute('aria-expanded') !== 'true';
       galleryToggle.setAttribute('aria-expanded', String(expanded));
       galleryContainer.classList.toggle('gallery-expanded', expanded);
-      galleryToggle.textContent = expanded ? 'Show less artwork' : 'See more artwork';
+      galleryShell.classList.toggle('is-expanded', expanded);
+      galleryToggle.textContent = expanded ? 'Show Less' : 'See More';
       if (!expanded) document.querySelector('#gallery')?.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth' });
     });
   }
@@ -297,8 +294,6 @@
 
   const enhancements = document.createElement('style');
   enhancements.textContent = `
-    .gallery-reveal{display:none;margin:24px auto 0;padding:12px 28px;border:1px solid #777;background:#151515;color:#fff;font:700 14px/1.4 var(--display-font);letter-spacing:1px;text-transform:uppercase}
-    .gallery-reveal:hover{background:#292929}
     .tds-newsletter-popup[hidden]{display:none!important}
     .tds-newsletter-popup{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px}
     .tds-newsletter-backdrop{position:absolute;inset:0;background:#000d}
@@ -312,8 +307,6 @@
     .tds-newsletter-close:hover{background:#333}
     body.newsletter-popup-open{overflow:hidden}
     @media(max-width:600px){
-      .gallery:not(.gallery-expanded) .gallery-item:nth-child(n+14){display:none}
-      .gallery-reveal{display:block}
       .episodes-heading{margin-bottom:22px}
       .episodes-heading h2{font-size:27px}
       .episodes-heading p{font-size:14px;line-height:1.65}

@@ -24,8 +24,8 @@
   <meta name="twitter:description" content="What if Germany had won the Great War? The Divided States is an animatic anthology following ordinary citizens through a Second American Civil War in the Kaiserreich alt-history world.">
   <meta name="twitter:image" content="https://dividedstates-project.com/assets/social-preview.jpg">
   <meta name="twitter:image:alt" content="The Divided States — stories from the Second American Civil War">
-  <link rel="stylesheet" href="styles.css?v=2.1.2">
-  <script src="main.js?v=2.1.0" defer></script>
+  <link rel="stylesheet" href="styles.css?v=2.2.0">
+  <script src="main.js?v=2.2.0" defer></script>
   <!-- Canonical shared entities follow vincentdenil.com. The graph uses the
        same #vincent, #atelier, KCC #org and FMP #org IDs as American Kingdoms.
        Keep complete local definitions: consumers need not fetch other sites. -->
@@ -349,7 +349,8 @@
         <h2 id="gallery-title">Gallery</h2>
         <p>Art and concepts from the world of The Divided States</p>
       </div>
-      <div class="gallery">
+      <div class="gallery-shell">
+      <div id="gallery-mosaic" class="gallery">
         <button class="gallery-item" type="button" data-full="assets/gallery/tanks-before-the-capitol.jpg" data-caption="Tanks before the Capitol" aria-label="Enlarge: Tanks before the Capitol">
           <img src="assets/gallery/tanks-before-the-capitol.jpg" alt="Tanks before the Capitol" width="1920" height="1080" loading="lazy" decoding="async">
         </button>
@@ -425,6 +426,8 @@
         <button class="gallery-item" type="button" data-full="assets/gallery/a-knock-at-the-door.jpg" data-caption="A knock at the door" aria-label="Enlarge: A knock at the door">
           <img src="assets/gallery/a-knock-at-the-door.jpg" alt="A knock at the door" width="1920" height="1080" loading="lazy" decoding="async">
         </button>
+      </div>
+      <button class="gallery-reveal" type="button" aria-controls="gallery-mosaic" aria-expanded="false">See More</button>
       </div>
       <div class="gallery-action">
         <a class="button press-button" href="#contact">REQUEST THE PRESS KIT</a>
