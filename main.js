@@ -189,31 +189,16 @@
     });
   }
 
-  // Compact Divided States video carousel below the main video choices.
-  const videoList = document.querySelector('.video-list');
-  if (videoList) {
-    const shorts = [
-      { id: 'jQD4olEGjiQ', title: 'The Revolution' },
-      { id: 'eUPUEBbYSxg', title: 'What is The Divided States?' },
-      { id: 'YkHB0frg7x0', title: 'Pacific States Lore' },
-      { id: 'TuJLcqTqN_k', title: 'Federal States Lore' },
-      { id: '0ZTv1G9I45o', title: 'Strife: Behind the Scenes' }
-    ];
-    const shortsSection = document.createElement('section');
-    shortsSection.className = 'tds-shorts';
-    shortsSection.setAttribute('aria-labelledby', 'tds-shorts-title');
-    shortsSection.innerHTML = '<div class="tds-shorts-head"><div><h3 id="tds-shorts-title">Divided States Shorts</h3><p>Short reports, faction lore and behind-the-scenes stories from the Second American Civil War.</p></div><div class="tds-shorts-controls"><button type="button" class="tds-shorts-prev" aria-label="Previous short">‹</button><button type="button" class="tds-shorts-next" aria-label="Next short">›</button></div></div><div class="tds-shorts-track" tabindex="0" aria-label="Divided States Shorts, scroll horizontally"></div>';
-    const shortsTrack = shortsSection.querySelector('.tds-shorts-track');
-    shorts.forEach(short => {
-      const card = document.createElement('figure');
-      card.className = 'tds-short-card';
-      card.innerHTML = '<div class="tds-short-video" role="button" tabindex="0" aria-label="Play ' + short.title + '"><img src="https://i.ytimg.com/vi/' + short.id + '/hqdefault.jpg" alt="' + short.title + ' Short thumbnail" width="480" height="360" loading="lazy" decoding="async"><div class="tds-short-play"><span class="tds-short-disc" aria-hidden="true">▶</span><span>Play Short</span></div></div><figcaption>' + short.title + '</figcaption>';
-      const shortVideo = card.querySelector('.tds-short-video');
+  // Static, portrait Shorts carousel mirrors the American Kingdoms interaction.
+  const shortsTrack = document.querySelector('#tds-shorts-track');
+  if (shortsTrack) {
+    const shortVideos = [...shortsTrack.querySelectorAll('.tds-short-video')];
+    shortVideos.forEach(shortVideo => {
       const playShort = () => {
         if (shortVideo.dataset.playing === 'true') return;
         const frame = document.createElement('iframe');
-        frame.src = 'https://www.youtube-nocookie.com/embed/' + short.id + '?autoplay=1&rel=0';
-        frame.title = short.title;
+        frame.src = shortVideo.dataset.embed;
+        frame.title = shortVideo.dataset.title;
         frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
         frame.referrerPolicy = 'strict-origin-when-cross-origin';
         frame.allowFullscreen = true;
@@ -227,12 +212,30 @@
           playShort();
         }
       });
-      shortsTrack.append(card);
     });
-    videoList.after(shortsSection);
-    const scrollShorts = direction => shortsTrack.scrollBy({ left: direction * Math.max(240, shortsTrack.clientWidth * 0.72), behavior: reducedMotion.matches ? 'auto' : 'smooth' });
-    shortsSection.querySelector('.tds-shorts-prev').addEventListener('click', () => scrollShorts(-1));
-    shortsSection.querySelector('.tds-shorts-next').addEventListener('click', () => scrollShorts(1));
+    const shortsPrevious = document.querySelector('.tds-shorts-prev');
+    const shortsNext = document.querySelector('.tds-shorts-next');
+    const updateShortsControls = () => {
+      const end = shortsTrack.scrollWidth - shortsTrack.clientWidth;
+      shortsPrevious.disabled = shortsTrack.scrollLeft <= 2;
+      shortsNext.disabled = shortsTrack.scrollLeft >= end - 2;
+    };
+    const scrollShorts = direction => {
+      const card = shortsTrack.querySelector('.tds-short-card');
+      const gap = parseFloat(getComputedStyle(shortsTrack).columnGap) || 0;
+      shortsTrack.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap), behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+    };
+    shortsPrevious.addEventListener('click', () => scrollShorts(-1));
+    shortsNext.addEventListener('click', () => scrollShorts(1));
+    shortsTrack.addEventListener('scroll', updateShortsControls, { passive: true });
+    window.addEventListener('resize', updateShortsControls);
+    shortsTrack.addEventListener('keydown', event => {
+      if (event.target !== shortsTrack) return;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        scrollShorts(event.key === 'ArrowRight' ? 1 : -1);
+      }
+    });
     let shortsDrag = null;
     let suppressShortClick = false;
     shortsTrack.addEventListener('pointerdown', event => {
@@ -262,6 +265,7 @@
       event.stopPropagation();
       suppressShortClick = false;
     }, true);
+    updateShortsControls();
   }
 
   // Newsletter popup, visually matched to the Divided States site.
@@ -295,24 +299,6 @@
   enhancements.textContent = `
     .gallery-reveal{display:none;margin:24px auto 0;padding:12px 28px;border:1px solid #777;background:#151515;color:#fff;font:700 14px/1.4 var(--display-font);letter-spacing:1px;text-transform:uppercase}
     .gallery-reveal:hover{background:#292929}
-    .tds-shorts{margin-top:34px;border-top:1px solid #3a3a3a;padding-top:24px}
-    .tds-shorts-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:18px}
-    .tds-shorts-head h3{margin:0 0 5px;font:700 26px/1.15 var(--display-font);text-transform:uppercase}
-    .tds-shorts-head p{margin:0;max-width:620px;font-size:14px;line-height:1.55}
-    .tds-shorts-controls{display:flex;gap:8px}
-    .tds-shorts-controls button{width:42px;height:42px;border:1px solid #666;background:#151515;color:#fff;font-size:26px;line-height:1}
-    .tds-shorts-controls button:hover{background:#292929}
-    .tds-shorts-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(190px,240px);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:2px 2px 12px;scrollbar-width:thin;scrollbar-color:#777 #222;cursor:grab}
-    .tds-shorts-track.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
-    .tds-short-card{scroll-snap-align:start;display:flex;flex-direction:column;margin:0;background:#151515;border:1px solid #3b3b3b;color:#eee;overflow:hidden}
-    .tds-short-card:hover{border-color:#777;color:#fff}
-    .tds-short-video{position:relative;aspect-ratio:9/16;overflow:hidden;background:#080808;cursor:pointer}
-    .tds-short-video:focus-visible{outline:3px solid #ee8686;outline-offset:-4px}
-    .tds-short-video img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.72) contrast(1.06)}
-    .tds-short-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-    .tds-short-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;font:700 12px/1.2 var(--display-font);letter-spacing:1.4px;text-transform:uppercase;text-shadow:0 2px 8px #000}
-    .tds-short-disc{display:grid;place-items:center;width:58px;height:58px;padding-left:4px;border-radius:50%;background:var(--accent);box-shadow:0 8px 24px #0008;font-size:21px}
-    .tds-short-card figcaption{min-height:4.8em;padding:13px 14px 15px;font-weight:700;font-size:14px;line-height:1.35}
     .tds-newsletter-popup[hidden]{display:none!important}
     .tds-newsletter-popup{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px}
     .tds-newsletter-backdrop{position:absolute;inset:0;background:#000d}
@@ -328,14 +314,9 @@
     @media(max-width:600px){
       .gallery:not(.gallery-expanded) .gallery-item:nth-child(n+14){display:none}
       .gallery-reveal{display:block}
-      .tds-shorts{margin-top:28px}
       .episodes-heading{margin-bottom:22px}
       .episodes-heading h2{font-size:27px}
       .episodes-heading p{font-size:14px;line-height:1.65}
-      .tds-shorts-head h3{font-size:22px}
-      .tds-shorts-head p{font-size:13px}
-      .tds-shorts-track{grid-auto-columns:minmax(160px,68vw);gap:16px}
-      .tds-shorts-controls{display:none}
       .tds-newsletter-popup{padding:12px}
       .tds-newsletter-card{grid-template-columns:1fr;grid-template-rows:minmax(150px,30dvh) auto;width:min(94vw,560px);max-height:calc(100dvh - 24px)}
       .tds-newsletter-card>img{height:100%;min-height:0}
