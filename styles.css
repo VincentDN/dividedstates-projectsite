@@ -69,7 +69,7 @@ section{scroll-margin-top:20px}
 .video-wrap{width:min(80%,1080px);margin:auto}
 .episodes-heading{margin:0 0 28px;text-align:center}
 .episodes-heading h2{margin:0 0 8px;font:700 34px/1.1 var(--display-font)}
-.episodes-heading p{max-width:720px;margin:0 auto;color:var(--text)}
+.episodes-heading p{max-width:720px;margin:0 auto;color:var(--text);font-size:17px}
 .player{position:relative;aspect-ratio:16/9;background:#111;overflow:hidden}
 .video-cover{width:100%;height:100%;object-fit:cover}
 .play-video{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:12px;width:100%;border:0;background:#0003;color:#fff;font-weight:700;text-shadow:0 1px 4px #000}
@@ -109,7 +109,7 @@ section{scroll-margin-top:20px}
 .gallery-section{padding:58px 0 74px}
 .gallery-heading{text-align:center;margin:0 auto 24px;padding-inline:20px}
 .gallery-heading h2{font:700 34px/1.1 var(--display-font);margin-bottom:8px}
-.gallery-heading p{font-size:16px}
+.gallery-heading p{font-size:17px}
 .gallery-shell{position:relative;max-width:1240px;margin:auto}
 .gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding-inline:20px}
 .gallery-item{display:block;grid-column:span 2;width:100%;aspect-ratio:16/9;padding:0;border:0;border-radius:3px;background:#222;overflow:hidden}
@@ -240,17 +240,15 @@ section{scroll-margin-top:20px}
   .hero .wrap{display:block;min-height:0;padding:0 0 58px;margin-top:-4px}
   .story-copy,.hero .story-copy{width:100%;max-width:none;margin:0}
   .hero .story-copy{padding-top:0}
-  .hero h1{margin-bottom:24px;font-size:clamp(31px,9vw,43px);line-height:1.18;letter-spacing:-.02em}
-  .hero .story-copy p{font-size:17px;line-height:1.8;color:#d0d0d0}
-  .story h2,h1{font-size:27px;line-height:1.55}
-  .story-copy p{line-height:1.85}
+  .hero .story-copy p{color:#d0d0d0}
+  .story h2,h1{font-size:clamp(31px,9vw,43px);line-height:1.18;letter-spacing:-.02em}
+  .story-copy p{font-size:17px;line-height:1.8}
   /* Match the opening premise on phones: full-width artwork fading into a clean black reading panel. */
   .divided{display:block;min-height:0;background:#000}
   .divided::before{content:"";display:block;width:100%;aspect-ratio:4/3;background:linear-gradient(180deg,transparent 58%,#000 100%),url("assets/gallery/under-new-banners.jpg") center/cover no-repeat}
   .divided .wrap{display:block;min-height:0;padding:0 0 58px;margin-top:-4px}
   .divided .story-copy{width:100%;max-width:none;margin:0}
-  .divided h2{margin-bottom:24px;font-size:clamp(31px,9vw,43px);line-height:1.18;letter-spacing:-.02em}
-  .divided .story-copy p{font-size:17px;line-height:1.8;color:#d0d0d0}
+  .divided .story-copy p{color:#d0d0d0}
   .dream{background-image:linear-gradient(#0005,#000a),url("assets/kingfish-march.jpg");background-position:center}
   .dream .wrap{grid-template-columns:1fr;gap:0}
   .dream .story-copy{grid-column:auto}
@@ -258,7 +256,7 @@ section{scroll-margin-top:20px}
   .episodes{padding:42px 0}
   .video-wrap{width:92%}
   .video-list{grid-template-columns:repeat(6,145px)}
-  .episodes-heading,.gallery-heading{text-align:left}
+  .episodes-heading,.gallery-heading,.section-title,.contact{text-align:left}
   .episodes-heading p{margin-inline:0}
   .tds-shorts-head{align-items:flex-start;margin-bottom:24px}
   .tds-shorts-head h3{font-size:24px}
@@ -269,7 +267,6 @@ section{scroll-margin-top:20px}
   .gallery{padding-inline:16px}
   .gallery-item,.gallery-item:last-child:nth-child(n){grid-column:1/-1}
   .enhanced .gallery-shell:not(.is-expanded)::after{right:16px;left:16px}
-  .gallery-heading h2{font-size:27px}
   .gallery-section{padding:42px 0 54px}
   .press-button{padding:13px 24px}
   .project-grid{grid-template-columns:1fr;gap:44px}
@@ -277,7 +274,6 @@ section{scroll-margin-top:20px}
   .merch-promo .wrap{width:90%}
   .merch-intro{margin-bottom:38px}
   .merch-intro h2{font-size:clamp(29px,8vw,38px)}
-  .merch-intro p{font-size:16px}
   .merch-grid{grid-template-columns:1fr;gap:48px}
   .merch-card-copy{padding-top:24px}
   .merch-card h3{font-size:27px}
