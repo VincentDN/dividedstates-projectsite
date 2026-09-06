@@ -181,7 +181,7 @@
       galleryToggle.setAttribute('aria-expanded', String(expanded));
       galleryContainer.classList.toggle('gallery-expanded', expanded);
       galleryShell.classList.toggle('is-expanded', expanded);
-      galleryToggle.textContent = expanded ? 'Show Less' : 'See More';
+      galleryToggle.textContent = expanded ? 'Show Less Art' : 'Show More Art';
       if (!expanded) document.querySelector('#gallery')?.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth' });
     });
   }
@@ -303,7 +303,7 @@
     .tds-newsletter-copy h2{font:700 clamp(28px,3.2vw,40px)/1.08 var(--display-font);margin-bottom:16px;color:#fff}
     .tds-newsletter-copy p{max-width:620px;margin:0 0 24px;line-height:1.6}
     .tds-newsletter-copy .button{align-self:flex-start}
-    .tds-newsletter-close{position:absolute;top:10px;right:10px;z-index:2;width:44px;height:44px;border:1px solid #777;background:#111e;color:#fff;font-size:30px;line-height:1}
+    .tds-newsletter-close{position:absolute;top:10px;right:10px;z-index:2;width:44px;height:44px;border:0;background:#111e;color:#fff;font-size:30px;line-height:1}
     .tds-newsletter-close:hover{background:#333}
     body.newsletter-popup-open{overflow:hidden}
     @media(max-width:600px){
