@@ -30,9 +30,13 @@ section{scroll-margin-top:20px}
 .wrap{width:min(80%,var(--content));margin-inline:auto}
 .texture{background:#080808 url("assets/backdrop.png") center/cover}
 .dark-noise{background-color:#101010;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .09'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");background-repeat:repeat;background-size:180px 180px}
+.episodes-grain{background-color:#191919;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .16'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.58'/%3E%3C/svg%3E"),radial-gradient(ellipse at 18% 44%,#232323 0,transparent 48%),linear-gradient(180deg,#202020 0%,#181818 58%,#151515 100%);background-repeat:repeat,no-repeat,no-repeat;background-size:120px 120px,cover,cover}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .skip-link{position:absolute;left:16px;top:12px;z-index:10;padding:8px 16px;background:#fff;color:#000;transform:translateY(-160%)}
 .skip-link:focus{transform:none;color:#000}
+.ribbon{padding:.42em 1rem;background:var(--accent);color:#fff;text-align:center;font:700 .68rem/1.45 var(--display-font);letter-spacing:.075em;text-transform:uppercase}
+.ribbon a{color:#fff;font-weight:700;text-underline-offset:3px}
+.ribbon a:hover{color:#fff}
 .masthead{padding:54px 0 50px}
 .brand{display:block;width:47%;max-width:508px;margin:0 auto 55px}
 .brand img{width:100%}
