@@ -273,7 +273,7 @@
     const popup = document.createElement('div');
     popup.className = 'tds-newsletter-popup';
     popup.hidden = true;
-    popup.innerHTML = '<div class="tds-newsletter-backdrop"></div><section class="tds-newsletter-card" role="dialog" aria-modal="true" aria-labelledby="tds-newsletter-title"><button class="tds-newsletter-close" type="button" aria-label="Close newsletter popup">×</button><img src="assets/crew-on-set.jpg" alt="The Kaiser Cat Cinema crew on the set of The Divided States: Strife" width="1920" height="1005"><div class="tds-newsletter-copy"><h2 id="tds-newsletter-title">Support The Divided States &amp; join the newsletter!</h2><p>If you\'d like to support the project, join the Kaiser Cat Cinema newsletter. We share project updates, behind-the-scenes material and new releases in our State of the Cinema digest.</p><a class="button" href="https://kaisercatcinema.com/pages/connect">Join the newsletter</a></div></section>';
+    popup.innerHTML = '<div class="tds-newsletter-backdrop"></div><section class="tds-newsletter-card" role="dialog" aria-modal="true" aria-labelledby="tds-newsletter-title" tabindex="-1"><button class="tds-newsletter-close" type="button" aria-label="Close newsletter popup">×</button><img src="assets/crew-on-set.jpg" alt="The Kaiser Cat Cinema crew on the set of The Divided States: Strife" width="1920" height="1005"><div class="tds-newsletter-copy"><h2 id="tds-newsletter-title">Support The Divided States &amp; join the newsletter!</h2><p>If you\'d like to support the project, join the Kaiser Cat Cinema newsletter. We share project updates, behind-the-scenes material and new releases in our State of the Cinema digest.</p><a class="button" href="https://kaisercatcinema.com/pages/connect">Join the newsletter</a></div></section>';
     document.body.append(popup);
     const closePopup = () => {
       popup.hidden = true;
@@ -288,7 +288,7 @@
     window.setTimeout(() => {
       popup.hidden = false;
       document.body.classList.add('newsletter-popup-open');
-      popup.querySelector('.tds-newsletter-close').focus();
+      popup.querySelector('.tds-newsletter-card').focus();
     }, 40000);
   }
 
@@ -298,6 +298,7 @@
     .tds-newsletter-popup{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px}
     .tds-newsletter-backdrop{position:absolute;inset:0;background:#000d}
     .tds-newsletter-card{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);width:min(980px,94vw);max-height:calc(100dvh - 32px);overflow:hidden;background:#111;border:1px solid #555;box-shadow:0 18px 60px #000;color:#d3d3d3}
+    .tds-newsletter-card:focus{outline:none}
     .tds-newsletter-card>img{width:100%;height:100%;min-height:0;object-fit:cover;object-position:center}
     .tds-newsletter-copy{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:clamp(28px,4vw,48px);text-align:left}
     .tds-newsletter-copy h2{font:700 clamp(28px,3.2vw,40px)/1.08 var(--display-font);margin-bottom:16px;color:#fff}

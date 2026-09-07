@@ -63,7 +63,7 @@ section{scroll-margin-top:20px}
 .dream .story-copy{grid-column:2;width:100%;max-width:none}
 .kansas{background-image:url("assets/economic-collapse.jpg")}
 .kansas .story-copy{margin-left:auto}
-.divided,.dream,.kansas{border-block:1px solid #3a3a3a}
+.hero,.divided,.dream,.kansas{border-block:1px solid #3a3a3a}
 
 /* One player replaces the six eager YouTube embeds and Divi carousel. */
 .episodes{padding:70px 0}
