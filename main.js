@@ -265,6 +265,49 @@
     updateShortsControls();
   }
 
+  // Newsletter signup: posts to /api/subscribe (a Cloudflare Pages Function),
+  // which adds the email to Shopify Mail via the Shopify Admin API.
+  const newsletterForm = document.querySelector('#newsletterForm');
+  if (newsletterForm) {
+    const newsletterWidget = document.querySelector('#newsletterWidget');
+    const newsletterEmail = newsletterForm.querySelector('#newsletterEmail');
+    const newsletterHoneypot = newsletterForm.querySelector('.newsletter-hp');
+    const newsletterError = newsletterForm.querySelector('.newsletter-error');
+    const newsletterSubmit = newsletterForm.querySelector('button[type="submit"]');
+    newsletterForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (newsletterHoneypot.value) return;
+      const email = newsletterEmail.value.trim();
+      if (!email) return;
+      newsletterSubmit.disabled = true;
+      newsletterError.hidden = true;
+      const originalLabel = newsletterSubmit.textContent;
+      newsletterSubmit.textContent = 'Signing Up…';
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, company: newsletterHoneypot.value })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (response.ok && data.ok) {
+          newsletterWidget.innerHTML = '<div class="newsletter-success"><p class="newsletter-success-title">Thanks for subscribing!</p><p class="newsletter-success-copy">You will receive an email confirmation shortly.</p></div>';
+        } else {
+          newsletterError.textContent = data.error || 'Something went wrong. Please try again.';
+          newsletterError.hidden = false;
+        }
+      } catch (_) {
+        newsletterError.textContent = 'Something went wrong. Please try again.';
+        newsletterError.hidden = false;
+      } finally {
+        if (document.body.contains(newsletterSubmit)) {
+          newsletterSubmit.disabled = false;
+          newsletterSubmit.textContent = originalLabel;
+        }
+      }
+    });
+  }
+
   // Newsletter popup, visually matched to the Divided States site.
   const popupKey = 'tds-newsletter-popup-dismissed';
   let popupDismissed = false;
