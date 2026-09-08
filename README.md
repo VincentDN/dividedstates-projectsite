@@ -15,10 +15,31 @@ The homepage preserves the original artwork, principal copy and section order.
 - `_redirects`: old page addresses redirect to homepage sections or KCC.
 - `_headers`: Cloudflare Pages security and cache headers.
 - `robots.txt` and `sitemap.xml`: the sitemap contains only the homepage.
+- `functions/api/subscribe.js`: Cloudflare Pages Function backing the inline
+  newsletter form in the Connect section (see below).
 
 The former Episodes, Connect and Patreon Cameo HTML pages, the branded 404
 page and all WordPress/Divi/plugin directories have been removed. Git history
 retains the old implementation.
+
+## Newsletter signup
+
+The email box in the "Interested? Connect with us!" section posts to
+`/api/subscribe`, a Cloudflare Pages Function (`functions/api/subscribe.js`)
+that subscribes the address to Shopify Mail by setting marketing consent on
+the matching Shopify customer via the Shopify Admin GraphQL API. No email
+addresses are stored in this repo or on Cloudflare; Shopify remains the only
+list.
+
+This requires two secrets set on the Cloudflare Pages project (Settings →
+Environment variables), never committed to the repo:
+
+- `SHOPIFY_STORE_DOMAIN` — e.g. `kaisercatcinema.myshopify.com`
+- `SHOPIFY_ADMIN_API_TOKEN` — an Admin API access token from a custom app in
+  the KCC Shopify admin, with the `read_customers` and `write_customers`
+  scopes.
+
+See `.dev.vars.example` for local development with `wrangler pages dev`.
 
 ## Deploy on the existing Cloudflare Pages project
 
