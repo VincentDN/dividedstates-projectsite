@@ -265,75 +265,81 @@
     updateShortsControls();
   }
 
+  // Newsletter popup, visually matched to the Divided States site. Built
+  // unconditionally so the footer eagle can always summon it, even after
+  // its automatic 40s appearance has already been dismissed once.
+  const popupKey = 'tds-newsletter-popup-dismissed';
+  const popup = document.createElement('div');
+  popup.className = 'tds-newsletter-popup';
+  popup.hidden = true;
+  popup.innerHTML = '<div class="tds-newsletter-backdrop"></div><section class="tds-newsletter-card" role="dialog" aria-modal="true" aria-labelledby="tds-newsletter-title" tabindex="-1"><button class="tds-newsletter-close" type="button" aria-label="Close newsletter popup">×</button><img src="assets/crew-on-set.jpg" alt="The Kaiser Cat Cinema crew on the set of The Divided States: Strife" width="1920" height="1005"><div class="tds-newsletter-copy"><h2 id="tds-newsletter-title">Support The Divided States &amp; join the newsletter!</h2><p>If you\'d like to support the project, join the Kaiser Cat Cinema newsletter. We share project updates, behind-the-scenes material and new releases in our State of the Cinema digest.</p><div class="newsletter-widget"><form class="newsletter-form" novalidate><div class="newsletter-form-row"><label class="sr-only" for="tdsPopupEmail">Email address</label><input type="email" id="tdsPopupEmail" name="email" placeholder="Your email" autocomplete="email" required><button type="submit" class="button newsletter-button">Sign Up</button></div><input type="text" name="company" class="newsletter-hp" tabindex="-1" autocomplete="off" aria-hidden="true"><p class="newsletter-error" role="alert" hidden></p></form></div></div></section>';
+  document.body.append(popup);
+  const closePopup = () => {
+    popup.hidden = true;
+    document.body.classList.remove('newsletter-popup-open');
+    try { localStorage.setItem(popupKey, '1'); } catch (_) {}
+  };
+  const openPopup = () => {
+    popup.hidden = false;
+    document.body.classList.add('newsletter-popup-open');
+    popup.querySelector('.tds-newsletter-card').focus();
+  };
+  popup.querySelector('.tds-newsletter-close').addEventListener('click', closePopup);
+  popup.querySelector('.tds-newsletter-backdrop').addEventListener('click', closePopup);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !popup.hidden) closePopup();
+  });
+
+  // Footer eagle: a quiet manual trigger, alongside its existing "back to top" link.
+  document.querySelector('.footer-mark')?.addEventListener('click', () => openPopup());
+
+  let popupDismissed = false;
+  try { popupDismissed = localStorage.getItem(popupKey) === '1'; } catch (_) {}
+  if (!popupDismissed) window.setTimeout(openPopup, 40000);
+
   // Newsletter signup: posts to /api/subscribe (a Cloudflare Pages Function),
-  // which adds the email to Shopify Mail via the Shopify Admin API.
-  const newsletterForm = document.querySelector('#newsletterForm');
-  if (newsletterForm) {
-    const newsletterWidget = document.querySelector('#newsletterWidget');
-    const newsletterEmail = newsletterForm.querySelector('#newsletterEmail');
-    const newsletterHoneypot = newsletterForm.querySelector('.newsletter-hp');
-    const newsletterError = newsletterForm.querySelector('.newsletter-error');
-    const newsletterSubmit = newsletterForm.querySelector('button[type="submit"]');
-    newsletterForm.addEventListener('submit', async event => {
+  // which adds the email to Shopify Mail via the Shopify Admin API. Wires up
+  // every .newsletter-form on the page (the Connect section and the popup).
+  document.querySelectorAll('.newsletter-form').forEach(form => {
+    const widget = form.closest('.newsletter-widget');
+    const emailInput = form.querySelector('input[type="email"]');
+    const honeypot = form.querySelector('.newsletter-hp');
+    const error = form.querySelector('.newsletter-error');
+    const submit = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', async event => {
       event.preventDefault();
-      if (newsletterHoneypot.value) return;
-      const email = newsletterEmail.value.trim();
+      if (honeypot.value) return;
+      const email = emailInput.value.trim();
       if (!email) return;
-      newsletterSubmit.disabled = true;
-      newsletterError.hidden = true;
-      const originalLabel = newsletterSubmit.textContent;
-      newsletterSubmit.textContent = 'Signing Up…';
+      submit.disabled = true;
+      error.hidden = true;
+      const originalLabel = submit.textContent;
+      submit.textContent = 'Signing Up…';
       try {
         const response = await fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, company: newsletterHoneypot.value })
+          body: JSON.stringify({ email, company: honeypot.value })
         });
         const data = await response.json().catch(() => ({}));
         if (response.ok && data.ok) {
-          newsletterWidget.innerHTML = '<div class="newsletter-success"><p class="newsletter-success-title">Thanks for subscribing!</p><p class="newsletter-success-copy">You will receive an email confirmation shortly.</p></div>';
+          widget.innerHTML = '<div class="newsletter-success"><p class="newsletter-success-title">Thanks for subscribing!</p><p class="newsletter-success-copy">You will receive an email confirmation shortly.</p></div>';
+          try { localStorage.setItem(popupKey, '1'); } catch (_) {}
         } else {
-          newsletterError.textContent = data.error || 'Something went wrong. Please try again.';
-          newsletterError.hidden = false;
+          error.textContent = data.error || 'Something went wrong. Please try again.';
+          error.hidden = false;
         }
       } catch (_) {
-        newsletterError.textContent = 'Something went wrong. Please try again.';
-        newsletterError.hidden = false;
+        error.textContent = 'Something went wrong. Please try again.';
+        error.hidden = false;
       } finally {
-        if (document.body.contains(newsletterSubmit)) {
-          newsletterSubmit.disabled = false;
-          newsletterSubmit.textContent = originalLabel;
+        if (document.body.contains(submit)) {
+          submit.disabled = false;
+          submit.textContent = originalLabel;
         }
       }
     });
-  }
-
-  // Newsletter popup, visually matched to the Divided States site.
-  const popupKey = 'tds-newsletter-popup-dismissed';
-  let popupDismissed = false;
-  try { popupDismissed = localStorage.getItem(popupKey) === '1'; } catch (_) {}
-  if (!popupDismissed) {
-    const popup = document.createElement('div');
-    popup.className = 'tds-newsletter-popup';
-    popup.hidden = true;
-    popup.innerHTML = '<div class="tds-newsletter-backdrop"></div><section class="tds-newsletter-card" role="dialog" aria-modal="true" aria-labelledby="tds-newsletter-title" tabindex="-1"><button class="tds-newsletter-close" type="button" aria-label="Close newsletter popup">×</button><img src="assets/crew-on-set.jpg" alt="The Kaiser Cat Cinema crew on the set of The Divided States: Strife" width="1920" height="1005"><div class="tds-newsletter-copy"><h2 id="tds-newsletter-title">Support The Divided States &amp; join the newsletter!</h2><p>If you\'d like to support the project, join the Kaiser Cat Cinema newsletter. We share project updates, behind-the-scenes material and new releases in our State of the Cinema digest.</p><a class="button" href="https://kaisercatcinema.com/pages/connect">Join the newsletter</a></div></section>';
-    document.body.append(popup);
-    const closePopup = () => {
-      popup.hidden = true;
-      document.body.classList.remove('newsletter-popup-open');
-      try { localStorage.setItem(popupKey, '1'); } catch (_) {}
-    };
-    popup.querySelector('.tds-newsletter-close').addEventListener('click', closePopup);
-    popup.querySelector('.tds-newsletter-backdrop').addEventListener('click', closePopup);
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && !popup.hidden) closePopup();
-    });
-    window.setTimeout(() => {
-      popup.hidden = false;
-      document.body.classList.add('newsletter-popup-open');
-      popup.querySelector('.tds-newsletter-card').focus();
-    }, 40000);
-  }
+  });
 
   const enhancements = document.createElement('style');
   enhancements.textContent = `
@@ -347,6 +353,7 @@
     .tds-newsletter-copy h2{font:700 clamp(28px,3.2vw,40px)/1.08 var(--display-font);margin-bottom:16px;color:#fff}
     .tds-newsletter-copy p{max-width:620px;margin:0 0 24px;line-height:1.6}
     .tds-newsletter-copy .button{align-self:flex-start}
+    .tds-newsletter-copy .newsletter-form-row{justify-content:flex-start;margin:0}
     .tds-newsletter-close{position:absolute;top:10px;right:10px;z-index:2;width:44px;height:44px;border:0;background:#111e;color:#fff;font-size:30px;line-height:1}
     .tds-newsletter-close:hover{background:#333}
     body.newsletter-popup-open{overflow:hidden}
@@ -361,6 +368,7 @@
       .tds-newsletter-copy h2{font-size:clamp(22px,6.5vw,28px);line-height:1.05;margin-bottom:10px}
       .tds-newsletter-copy p{font-size:clamp(13px,3.7vw,15px);line-height:1.45;margin-bottom:16px}
       .tds-newsletter-copy .button{width:100%;padding-inline:18px}
+      .tds-newsletter-copy .newsletter-form-row{justify-content:center}
     }
     @media print{.gallery-reveal,.tds-shorts,.tds-newsletter-popup{display:none!important}}
   `;
