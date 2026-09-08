@@ -31,13 +31,16 @@ the matching Shopify customer via the Shopify Admin GraphQL API. No email
 addresses are stored in this repo or on Cloudflare; Shopify remains the only
 list.
 
-This requires three secrets set on the Cloudflare Pages project (Settings →
+This requires four variables set on the Cloudflare Pages project (Settings →
 Environment variables), never committed to the repo:
 
-- `SHOPIFY_STORE_DOMAIN` — e.g. `kaisercatcinema.myshopify.com`
-- `SHOPIFY_CLIENT_ID` and `SHOPIFY_CLIENT_SECRET` — from the custom app's API
-  credentials page in the Shopify Dev Dashboard, with the `read_customers`
-  and `write_customers` Admin API scopes configured.
+- `SHOPIFY_STORE_DOMAIN` (Text) — e.g. `kaisercatcinema.myshopify.com`
+- `SHOPIFY_CLIENT_ID` and `SHOPIFY_CLIENT_SECRET` (Secret) — from the custom
+  app's API credentials page in the Shopify Dev Dashboard, with the
+  `read_customers` and `write_customers` Admin API scopes configured.
+- `SHOPIFY_SOURCE_TAG` (Text) — `source:tds_projectsite` on this project.
+  Every subscriber who signs up here gets tagged with this in Shopify, so you
+  can filter/segment customers by which site brought them in.
 
 Since January 1, 2026 Shopify custom apps no longer hand out a permanent
 `shpat_` token — instead the Function exchanges the Client ID/Secret for a
