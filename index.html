@@ -555,8 +555,18 @@
       <div class="wrap">
         <h2 id="contact-title">Interested? Connect with us!</h2>
         <img class="contact-photo" src="assets/crew-on-set.jpg" alt="The Kaiser Cat Cinema crew on the set of The Divided States: Strife" width="1920" height="1005" loading="lazy" decoding="async">
-        <p class="contact-copy">Connect with the Kaiser Cat Cinema team on all social media channels, or sign up to our newsletter on kaisercatcinema.com. In our newsletter, we share a monthly digest known as 'State of the Cinema'. There, you can find behind-the-scenes content, show updates, as well as exclusive sales on the webshop.</p>
-        <a class="button newsletter-button" href="https://kaisercatcinema.com/pages/connect">Sign up to the KCC Newsletter <span aria-hidden="true">↗</span></a>
+        <p class="contact-copy">Connect with the Kaiser Cat Cinema team on all social media channels, or join our newsletter below. In our newsletter, we share a monthly digest known as 'State of the Cinema'. There, you can find behind-the-scenes content, show updates, as well as exclusive sales on the webshop.</p>
+        <div class="newsletter-widget" id="newsletterWidget">
+          <form class="newsletter-form" id="newsletterForm" novalidate>
+            <div class="newsletter-form-row">
+              <label class="sr-only" for="newsletterEmail">Email address</label>
+              <input type="email" id="newsletterEmail" name="email" placeholder="Your email" autocomplete="email" required>
+              <button type="submit" class="button newsletter-button">Sign Up</button>
+            </div>
+            <input type="text" name="company" class="newsletter-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <p class="newsletter-error" role="alert" hidden></p>
+          </form>
+        </div>
         <!-- KCC profiles verified against kaisercatcinema.com/pages/connect.
              Brand SVGs: Font Awesome Free, CC BY 4.0; assets/icons/LICENSE.txt. -->
         <nav class="social-icons newsletter-socials" aria-label="Kaiser Cat Cinema social profiles">
