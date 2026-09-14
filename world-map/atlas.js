@@ -284,7 +284,24 @@
           stateLayer._path.setAttribute("data-faction", stateLayer.feature.properties.faction);
         }
       });
+      updateMosaicOpacity();
     });
+
+  // The mosaic is meant to sell "this flat region is made of states" at a
+  // glance from a distance; up close it just reads as noisy borders
+  // cutting across what should be one flat faction colour. Fade the whole
+  // states pane out (revealing the flat .faction-fill colour beneath, not
+  // pure transparency) as you zoom past MOSAIC_FADE_ZOOM, down to a bare
+  // MOSAIC_MIN_OPACITY hint rather than vanishing outright.
+  var MOSAIC_FADE_ZOOM = 5;
+  var MOSAIC_FLAT_ZOOM = 9;
+  var MOSAIC_MIN_OPACITY = 0.18;
+  function updateMosaicOpacity() {
+    var zoom = map.getZoom();
+    var t = Math.min(1, Math.max(0, (zoom - MOSAIC_FADE_ZOOM) / (MOSAIC_FLAT_ZOOM - MOSAIC_FADE_ZOOM)));
+    statesPane.style.opacity = 1 - t * (1 - MOSAIC_MIN_OPACITY);
+  }
+  map.on("zoomend", updateMosaicOpacity);
 
   document.getElementById("panel-toggle").addEventListener("click", function () {
     var panel = document.getElementById("panel");
