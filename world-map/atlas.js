@@ -4,7 +4,7 @@
   var FLAG_LINKS = {
     // The only faction with a dedicated Flagmaker product today; the rest
     // fall back to the general alt-history collection until one exists.
-    // See map-alpha/README.md.
+    // See world-map/README.md.
     "american-union-state": "https://flagmaker-print.com/products/american-union-state-flag-kaiserreich",
   };
   var COLLECTION_URL = "https://flagmaker-print.com/collections/alt-history-flags";

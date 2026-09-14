@@ -6,13 +6,15 @@ key from the reference screenshot (orange West, red centre, blue-grey South,
 green Northeast). Modelled on the American Kingdoms atlas at
 `americankingdoms-projectsite/medieval-america-map/` (same general Leaflet
 + GeoJSON + details-panel setup), rebuilt from scratch here rather than
-copied wholesale: this map has no submaps, city markers, culture/realm mode
-toggle or `?edit=1` editor, and uses Leaflet's default Web Mercator instead
-of AK's custom polar projection (unnecessary at continental-US scale).
+copied wholesale: this map has no submaps, culture/realm mode toggle or
+`?edit=1` editor, and uses Leaflet's default Web Mercator instead of AK's
+custom polar projection (unnecessary at continental-US scale).
 
-Not linked from the homepage nav and marked `noindex, nofollow` — an
-orphaned page reachable only by its direct URL, `/map-alpha/`, per the
-request that put it here.
+Linked from the homepage's main nav, footer Explore column, and a Map
+Promo section below the gallery (see the root `README.md`). Still marked
+alpha on the page itself (the banner, the title) and its state-to-faction
+borders are an explicit provisional placeholder -- see below -- but it's
+no longer `noindex`/orphaned.
 
 The sea is now near-black (`#121214`) and land a bright warm grey
 (`#b3ab9c`), matching the reference newsreel stills' own high contrast --
@@ -136,7 +138,7 @@ everything except roads; `python3 scripts/build-roads.py` separately
 ## Preview locally
 
 Serve the **repository root** (the page loads `../favicon.ico` and
-`../assets/logo.png` from it) and open `/map-alpha/`:
+`../assets/logo.png` from it) and open `/world-map/`:
 
 ```
 python3 -m http.server 4187

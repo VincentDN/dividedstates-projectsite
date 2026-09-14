@@ -19,3 +19,6 @@
 /projects/                 /#projects                                         301
 /crew                      /#crew                                             301
 /crew/                     /#crew                                             301
+/map-alpha                 /world-map/                                        301
+/map-alpha/                /world-map/                                        301
+/map-alpha/:splat          /world-map/:splat                                  301

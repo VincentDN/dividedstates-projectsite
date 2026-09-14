@@ -5,22 +5,24 @@ Version 2.0.4 · 3 September 2026
 ## Roadmap notes (raise these next time we pick up site work)
 
 - **Full interactive map, for both the TDS site and the AK site.**
-  Underway: `/map-alpha/` (see `map-alpha/README.md`) is a first alpha —
+  Underway: `/world-map/` (see `world-map/README.md`) is a first alpha —
   four dissolved macro-regions (New England, Revolutionary States,
   American Union State, Congressional States) over real 1940 state lines,
-  styled after the retro B&W newsreel reference art. It's orphaned
-  (`noindex`, not linked from the nav) and its state-to-faction borders
-  are explicitly a provisional placeholder pending confirmation — see
-  that README for how to correct them. Sibling AK atlas is at
-  `medieval-america-map/` in that repo, for comparison.
+  styled after the retro B&W newsreel reference art. It's now live in the
+  main nav, the footer's Explore column, and a Map Promo section below
+  the homepage gallery (same full-bleed-band treatment as AK's own map
+  promo) — no longer orphaned/noindexed, though it's still alpha
+  software and its state-to-faction borders are explicitly a provisional
+  placeholder pending confirmation, per that README. Sibling AK atlas is
+  at `medieval-america-map/` in that repo, for comparison.
 - **Every flag should be purchasable via a direct link to its Flagmaker
   product page**, not just the generic collection link. The homepage's
   American Union State flag already links straight to its Flagmaker
-  product page; `/map-alpha/` follows the same pattern but only has a
+  product page; `/world-map/` follows the same pattern but only has a
   real product to link for that one faction so far — New England,
   Revolutionary States and Congressional States still fall back to the
   generic `https://flagmaker-print.com/collections/alt-history-flags`
-  collection link (see `map-alpha/atlas.js`'s `FLAG_LINKS`) until they
+  collection link (see `world-map/atlas.js`'s `FLAG_LINKS`) until they
   get dedicated product pages.
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
@@ -35,7 +37,7 @@ The homepage preserves the original artwork, principal copy and section order.
 - `assets/`: only the homepage's images, video thumbnails and self-hosted fonts.
 - `_redirects`: old page addresses redirect to homepage sections or KCC.
 - `_headers`: Cloudflare Pages security and cache headers.
-- `robots.txt` and `sitemap.xml`: the sitemap contains only the homepage.
+- `robots.txt` and `sitemap.xml`: the sitemap lists the homepage and `/world-map/`.
 - `functions/api/subscribe.js`: Cloudflare Pages Function backing the inline
   newsletter form in the Connect section (see below).
 

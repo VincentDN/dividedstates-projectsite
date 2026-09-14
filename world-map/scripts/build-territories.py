@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build data/territories.geojson for the Divided States map-alpha page.
+"""Build data/territories.geojson for the Divided States world-map page.
 
 Dissolves US state polygons (Natural Earth 1:50m admin-1, public domain,
 downloaded for the American Kingdoms atlas and copied into
@@ -10,12 +10,12 @@ Alaska/Hawaii and Canada/Mexico as uncoloured neutral context.
 The state-to-faction assignment is a best-effort placeholder based on the
 reference art supplied for this page and the existing site copy ("Chicago
 and Washington have fallen" -> DC is Revolutionary States, not loyalist),
-not confirmed canon. See map-alpha/README.md for how to revise it.
+not confirmed canon. See world-map/README.md for how to revise it.
 
 Requires shapely >= 2.
 
 Run from the repository root:
-    python3 map-alpha/scripts/build-territories.py
+    python3 world-map/scripts/build-territories.py
 """
 import json
 from pathlib import Path
