@@ -11,11 +11,28 @@
   <link rel="icon" href="../favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vendor/leaflet.css">
-  <link rel="stylesheet" href="atlas.css?v=1">
+  <link rel="stylesheet" href="atlas.css?v=2">
   <script defer src="vendor/leaflet.js"></script>
-  <script defer src="atlas.js?v=1"></script>
+  <script defer src="atlas.js?v=2"></script>
 </head>
 <body>
+  <!-- Animated diagonal fills for Alaska/Hawaii: nominally under a
+       faction's flag but not part of the war. Defined once, referenced
+       by id from atlas.js. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <pattern id="hatch-affiliated-american-union-state" width="20" height="20" patternUnits="userSpaceOnUse">
+        <rect width="20" height="20" fill="#3a434b"/>
+        <path d="M-5,5 l10,-10 M0,20 l20,-20 M15,25 l10,-10" stroke="#7c8b96" stroke-width="8"/>
+        <animateTransform attributeName="patternTransform" type="translate" from="0 0" to="20 20" dur="3.5s" repeatCount="indefinite"/>
+      </pattern>
+      <pattern id="hatch-affiliated-congressional-states" width="20" height="20" patternUnits="userSpaceOnUse">
+        <rect width="20" height="20" fill="#7a5218"/>
+        <path d="M-5,5 l10,-10 M0,20 l20,-20 M15,25 l10,-10" stroke="#d6a44c" stroke-width="8"/>
+        <animateTransform attributeName="patternTransform" type="translate" from="0 0" to="20 20" dur="3.5s" repeatCount="indefinite"/>
+      </pattern>
+    </defs>
+  </svg>
   <div id="alpha-banner" role="status">This map is an early alpha. Faction borders are a provisional placeholder, not confirmed canon &mdash; questions or corrections go to Vincent.</div>
   <header>
     <a class="brand-link" href="https://dividedstates-project.com/" aria-label="The Divided States home"><img src="../assets/logo.png" alt="The Divided States" width="1156" height="512"></a>
@@ -49,6 +66,9 @@
             <legend>Show on the map</legend>
             <label><input id="toggle-territories" type="checkbox" checked> Factions</label>
             <label><input id="toggle-labels" type="checkbox" checked> Labels</label>
+            <label><input id="toggle-capitals" type="checkbox" checked> State capitals</label>
+            <label><input id="toggle-roads" type="checkbox" checked> Major highways</label>
+            <label><input id="toggle-water" type="checkbox" checked> Lakes &amp; rivers</label>
           </fieldset>
           <a class="wiki" href="https://dividedstates-project.com/">Back to The Divided States</a>
         </div>

@@ -9,20 +9,31 @@
   };
   var COLLECTION_URL = "https://flagmaker-print.com/collections/alt-history-flags";
 
+  // Alaska and Hawaii: nominally under a faction's flag but not part of
+  // the war, rendered with a moving diagonal hatch instead of a solid fill.
+  var AFFILIATED_HATCH = {
+    "american-union-state": "url(#hatch-affiliated-american-union-state)",
+    "congressional-states": "url(#hatch-affiliated-congressional-states)",
+  };
+
   var map = L.map("map", {
+    attributionControl: false,
     zoomControl: false,
     minZoom: 3,
-    maxZoom: 8,
+    maxZoom: 10,
     worldCopyJump: false,
   }).setView([39, -96], 4);
   L.control.zoom({ position: "bottomright" }).addTo(map);
-
-  L.control.attribution({ prefix: false }).addTo(map);
+  L.control.attribution({ prefix: "Map made with Leaflet" }).addTo(map);
 
   var landPane = map.createPane("land");
   landPane.style.zIndex = 350;
+  var waterPane = map.createPane("water");
+  waterPane.style.zIndex = 360;
   var factionPane = map.createPane("factions");
   factionPane.style.zIndex = 400;
+  var roadPane = map.createPane("roads");
+  roadPane.style.zIndex = 420;
   var labelPane = map.createPane("labels");
   labelPane.style.zIndex = 640;
 
@@ -50,9 +61,11 @@
     document.getElementById("detail-name").textContent = props.name;
     document.getElementById("detail-description").textContent = props.summary || "";
 
+    var flagId = props.kind === "affiliated" ? props.faction : props.id;
+
     var flagImg = document.getElementById("detail-flag");
-    if (props.kind === "faction") {
-      flagImg.src = "assets/flags/" + props.id + ".svg";
+    if (props.kind === "faction" || props.kind === "affiliated") {
+      flagImg.src = "assets/flags/" + flagId + ".svg";
       flagImg.alt = props.name + " flag (placeholder design)";
       flagImg.hidden = false;
     } else {
@@ -60,8 +73,8 @@
     }
 
     var buyLink = document.getElementById("detail-flag-buy");
-    if (props.kind === "faction") {
-      buyLink.href = FLAG_LINKS[props.id] || COLLECTION_URL;
+    if (props.kind === "faction" || props.kind === "affiliated") {
+      buyLink.href = FLAG_LINKS[flagId] || COLLECTION_URL;
       buyLink.hidden = false;
     } else {
       buyLink.hidden = true;
@@ -75,6 +88,8 @@
     document.getElementById("panel-toggle").setAttribute("aria-expanded", "true");
   }
 
+  var capitalMarkers = [];
+
   fetch("data/land.geojson")
     .then(function (r) { return r.json(); })
     .then(function (geo) {
@@ -84,6 +99,64 @@
         interactive: false,
       }).addTo(map);
     });
+
+  fetch("data/lakes.geojson")
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      L.geoJSON(geo, {
+        pane: "water",
+        className: "lake-base",
+        interactive: false,
+      }).addTo(map);
+    });
+
+  fetch("data/rivers.geojson")
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      L.geoJSON(geo, {
+        pane: "water",
+        className: "river-line",
+        interactive: false,
+      }).addTo(map);
+    });
+
+  fetch("data/roads.geojson")
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      L.geoJSON(geo, {
+        pane: "roads",
+        className: "road-line",
+        interactive: false,
+      }).addTo(map);
+    });
+
+  fetch("data/capitals.geojson")
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      geo.features.forEach(function (feature) {
+        var coords = feature.geometry.coordinates;
+        var marker = L.marker([coords[1], coords[0]], {
+          pane: "labels",
+          interactive: false,
+          icon: L.divIcon({
+            className: "capital-dot",
+            html: '<span class="capital-mark"><span>' + feature.properties.name + "</span></span>",
+          }),
+        }).addTo(map);
+        capitalMarkers.push(marker);
+      });
+      updateCapitalVisibility();
+    });
+
+  var CAPITAL_MIN_ZOOM = 5;
+  function updateCapitalVisibility() {
+    var show = map.getZoom() >= CAPITAL_MIN_ZOOM && document.getElementById("toggle-capitals").checked;
+    capitalMarkers.forEach(function (m) {
+      var el = m.getElement();
+      if (el) el.style.display = show ? "" : "none";
+    });
+  }
+  map.on("zoomend", updateCapitalVisibility);
 
   fetch("data/territories.geojson")
     .then(function (r) { return r.json(); })
@@ -95,11 +168,11 @@
         style: function (feature) {
           var props = feature.properties;
           return {
-            className: "faction-fill" + (props.kind !== "faction" ? " is-neutral" : ""),
+            className: "faction-fill" + (props.kind === "affiliated" ? " is-affiliated" : ""),
             color: "#0a0a0a",
             weight: 1.4,
             fillColor: props.color,
-            fillOpacity: props.kind === "faction" ? 0.85 : 0.35,
+            fillOpacity: props.kind === "territory" ? 0.35 : 0.9,
           };
         },
         onEachFeature: function (feature, layer) {
@@ -130,7 +203,9 @@
             });
             li.appendChild(btn);
             factionListEl.appendChild(li);
+          }
 
+          if (props.kind === "faction" || props.kind === "affiliated") {
             var center = layer.getBounds().getCenter();
             var marker = L.marker(center, {
               pane: "labels",
@@ -144,6 +219,14 @@
           }
         },
       }).addTo(map);
+
+      Object.keys(factionLayers).forEach(function (id) {
+        var layer = factionLayers[id];
+        var props = layer.feature.properties;
+        if (layer._path && props.kind === "affiliated") {
+          layer._path.style.fill = AFFILIATED_HATCH[props.faction] || "";
+        }
+      });
     });
 
   document.getElementById("panel-toggle").addEventListener("click", function () {
@@ -167,6 +250,18 @@
     labelMarkers.forEach(function (m) {
       var el = m.getElement();
       if (el) el.style.display = e.target.checked ? "" : "none";
+    });
+  });
+  document.getElementById("toggle-capitals").addEventListener("change", updateCapitalVisibility);
+  document.getElementById("toggle-roads").addEventListener("change", function (e) {
+    document.querySelectorAll(".road-line").forEach(function (path) {
+      path.style.display = e.target.checked ? "" : "none";
+    });
+  });
+  document.getElementById("toggle-water").addEventListener("change", function (e) {
+    var display = e.target.checked ? "" : "none";
+    document.querySelectorAll(".lake-base, .river-line").forEach(function (path) {
+      path.style.display = display;
     });
   });
 })();

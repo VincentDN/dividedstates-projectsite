@@ -88,6 +88,33 @@ STATE_TO_FACTION = {
     code: fid for fid, data in FACTIONS.items() for code in data["states"]
 }
 
+# Alaska and Hawaii weren't states in 1940 and sit outside the civil war
+# entirely, but each is nominally under one side's flag -- Alaska as an
+# American Union State territory (the AUS held the Gulf shipping lanes a
+# territorial government would have depended on), Hawaii under the
+# Congressional States' Pacific fleet. Neither actively participates, so
+# they're tagged "affiliated" rather than "faction" and rendered with the
+# animated diagonal treatment instead of a solid fill.
+AFFILIATED_TERRITORIES = {
+    "AK": {
+        "faction": "american-union-state",
+        "summary": (
+            "Alaska is nominally American Union State territory, its "
+            "governor answering to Baton Rouge -- but it takes no active "
+            "part in the war. Too remote, too thinly settled, and not "
+            "yet a state to fight over."
+        ),
+    },
+    "HI": {
+        "faction": "congressional-states",
+        "summary": (
+            "Hawaii falls under the Congressional States' Pacific claim, "
+            "home to their fleet -- but it isn't a state yet, and it "
+            "takes no active part in the war on the mainland."
+        ),
+    },
+}
+
 
 def main():
     src = json.loads(SRC.read_text())
@@ -126,6 +153,26 @@ def main():
         )
 
     for postal, (name, geom) in territory.items():
+        affiliation = AFFILIATED_TERRITORIES.get(postal)
+        if affiliation:
+            faction_id = affiliation["faction"]
+            features.append(
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": f"territory-{postal.lower()}",
+                        "name": name,
+                        "kind": "affiliated",
+                        "faction": faction_id,
+                        "color": FACTIONS[faction_id]["color"],
+                        "summary": affiliation["summary"],
+                        "states": [postal],
+                    },
+                    "geometry": mapping(geom),
+                }
+            )
+            continue
+
         features.append(
             {
                 "type": "Feature",
