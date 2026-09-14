@@ -52,6 +52,9 @@ def write(name, geometry_or_features):
     print(f"Wrote {out} ({out.stat().st_size} bytes)")
 
 
+GREAT_LAKES = {"Lake Superior", "Lake Michigan", "Lake Huron", "Lake Erie", "Lake Ontario"}
+
+
 def main():
     # Coastline -- finer tolerance than the first pass (0.003 vs 0.01) for a
     # visibly crisper edge at the zoom levels this page actually uses.
@@ -59,29 +62,46 @@ def main():
     # The Great Lakes aren't holes in Natural Earth's land polygon (it's
     # solid landmass there), so the first pass drew them as a *separate*
     # lakes layer on top of land -- independently simplified, so its
-    # boundary didn't quite line up with land's, especially in the
-    # Georgian Bay / 30,000 Islands area, leaving jagged sliver gaps of
-    # bare sea colour between the two mismatched edges. Cutting the lakes
-    # out of land at full precision *before* simplifying instead (so the
-    # hole and the coastline share one topology, simplified together as a
-    # single pass) makes them holes by construction -- no second edge to
-    # ever drift out of alignment with the first.
+    # boundary didn't quite line up with land's, leaving jagged sliver
+    # gaps of bare sea colour between the two mismatched edges. Cutting
+    # the lakes out of land *before* simplifying (one shared topology,
+    # simplified together) was meant to fix that by construction, but the
+    # artifacts persisted -- because the source of the mismatch wasn't
+    # simplification order at all, it was subtracting the *entire*
+    # 412-feature natural-earth-lakes layer (which includes hundreds of
+    # small, densely-packed Canadian Shield lakes north of Superior) as
+    # one unary_union+difference pass; that many nearby small holes
+    # sharing one simplify() call is exactly the shape that produces
+    # shattered-looking self-intersection artifacts. The five Great Lakes
+    # themselves are each a single valid polygon -- only they need to be
+    # holes for this map to read correctly -- so only they get cut,
+    # individually simplified before differencing so five simple shapes
+    # never have to survive one simplify() pass together with hundreds of
+    # tiny ones. Each is also buffered out by a hair (~110 m) before the
+    # cut, so any residual tracing mismatch between the land and lakes
+    # *datasets* (not just simplification) erodes into the hole rather
+    # than surviving as a sliver of exposed sea colour along the shore.
     land_raw = clip_dissolve("natural-earth-land.geojson", None)
-    lakes_raw = clip_dissolve("natural-earth-lakes.geojson", None)
-    land = land_raw.difference(lakes_raw).simplify(0.003, preserve_topology=True)
+    lakes_src = json.loads((SRC / "natural-earth-lakes.geojson").read_text())
+    great_lakes = [
+        shape(f["geometry"]).simplify(0.0015, preserve_topology=True).buffer(0.001)
+        for f in lakes_src["features"]
+        if f["properties"].get("name") in GREAT_LAKES
+    ]
+    land = land_raw.difference(unary_union(great_lakes)).simplify(0.003, preserve_topology=True)
     write("land.geojson", land)
 
-    # Kept as its own file too (full lake footprint, not diffed against
-    # land) in case a future pass wants to style water separately from
-    # the sea -- not rendered as a map layer today, since land's own
-    # holes already reveal the sea-black beneath at zero seam risk.
+    # The full lakes layer (all 412 features, not just the Great Lakes),
+    # kept as its own file in case a future pass wants water styled
+    # differently from open sea -- not rendered as a map layer today.
+    lakes_raw = clip_dissolve("natural-earth-lakes.geojson", None)
     lakes = lakes_raw.simplify(0.003, preserve_topology=True)
     write("lakes.geojson", lakes)
 
     rivers_src = json.loads((SRC / "natural-earth-rivers.geojson").read_text())
     river_features = []
     for feature in rivers_src["features"]:
-        if (feature["properties"].get("scalerank") or 9) > 5:
+        if (feature["properties"].get("scalerank") or 9) > 6:
             continue
         geom = shape(feature["geometry"])
         if not geom.intersects(BBOX):

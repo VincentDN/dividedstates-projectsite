@@ -113,28 +113,45 @@ territories, all clipped to a `lon -170..-50, lat 5..75` North America box:
 
 - `data/land.geojson` — coastline, simplified at a finer 0.003° tolerance
   than the first pass's 0.01° for visibly crisper detail. The Great Lakes
-  are cut out of it as true holes (`land_raw.difference(lakes_raw)`,
-  *then* simplified once as a single geometry) rather than drawn as a
-  second, separately-simplified layer on top -- the original approach
-  left jagged sliver gaps wherever the two independently-simplified edges
-  didn't quite line up, worst around Georgian Bay's genuinely complex
-  coastline. One hole-by-construction has no second edge to drift out of
-  alignment with the first.
-- `data/lakes.geojson` — the lake footprint on its own (not diffed against
-  land), kept as data but not rendered as a separate map layer today,
-  since land's own holes already show the sea-black through with no seam
-  risk. Here in case a future pass wants water styled differently from
-  open sea.
-- `data/rivers.geojson` — Natural Earth rivers filtered to `scalerank<=5`
-  (keeps the Mississippi/Missouri/Ohio/Columbia/Rio Grande tier, drops the
-  minor tributaries that would just clutter the map at this scale).
+  are cut out of it as true holes. The first attempt at this
+  (`land_raw.difference(lakes_raw)` for *all* 412 features in
+  `natural-earth-lakes.geojson`, simplified once as a single geometry)
+  still produced jagged shard artifacts, worst north of Lake Superior --
+  the fix wasn't simplification order, it was differencing hundreds of
+  small, densely-packed Canadian Shield lakes in the same pass as the
+  five actual Great Lakes; that many nearby holes sharing one
+  `simplify()` call is exactly the shape that produces self-intersecting
+  shards. Only the five lakes named `Lake Superior`/`Michigan`/`Huron`/
+  `Erie`/`Ontario` are cut now, each individually simplified (0.0015°)
+  and buffered out by ~110 m *before* the difference, so a residual
+  tracing mismatch between the land and lakes datasets erodes into the
+  hole instead of surviving as a sliver of exposed sea colour. Smaller
+  named lakes elsewhere may still show the original artifact; only the
+  Great Lakes were in scope for this fix.
+- `data/lakes.geojson` — the full lake footprint (all 412 features, not
+  just the five Great Lakes cut into `land.geojson`), kept as data but
+  not rendered as its own map layer today, since land's own holes already
+  show the sea-black through with no seam risk for the ones that matter.
+- `data/rivers.geojson` — Natural Earth rivers filtered to `scalerank<=6`
+  (keeps the Mississippi/Missouri/Ohio/Columbia/Rio Grande tier plus a
+  wider set of named tributaries; dropped to `<=5` in the first pass, its
+  `#4a6b7a` stroke was also too close to the land/faction colours to read
+  as water at a glance -- now a lighter, more distinctly blue `#6fa0b8` at
+  1.5px).
 - `data/capitals.geojson` — all 50 state capitals, from
   `sources/natural-earth-populated-places.geojson`'s `Admin-1 capital`
-  rows. `atlas.js` only shows their markers/labels once you zoom in past
-  `CAPITAL_MIN_ZOOM` (5) — at the default continental view they were just
-  50 overlapping labels. Styled as a small solid chip (`.capital-mark`) with
-  a star glyph and bold condensed text, echoing the briefing cards' own
-  "SACRAMENTO"-style capital callout rather than plain map text.
+  rows. Styled as a small solid chip (`.capital-mark`) with a diamond
+  glyph and bold condensed text, echoing the briefing cards' own
+  "SACRAMENTO"-style capital callout rather than plain map text --
+  `.capital-mark` must be `inline-flex`, not `flex`: Leaflet's own divIcon
+  wrapper is a fixed 12x12 anchor box, and a block-level flex child's auto
+  width fills that containing block instead of shrink-wrapping its own
+  content, which is why the dark chip background used to cover only the
+  icon while the city name spilled out past it with no backing. `atlas.js`
+  fades capitals in by zoom rather than snapping them straight to full
+  strength: hidden below `CAPITAL_MIN_ZOOM` (5), ramping from 30% to 100%
+  opacity by `CAPITAL_FULL_ZOOM` (8), so the map doesn't jump from empty
+  to 50 loud labels in one scroll tick.
 
 Major highways are separate: `scripts/build-roads.py` filters Natural
 Earth's 1:10m roads (`type == "Major Highway"`, `sov_a3 == "USA"`) down to

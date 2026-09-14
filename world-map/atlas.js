@@ -149,12 +149,23 @@
       updateCapitalVisibility();
     });
 
+  // Capitals fade in gradually rather than snapping straight to full
+  // strength: barely-there at CAPITAL_MIN_ZOOM, full opacity by
+  // CAPITAL_FULL_ZOOM, so the map doesn't go from empty to 50 loud labels
+  // in one scroll tick.
   var CAPITAL_MIN_ZOOM = 5;
+  var CAPITAL_FULL_ZOOM = 8;
   function updateCapitalVisibility() {
-    var show = map.getZoom() >= CAPITAL_MIN_ZOOM && document.getElementById("toggle-capitals").checked;
+    var zoom = map.getZoom();
+    var checked = document.getElementById("toggle-capitals").checked;
+    var show = zoom >= CAPITAL_MIN_ZOOM && checked;
+    var opacity = Math.min(1, Math.max(0.3, (zoom - CAPITAL_MIN_ZOOM + 1) / (CAPITAL_FULL_ZOOM - CAPITAL_MIN_ZOOM + 1)));
     capitalMarkers.forEach(function (m) {
       var el = m.getElement();
-      if (el) el.style.display = show ? "" : "none";
+      if (!el) return;
+      el.style.display = show ? "" : "none";
+      var mark = el.querySelector(".capital-mark");
+      if (mark) mark.style.opacity = opacity;
     });
   }
   map.on("zoomend", updateCapitalVisibility);

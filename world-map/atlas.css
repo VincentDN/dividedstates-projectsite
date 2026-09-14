@@ -44,14 +44,20 @@ main{position:relative;flex:1;min-height:0;overflow:hidden}
 .faction-fill:hover,.faction-fill.is-selected{stroke:#f2efe6;stroke-width:2.4;fill-opacity:1}
 .leaflet-interactive:focus{outline:none;stroke:#f2efe6;stroke-width:3}
 .land-base{fill:#b3ab9c;stroke:#5c5648;stroke-width:.6;fill-opacity:1}
-.river-line{fill:none;stroke:#4a6b7a;stroke-width:1.1;stroke-linecap:round;opacity:.85}
+.river-line{fill:none;stroke:#6fa0b8;stroke-width:1.5;stroke-linecap:round;opacity:.9}
 .road-line{fill:none;stroke:#ab3232;stroke-width:1.1;stroke-linecap:round;opacity:.75;stroke-dasharray:1 3}
-/* Briefing-card style label chip: a solid dark tag with a star glyph,
-   echoing the reference "SACRAMENTO" callout rather than plain map text. */
+/* Briefing-card style label chip: a solid dark tag with a diamond glyph,
+   echoing the reference "SACRAMENTO" callout rather than plain map text.
+   Leaflet's own divIcon wrapper is a fixed 12x12 box (its only job is to
+   anchor the marker's position); it does NOT size to this chip's actual
+   content. `.capital-mark` must stay inline-flex, not flex -- a block-level
+   flex box's auto width fills that 12px containing block instead of
+   shrink-wrapping its content, so the dark background only ever covered
+   the diamond and the name text spilled out past it with no backing. */
 .capital-dot{background:none;border:0;pointer-events:none!important}
-.capital-mark{display:flex;align-items:center;gap:5px;padding:2px 7px 2px 5px;white-space:nowrap;pointer-events:none;
-  background:#14110dd9;border:1px solid #00000080;border-radius:3px}
-.capital-mark::before{content:'\2605';font-size:11px;line-height:1;color:#e7c56a}
+.capital-mark{display:inline-flex;align-items:center;gap:5px;padding:2px 7px 2px 5px;white-space:nowrap;pointer-events:none;
+  background:#14110dd9;border:1px solid #00000080;border-radius:3px;transition:opacity .15s ease}
+.capital-mark::before{content:'\25C6';font-size:9px;line-height:1;color:#f2efe6}
 .capital-mark span{font:700 10px/1.1 var(--display-font);letter-spacing:.03em;text-transform:uppercase;color:#f2efe6}
 
 .territory-tooltip{background:#111;border:1px solid #4a4a4a;color:var(--heading);box-shadow:0 3px 16px #00000080;padding:8px 12px;white-space:normal;min-width:140px;max-width:220px;font:15px/1.3 var(--body-font)}
