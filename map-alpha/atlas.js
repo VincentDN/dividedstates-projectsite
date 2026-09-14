@@ -1,6 +1,21 @@
 (function () {
   "use strict";
 
+  var HATCH_FILL = {
+    "new-england": "url(#hatch-new-england)",
+    "revolutionary-states": "url(#hatch-revolutionary-states)",
+    "american-union-state": "url(#hatch-american-union-state)",
+    "congressional-states": "url(#hatch-congressional-states)",
+  };
+
+  var CITIES = [
+    { name: "Boston", lat: 42.36, lng: -71.06, faction: "new-england", capital: true },
+    { name: "Chicago", lat: 41.88, lng: -87.63, faction: "revolutionary-states", capital: true },
+    { name: "Baton Rouge", lat: 30.45, lng: -91.14, faction: "american-union-state", capital: true },
+    { name: "San Francisco", lat: 37.77, lng: -122.42, faction: "congressional-states", capital: true },
+    { name: "Washington, D.C. (fallen)", lat: 38.91, lng: -77.04, faction: "revolutionary-states", capital: false, fallen: true },
+  ];
+
   var FLAG_LINKS = {
     // The only faction with a dedicated Flagmaker product today; the rest
     // fall back to the general alt-history collection until one exists.
@@ -23,6 +38,8 @@
   landPane.style.zIndex = 350;
   var factionPane = map.createPane("factions");
   factionPane.style.zIndex = 400;
+  var stateLinesPane = map.createPane("statelines");
+  stateLinesPane.style.zIndex = 420;
   var labelPane = map.createPane("labels");
   labelPane.style.zIndex = 640;
 
@@ -67,6 +84,14 @@
       buyLink.hidden = true;
     }
 
+    var stamp = document.getElementById("flag-stamp");
+    if (props.kind === "faction") {
+      stamp.src = "assets/flags/" + props.id + ".svg";
+      stamp.hidden = false;
+    } else {
+      stamp.hidden = true;
+    }
+
     openPanel();
   }
 
@@ -84,6 +109,30 @@
         interactive: false,
       }).addTo(map);
     });
+
+  fetch("data/state-lines.geojson")
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      L.geoJSON(geo, {
+        pane: "statelines",
+        className: "state-line",
+        interactive: false,
+      }).addTo(map);
+    });
+
+  CITIES.forEach(function (city) {
+    var classes = "city-dot-mark" + (city.capital ? " is-capital" : "") + (city.fallen ? " is-fallen" : "");
+    L.marker([city.lat, city.lng], {
+      pane: "labels",
+      interactive: false,
+      icon: L.divIcon({
+        className: "city-dot",
+        iconSize: [10, 10],
+        iconAnchor: [4, 4],
+        html: '<span class="' + classes + '"><span>' + city.name + "</span></span>",
+      }),
+    }).addTo(map);
+  });
 
   fetch("data/territories.geojson")
     .then(function (r) { return r.json(); })
@@ -144,6 +193,13 @@
           }
         },
       }).addTo(map);
+
+      Object.keys(factionLayers).forEach(function (id) {
+        var layer = factionLayers[id];
+        if (layer._path && HATCH_FILL[id]) {
+          layer._path.style.fill = HATCH_FILL[id];
+        }
+      });
     });
 
   document.getElementById("panel-toggle").addEventListener("click", function () {

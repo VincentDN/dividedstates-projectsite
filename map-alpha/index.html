@@ -9,24 +9,51 @@
   <meta name="description" content="An alpha interactive map of the Second American Civil War: the Revolutionary States, the American Union State, the Congressional States and loyalist New England, 1940.">
   <link rel="canonical" href="https://dividedstates-project.com/map-alpha/">
   <link rel="icon" href="../favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Open+Sans:ital,wght@0,400;0,700;1,400&family=Staatliches&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vendor/leaflet.css">
   <link rel="stylesheet" href="atlas.css?v=1">
   <script defer src="vendor/leaflet.js"></script>
   <script defer src="atlas.js?v=1"></script>
 </head>
 <body>
+  <!-- Reusable diagonal-hatch fills, painted like a duotone print plate.
+       Defined once, referenced by id from atlas.js as each faction's fill. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <pattern id="hatch-new-england" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="14" height="14" fill="#c9c0a3"/>
+        <rect width="7" height="14" fill="#5f6b47"/>
+      </pattern>
+      <pattern id="hatch-revolutionary-states" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="14" height="14" fill="#e2c9a0"/>
+        <rect width="7" height="14" fill="#8c2c26"/>
+      </pattern>
+      <pattern id="hatch-american-union-state" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="14" height="14" fill="#d8cfb0"/>
+        <rect width="7" height="14" fill="#48545e"/>
+      </pattern>
+      <pattern id="hatch-congressional-states" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="14" height="14" fill="#ecd9ab"/>
+        <rect width="7" height="14" fill="#a8701f"/>
+      </pattern>
+      <pattern id="hatch-neutral" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="10" height="10" fill="#d9d2bc"/>
+        <rect width="3" height="10" fill="#b6ac8e"/>
+      </pattern>
+    </defs>
+  </svg>
   <div id="alpha-banner" role="status">This map is an early alpha. Faction borders are a provisional placeholder, not confirmed canon &mdash; questions or corrections go to Vincent.</div>
   <header>
     <a class="brand-link" href="https://dividedstates-project.com/" aria-label="The Divided States home"><img src="../assets/logo.png" alt="The Divided States" width="1156" height="512"></a>
     <div class="atlas-title">
-      <h1>The Second American Civil War, 1940</h1>
-      <p>Four factions, one broken Union. Select a territory to read its story.</p>
+      <h1>Second American Civil War</h1>
+      <p class="atlas-subtitle">Occupation Areas &middot; 1940</p>
     </div>
     <nav aria-label="Atlas controls"><button id="panel-toggle" type="button" aria-controls="panel" aria-expanded="true">Map key</button></nav>
   </header>
   <main>
     <div id="map" aria-label="Interactive map of the Divided States. Use arrow keys to pan and plus or minus to zoom."></div>
+    <img id="flag-stamp" alt="" hidden>
     <aside id="panel" aria-labelledby="panel-title">
       <div class="panel-heading"><h2 id="panel-title">Map key</h2><button id="panel-close" type="button" aria-label="Close map panel">&times;</button></div>
       <div class="panel-body">
