@@ -24,15 +24,11 @@ overlay was a `repeating-linear-gradient` scanline stripe (read as a CRT
 effect, not the intended film-print look); it's now a directional
 `feTurbulence` (`type="turbulence"`, uneven x/y `baseFrequency`) grain,
 `multiply`-blended so it darkens unevenly like ink soaking into paper
-fibre instead of a uniform overlay wash. `#map::before`'s own fine-grain
-layer got a second, much coarser `background-image` alongside it: a
-low-`baseFrequency` `feTurbulence` whose alpha is remapped through a
-`feComponentTransfer` table biased toward 0 (so only the noise peaks
-survive as blob shapes) and recoloured solid white via `feColorMatrix`.
-Both layers share `::before`'s single `mix-blend-mode:overlay` -- under
-overlay, white lightens and near-black darkens, so the blotches read as
-pale, aged-paper watermarks against the fine grain without needing a
-second element or blend mode. The Leaflet
+fibre instead of a uniform overlay wash. `#map::before` is a single fine
+`feTurbulence` grain layer, `overlay`-blended. A coarser second
+`background-image` (big pale blotches, meant to read as aged-paper
+watermarks) was tried alongside it but rolled back -- too messy on top of
+the state mosaic -- so `::before` stays the one grain layer. The Leaflet
 attribution control was also being added twice (once automatically by
 `L.map()`'s default `attributionControl: true`, once explicitly for the
 custom prefix), which is why the live default-Leaflet "Leaflet" credit
@@ -77,15 +73,15 @@ fall straight through to the faction layer underneath), and the shade is
 a small deterministic hash-based lightness offset per state (`shade()` in
 the script) rather than anything meaningful about that state individually.
 
-It's meant to read as "this flat region is made of states" at a glance,
-not to compete with the flat colour once you're zoomed in close enough to
-be looking at one or two states -- at that range the borders/shading just
-looked like noise cutting across what should read as one solid colour. So
-`atlas.js`'s `updateMosaicOpacity()` fades the whole `states` pane's own
-opacity down as you zoom in (full strength at/below `MOSAIC_FADE_ZOOM`
-(5), down to a bare `MOSAIC_MIN_OPACITY` (0.18) hint by `MOSAIC_FLAT_ZOOM`
-(9) rather than vanishing outright), letting the flat `.faction-fill`
-colour beneath dominate instead.
+It's meant to read as "this region is made of individual states" once
+you're zoomed in close, not to compete with the flat colour at the
+whole-US overview -- at that range the borders/shading just looked like
+noise cutting across what should read as one solid colour. So
+`atlas.js`'s `updateMosaicOpacity()` keeps the whole `states` pane's own
+opacity down near a bare `MOSAIC_MIN_OPACITY` (0.18) hint at/below
+`MOSAIC_FADE_ZOOM` (5) -- letting the flat `.faction-fill` colour beneath
+dominate at the whole-US view -- and ramps it up to full opacity by
+`MOSAIC_FULL_ZOOM` (9) as you zoom in toward city level.
 
 Alaska and Hawaii weren't states in 1940 and take no active part in the
 war, so instead of a solid fill each is drawn with a moving diagonal hatch
