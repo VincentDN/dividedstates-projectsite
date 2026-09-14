@@ -16,6 +16,17 @@ alpha on the page itself (the banner, the title) and its state-to-faction
 borders are an explicit provisional placeholder -- see below -- but it's
 no longer `noindex`/orphaned.
 
+`atlas.js` now uses the same custom polar-azimuthal CRS as the AK atlas
+(`L.CRS.PolarAzimuthal`, centred on the North Pole rather than Leaflet's
+default Web Mercator) instead of the plain Web Mercator this page started
+with -- it reads better even at continental-US scale, since Mercator
+visibly stretches Canada/the Great Lakes relative to the Gulf states.
+Copied over function-for-function (project/unproject/`lon0`); the CRS's
+`code` string is `DS:polar-azimuthal` rather than AK's `AK:polar-azimuthal`
+so the two are distinguishable if ever inspected side by side, though both
+still register under the same `L.CRS.PolarAzimuthal` global since the two
+pages never load together.
+
 The sea is a dark grey (`#2b2b2e`, previously near-black `#121214` -- pure
 black read as a void the grain couldn't show up over) and land a bright
 warm grey (`#b3ab9c`), matching the reference newsreel stills' own high
@@ -212,6 +223,71 @@ Run `python3 scripts/build-map-layers.py` (needs `shapely`) to regenerate
 everything except roads; `python3 scripts/build-roads.py` separately
 (needs network access) for those.
 
+## Mobile layout fixes
+
+Two narrow-viewport layout bugs, independent of the performance work
+below: the zoom `+`/`-` control was anchored `bottomright`, which on
+mobile sat right on top of `#panel` (docked along the bottom edge there,
+see its `@media(max-width:760px)` rule) -- now `topright`, clear of the
+panel at every width, matching where the AK atlas puts its own zoom
+control for the same reason. And `header`'s three flex children (logo,
+title, "Map key" button) used to free-wrap in source order, which on a
+narrow screen could land the title squeezed into whatever width was left
+between the other two rather than getting its own row; the mobile media
+query now pins logo+button to one row (`order`, `margin-left:auto`) and
+the title to its own full-width row underneath, at a smaller size.
+
+## Mobile performance: a lower-detail bundle
+
+The full data set (`land`, `territories`, `states`, `rivers`, `roads`,
+`capitals`) runs to ~1.8 MB of GeoJSON, dominated by vertex-dense
+coastline and state borders plus `roads.geojson` (the major-highways
+overlay alone is the single heaviest file). Fine at continental-US zoom on
+a desktop, but excessive for a phone: pinch-zoom has to re-render that
+much vector detail on every frame, and it's rarely visible at the zoom
+level a phone screen actually shows.
+
+`scripts/build-mobile-map.py` (needs `shapely>=2.1`) bundles a
+pre-simplified, single-request replacement, written to
+`data/mobile/atlas.json`:
+
+- `territories` and `states` are each simplified as one shared-edge
+  coverage (`shapely.coverage_simplify`) rather than feature-by-feature --
+  both were dissolved from the same admin-1 source with no independent
+  rounding, so their borders already share exact edges going in, and
+  coverage-simplifying keeps that guarantee instead of letting
+  neighbouring polygons drift apart into gaps or overlapping slivers the
+  way simplifying each one separately would.
+- `land` gets a coarser coastline pass (0.02° vs the desktop file's
+  0.003°) and drops slivers under ~0.001° of area outright.
+- `rivers` and `roads` are dropped entirely rather than simplified --
+  both are decorative, not needed to read the map, and skipping them is
+  most of the size win.
+- `capitals` is copied through unsimplified; it's already tiny point data.
+
+Run it after regenerating any of the source files above:
+
+```
+python3 world-map/scripts/build-mobile-map.py
+```
+
+It prints a size comparison (`fullDataBytes` vs `mobileDataBytes`/
+`mobileGzipBytes`) and writes the same numbers to
+`data/mobile/build-stats.json`; last run was a ~78% reduction (1.8 MB to
+~400 KB raw, ~136 KB gzipped).
+
+`atlas.js` decides whether to use it via a `liteMode` flag -- true on a
+narrow viewport (`max-width:900px`), a coarse pointer under 1200px, or
+`navigator.connection.saveData`, and overridable with `?detail=full` or
+`?detail=lite` on the URL for testing either path on any device. In lite
+mode, every layer fetch goes through one `loadLayer()` helper that pulls
+from the single cached `data/mobile/atlas.json` response instead of six
+separate requests; `rivers`/`roads` resolve to an empty FeatureCollection
+client-side rather than being fetched at all, and the now-inert "Major
+highways"/"Rivers" checkboxes in the map key are hidden (`document
+.documentElement.classList.toggle("atlas-lite", liteMode)` also flags the
+`<html>` element, in case a future style needs to key off it).
+
 ## Files
 
 - `index.html`, `atlas.css`, `atlas.js` — the page.
@@ -222,6 +298,9 @@ everything except roads; `python3 scripts/build-roads.py` separately
 - `data/land.geojson`, `data/lakes.geojson`, `data/rivers.geojson`,
   `data/capitals.geojson`, `data/roads.geojson` — base map layers (see
   above).
+- `data/mobile/atlas.json`, `data/mobile/build-stats.json` — the bundled
+  lower-detail data phones load instead, generated by
+  `scripts/build-mobile-map.py` (see above).
 - `sources/` — the raw Natural Earth inputs (public domain; see the AK
   atlas's README for full sourcing/license notes, same data). Roads is
   the exception -- not vendored, see above.

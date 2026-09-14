@@ -118,12 +118,20 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 
 @media(max-width:760px){
   #alpha-banner{font-size:.7rem;padding:6px 10px}
-  header{padding:8px 12px;gap:8px;flex-wrap:wrap}
-  .brand-link img{width:96px}
-  h1{font-size:.9rem}
+  /* Two clean rows instead of three flex items free-wrapping into whatever
+     order fits: row one is logo-left/button-right, row two is the title,
+     full-width and left-aligned underneath -- rather than the title
+     wrapping in wherever space is left between them at whatever width it
+     was given as a middle flex item. */
+  header{display:flex;flex-wrap:wrap;align-items:center;padding:8px 12px;gap:2px 10px}
+  .brand-link{order:1}
+  nav{order:2;margin-left:auto;width:auto;justify-content:flex-end}
+  .atlas-title{order:3;flex-basis:100%;align-items:flex-start;text-align:left}
+  .brand-link img{width:88px}
+  h1{font-size:.78rem;letter-spacing:.02em}
   .atlas-title p{display:none}
-  nav{width:100%;justify-content:flex-end}
   #panel{left:10px;right:10px;top:auto;bottom:14px;width:auto;max-height:min(50%,24rem)}
   .panel-body{font-size:15px;padding:12px 16px}
+  .leaflet-control-attribution{font-size:10px}
 }
 @media(hover:none){.territory-tooltip{display:none!important}}

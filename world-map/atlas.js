@@ -27,14 +27,51 @@
     "congressional-states": "url(#hatch-affiliated-congressional-states)",
   };
 
+  // Azimuthal equidistant, centred on the North Pole, rather than
+  // Leaflet's default Web Mercator -- the same projection used by the
+  // American Kingdoms atlas, which reads noticeably better for a map
+  // that's really just the continental US: it doesn't stretch the north
+  // the way Mercator does, so Canada/Great Lakes country doesn't balloon
+  // relative to the Gulf states. There's no tile layer here (every layer
+  // is vector GeoJSON), so a custom CRS only has to get project/unproject
+  // right; nothing depends on a 256px tile pyramid. lon0 picks which
+  // meridian points "up" from the pole -- roughly through central Canada,
+  // so North America reads upright rather than rotated.
+  var EARTH_R = 6371000, D2R = Math.PI / 180, R2D = 180 / Math.PI, POLAR_LON0 = -100 * D2R;
+  var PolarAzimuthal = {
+    R: EARTH_R,
+    project: function (latlng) {
+      var rho = EARTH_R * (Math.PI / 2 - latlng.lat * D2R);
+      var theta = latlng.lng * D2R - POLAR_LON0;
+      return L.point(rho * Math.sin(theta), -rho * Math.cos(theta));
+    },
+    unproject: function (point) {
+      var rho = Math.sqrt(point.x * point.x + point.y * point.y);
+      var lat = 90 - (rho / EARTH_R) * R2D;
+      var lon = (((POLAR_LON0 + Math.atan2(point.x, -point.y)) * R2D + 540) % 360) - 180;
+      return L.latLng(lat, lon);
+    },
+    bounds: L.bounds([-EARTH_R * Math.PI, -EARTH_R * Math.PI], [EARTH_R * Math.PI, EARTH_R * Math.PI]),
+  };
+  var polarScale = 0.5 / (Math.PI * EARTH_R);
+  L.CRS.PolarAzimuthal = L.extend({}, L.CRS.Earth, {
+    code: "DS:polar-azimuthal",
+    projection: PolarAzimuthal,
+    transformation: new L.Transformation(polarScale, 0.5, -polarScale, 0.5),
+  });
+
   var map = L.map("map", {
+    crs: L.CRS.PolarAzimuthal,
     attributionControl: false,
     zoomControl: false,
     minZoom: 3,
     maxZoom: 10,
     worldCopyJump: false,
   }).setView([39, -96], 4);
-  L.control.zoom({ position: "bottomright" }).addTo(map);
+  // Top-right rather than bottom-right: the info panel docks along the
+  // bottom edge on narrow/mobile layouts (see atlas.css), and a
+  // bottom-right zoom control would sit right on top of it there.
+  L.control.zoom({ position: "topright" }).addTo(map);
   L.control.attribution({ prefix: "Map made with Leaflet" }).addTo(map);
 
   var landPane = map.createPane("land");
@@ -109,10 +146,44 @@
     document.getElementById("panel-toggle").setAttribute("aria-expanded", "true");
   }
 
+  // On phones/tablets (and anyone asking for less data), swap the six
+  // full-resolution GeoJSON files for one pre-simplified bundle: coarser
+  // coastline, shared-edge-simplified territory/state borders, and rivers
+  // and the major-highway layer dropped outright, since both are
+  // decorative and roads.geojson alone is the single heaviest file in
+  // data/. See scripts/build-mobile-map.py for how the bundle is built.
+  // ?detail=full/lite on the URL overrides the automatic guess, for
+  // testing either path on any device.
+  var requestedDetail = new URLSearchParams(location.search).get("detail");
+  var liteMode = requestedDetail !== "full" && (
+    requestedDetail === "lite" ||
+    matchMedia("(max-width:900px)").matches ||
+    (matchMedia("(pointer:coarse)").matches && matchMedia("(max-width:1200px)").matches) ||
+    (navigator.connection && navigator.connection.saveData === true)
+  );
+  document.documentElement.classList.toggle("atlas-lite", liteMode);
+  if (liteMode) {
+    // Nothing left to toggle -- rivers and roads aren't in the mobile bundle at all.
+    ["toggle-roads", "toggle-water"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.closest("label").hidden = true;
+    });
+  }
+  var EMPTY_FC = { type: "FeatureCollection", features: [] };
+  var mobileBundle = liteMode
+    ? fetch("data/mobile/atlas.json?v=1").then(function (r) { return r.json(); })
+    : null;
+  function loadLayer(name) {
+    if (liteMode) {
+      if (name === "rivers" || name === "roads") return Promise.resolve(EMPTY_FC);
+      return mobileBundle.then(function (bundle) { return bundle[name]; });
+    }
+    return fetch("data/" + name + ".geojson").then(function (r) { return r.json(); });
+  }
+
   var capitalMarkers = [];
 
-  fetch("data/land.geojson")
-    .then(function (r) { return r.json(); })
+  loadLayer("land")
     .then(function (geo) {
       L.geoJSON(geo, {
         pane: "land",
@@ -121,8 +192,7 @@
       }).addTo(map);
     });
 
-  fetch("data/rivers.geojson")
-    .then(function (r) { return r.json(); })
+  loadLayer("rivers")
     .then(function (geo) {
       L.geoJSON(geo, {
         pane: "water",
@@ -131,8 +201,7 @@
       }).addTo(map);
     });
 
-  fetch("data/roads.geojson")
-    .then(function (r) { return r.json(); })
+  loadLayer("roads")
     .then(function (geo) {
       L.geoJSON(geo, {
         pane: "roads",
@@ -141,8 +210,7 @@
       }).addTo(map);
     });
 
-  fetch("data/capitals.geojson")
-    .then(function (r) { return r.json(); })
+  loadLayer("capitals")
     .then(function (geo) {
       geo.features.forEach(function (feature) {
         var coords = feature.geometry.coordinates;
@@ -185,8 +253,7 @@
   }
   map.on("zoomend", updateCapitalVisibility);
 
-  fetch("data/territories.geojson")
-    .then(function (r) { return r.json(); })
+  loadLayer("territories")
     .then(function (geo) {
       var factionListEl = document.getElementById("faction-list");
 
@@ -262,8 +329,7 @@
   // without changing what a click selects (that's still handled by the
   // faction layer underneath -- these paths are interactive:false so
   // clicks/hover fall straight through to it).
-  fetch("data/states.geojson")
-    .then(function (r) { return r.json(); })
+  loadLayer("states")
     .then(function (geo) {
       var layer = L.geoJSON(geo, {
         pane: "states",
