@@ -35,11 +35,13 @@ with its Ukraine-flag emoji was showing through; `atlas.js` now sets
 ## The four factions and their borders — provisional, not canon
 
 The "Declassified" faction briefing cards established a three-faction
-civil war (Loyalist / Revolutionary / Congressional) with New England
-folded into the Loyalist States' single claim. New England was then
+civil war ("Loyalist" / Revolutionary / Congressional) with New England
+folded into the Loyalist faction's single claim. New England was then
 restored as its own region on direct request -- back to its original
-footprint from the very first pass, not part of Loyalist territory.
-`scripts/build-territories.py` dissolves US state polygons (Natural Earth
+footprint from the very first pass. The Loyalist faction was itself
+renamed from "Loyalist States" to **American Union State**, matching the
+real name of the flag supplied for it, keeping the same territory, colour
+and "Blue States" lore. `scripts/build-territories.py` dissolves US state polygons (Natural Earth
 1:50m admin-1, public domain, copied from the AK atlas's own
 `sources/natural-earth-admin1-states.geojson` into this page's `sources/`)
 into four macro-regions, real 1940 state lines standing in for whatever
@@ -48,15 +50,15 @@ the eventual in-universe borders turn out to be:
 | Faction | Colour | States |
 | --- | --- | --- |
 | New England | green `#5f7a4f` | ME, NH, VT, MA, RI, CT, NY, NJ |
-| Loyalist States ("Blue States") | navy `#1f3a66` | VA, NC, SC, GA, FL, AL, MS, TN, KY, AR, LA, TX, OK, NM |
+| American Union State ("Blue States") | navy `#1f3a66` | VA, NC, SC, GA, FL, AL, MS, TN, KY, AR, LA, TX, OK, NM |
 | Revolutionary States ("Red States" / R.S.A.) | red `#8c2c26` | PA, DE, MD, DC, WV, OH, MI, WI, IL, IN, MN, IA, MO, KS, NE, SD, ND, MT, WY, CO, UT, ID |
 | Congressional States ("Pacific States") | gold `#c98a2b` | WA, OR, CA, NV, AZ |
 
 The briefing card's own map put all of this under one Loyalist claim
 (capital Atlanta) reaching from New England down through the South; this
 map now shows New England as its own region again instead, so its lore
-text still reads as loyal to the same government/flag as Loyalist States,
-just administered separately on the map.
+text still reads as loyal to the same government/flag as the American
+Union State, just administered separately on the map.
 
 Each state also renders as its own subtle shade of its faction's base
 colour with a thin border to its neighbours (`data/states.geojson`, also
@@ -74,7 +76,7 @@ war, so instead of a solid fill each is drawn with a moving diagonal hatch
 (SVG `<pattern>` + SMIL `<animateTransform>`, defined inline at the top of
 `index.html`, applied by `atlas.js` setting `layer._path.style.fill` since
 Leaflet's own `fillColor` option can't take a `url(#...)` paint server) in
-shades of its nominal faction's colour: Alaska under the Loyalist States,
+shades of its nominal faction's colour: Alaska under the American Union State,
 Hawaii under the Congressional States. Their flag/buy-a-flag panel still
 points at that faction's real flag, via `atlas.js`'s `flagId` lookup.
 
@@ -95,12 +97,13 @@ Real flag art now exists for two of the four factions, supplied as
 Illustrator/PDF vectors and rasterised here (`pdftoppm`) rather than
 redrawn by hand:
 
-- **Loyalist States** — `assets/flags/loyalist-states.png`, the supplied
-  AUS eagle-on-blue vector. Links to
+- **American Union State** — `assets/flags/american-union-state.png`, the
+  supplied AUS eagle-on-blue vector. Links to
   `https://flagmaker-print.com/products/american-union-state-flag-kaiserreich`,
-  the same product already used on the homepage (that flag's real name is
-  evidently "American Union State" regardless of what this faction is
-  called on the map -- the two are the same design).
+  the same product already used on the homepage -- this faction was in
+  fact renamed to "American Union State" specifically to match this real
+  flag's actual name, having briefly been called "Loyalist States" per
+  the briefing cards.
 - **Congressional States** — `assets/flags/congressional-states.png`, the
   supplied Pacific States/PSA vector (white-red-gold bands, navy star and
   bear). **No real Flagmaker product URL for this one yet** -- `FLAG_LINKS`

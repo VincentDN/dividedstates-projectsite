@@ -48,10 +48,13 @@ STATES_OUT = ROOT / "data" / "states.geojson"
 GREAT_LAKES = {"Lake Superior", "Lake Michigan", "Lake Huron", "Lake Erie", "Lake Ontario"}
 
 # Four-way split per the briefing cards, with New England restored as its
-# own region (per direct request) rather than folded into Loyalist States --
-# the cards' own map put it all under one Loyalist claim, but New England
-# goes back to covering just the six New England states plus New York and
-# New Jersey, the same footprint it had before that merge.
+# own region (per direct request) rather than folded into the "Loyalist
+# States" -- the cards' own map put it all under one Loyalist claim, but
+# New England goes back to covering just the six New England states plus
+# New York and New Jersey, the same footprint it had before that merge.
+# "Loyalist States" was itself later renamed to "American Union State" --
+# the actual name of the flag supplied for it -- while keeping the same
+# territory, colour and "Blue States"/Loyalist lore.
 FACTIONS = {
     "new-england": {
         "name": "New England",
@@ -64,29 +67,29 @@ FACTIONS = {
             "hemmed in by the Revolutionary States to the west and south."
         ),
     },
-    "loyalist-states": {
-        "name": "Loyalist States",
+    "american-union-state": {
+        "name": "American Union State",
         "color": "#1f3a66",
         "states": [
             "VA", "NC", "SC", "GA", "FL", "AL", "MS", "TN", "KY", "AR",
             "LA", "TX", "OK", "NM",
         ],
         "summary": (
-            "Also known as the ‘Blue States,’ the Loyalist States "
-            "are an alliance of conservative and reactionary forces under "
+            "Also known as the ‘Blue States,’ the American Union State "
+            "is an alliance of conservative and reactionary forces under "
             "President Langdon, whose legitimacy dates to the 1936 "
             "election crisis. When Langdon sent the Federal Army to crush "
             "the Labor Revolt against explicit orders from Congress, he "
             "was decried as a tyrant — and when he backed a military "
             "coup to remove Congress entirely, its surviving "
             "representatives fled west to found the Congressional "
-            "States.\n\nBoth the Loyalist and Congressional governments "
-            "still claim the title United States of America; their Rocky "
-            "Mountain border has stood as a demilitarized zone since the "
-            "Rocky Mountains Ceasefire. German arms have proven paramount "
-            "in pushing back the Red advance, and with Washington "
-            "retaken, Langdon is now poised to cut the Revolutionary "
-            "States off from the sea."
+            "States.\n\nBoth the American Union State and Congressional "
+            "governments still claim the title United States of America; "
+            "their Rocky Mountain border has stood as a demilitarized "
+            "zone since the Rocky Mountains Ceasefire. German arms have "
+            "proven paramount in pushing back the Red advance, and with "
+            "Washington retaken, Langdon is now poised to cut the "
+            "Revolutionary States off from the sea."
         ),
     },
     "revolutionary-states": {
@@ -141,18 +144,18 @@ STATE_TO_FACTION = {
 
 # Alaska and Hawaii weren't states in 1940 and sit outside the civil war
 # entirely, but each is nominally under one side's flag -- Alaska as
-# Loyalist territory (the Gulf shipping lanes a territorial government
-# would have depended on), Hawaii under the Congressional States' Pacific
-# fleet. Neither actively participates, so they're tagged "affiliated"
-# rather than "faction" and rendered with the animated diagonal treatment
-# instead of a solid fill.
+# American Union State territory (the Gulf shipping lanes a territorial
+# government would have depended on), Hawaii under the Congressional
+# States' Pacific fleet. Neither actively participates, so they're tagged
+# "affiliated" rather than "faction" and rendered with the animated
+# diagonal treatment instead of a solid fill.
 AFFILIATED_TERRITORIES = {
     "AK": {
-        "faction": "loyalist-states",
+        "faction": "american-union-state",
         "summary": (
-            "Alaska is nominally Loyalist territory, its governor "
-            "answering to Atlanta — but it takes no active part in "
-            "the war. Too remote, too thinly settled, and not yet a "
+            "Alaska is nominally American Union State territory, its "
+            "governor answering to Atlanta — but it takes no active part "
+            "in the war. Too remote, too thinly settled, and not yet a "
             "state to fight over."
         ),
     },

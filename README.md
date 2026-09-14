@@ -6,7 +6,7 @@ Version 2.0.4 · 3 September 2026
 
 - **Full interactive map, for both the TDS site and the AK site.**
   Underway: `/world-map/` (see `world-map/README.md`) is a first alpha —
-  four dissolved macro-regions (New England, Loyalist States,
+  four dissolved macro-regions (New England, American Union State,
   Revolutionary States, Congressional States, per the "Declassified"
   faction briefing cards, with New England later restored as its own
   region on request) over real 1940 state lines, each state also
@@ -19,7 +19,7 @@ Version 2.0.4 · 3 September 2026
   placeholder pending confirmation, per that README. Sibling AK atlas is
   at `medieval-america-map/` in that repo, for comparison.
 - **Every flag should be purchasable via a direct link to its Flagmaker
-  product page**, not just the generic collection link. Loyalist States
+  product page**, not just the generic collection link. American Union State
   and Revolutionary States both link straight to their real product pages
   now (`world-map/atlas.js`'s `FLAG_LINKS`); **Congressional States and
   New England still need their real Flagmaker product URLs** — both fall

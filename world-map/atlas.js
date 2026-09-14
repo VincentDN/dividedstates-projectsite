@@ -4,17 +4,17 @@
   var FLAG_LINKS = {
     // Real Flagmaker product pages. Congressional States has none yet --
     // see world-map/README.md -- so it falls back to COLLECTION_URL.
-    "loyalist-states": "https://flagmaker-print.com/products/american-union-state-flag-kaiserreich",
+    "american-union-state": "https://flagmaker-print.com/products/american-union-state-flag-kaiserreich",
     "revolutionary-states": "https://flagmaker-print.com/products/revolutionary-states-flag-the-divided-states",
   };
   var COLLECTION_URL = "https://flagmaker-print.com/collections/alt-history-flags";
 
-  // The real flag artwork supplied for Loyalist/Congressional is a raster
-  // (their Flagmaker vectors, rasterised); Revolutionary's is still a
-  // hand-drawn placeholder pending its own vector. Keyed by faction id so
-  // showDetails() can pick the right file per faction.
+  // The real flag artwork supplied for American Union State/Congressional
+  // is a raster (their Flagmaker vectors, rasterised); Revolutionary's is
+  // still a hand-drawn placeholder pending its own vector. Keyed by
+  // faction id so showDetails() can pick the right file per faction.
   var FLAG_IMAGE_EXT = {
-    "loyalist-states": "png",
+    "american-union-state": "png",
     "congressional-states": "png",
     "revolutionary-states": "svg",
     "new-england": "svg",
@@ -23,7 +23,7 @@
   // Alaska and Hawaii: nominally under a faction's flag but not part of
   // the war, rendered with a moving diagonal hatch instead of a solid fill.
   var AFFILIATED_HATCH = {
-    "loyalist-states": "url(#hatch-affiliated-loyalist-states)",
+    "american-union-state": "url(#hatch-affiliated-american-union-state)",
     "congressional-states": "url(#hatch-affiliated-congressional-states)",
   };
 
