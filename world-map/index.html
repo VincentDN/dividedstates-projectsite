@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow">
   <title>Map of the Second American Civil War in 1940 | The Divided States</title>
-  <meta name="description" content="Explore the interactive Divided States map: the Revolutionary States, the American Union State, the Congressional States and loyalist New England, 1940.">
+  <meta name="description" content="Explore the interactive Divided States map: the Loyalist States, the Revolutionary States and the Congressional States, 1940.">
   <link rel="canonical" href="https://dividedstates-project.com/world-map/">
   <link rel="icon" href="../favicon.ico">
 
@@ -14,16 +14,16 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="The Divided States">
   <meta property="og:title" content="Map of the Second American Civil War in 1940 | The Divided States">
-  <meta property="og:description" content="Explore the interactive Divided States map: the Revolutionary States, the American Union State, the Congressional States and loyalist New England, 1940.">
+  <meta property="og:description" content="Explore the interactive Divided States map: the Loyalist States, the Revolutionary States and the Congressional States, 1940.">
   <meta property="og:url" content="https://dividedstates-project.com/world-map/">
   <meta property="og:image" content="https://dividedstates-project.com/assets/social-preview.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@kaisercatcinema">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vendor/leaflet.css">
-  <link rel="stylesheet" href="atlas.css?v=3">
+  <link rel="stylesheet" href="atlas.css?v=4">
   <script defer src="vendor/leaflet.js"></script>
-  <script defer src="atlas.js?v=3"></script>
+  <script defer src="atlas.js?v=4"></script>
 </head>
 <body>
   <!-- Animated diagonal fills for Alaska/Hawaii: nominally under a
@@ -31,7 +31,7 @@
        by id from atlas.js. -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
-      <pattern id="hatch-affiliated-american-union-state" width="20" height="20" patternUnits="userSpaceOnUse">
+      <pattern id="hatch-affiliated-loyalist-states" width="20" height="20" patternUnits="userSpaceOnUse">
         <rect width="20" height="20" fill="#3a434b"/>
         <path d="M-5,5 l10,-10 M0,20 l20,-20 M15,25 l10,-10" stroke="#7c8b96" stroke-width="8"/>
         <animateTransform attributeName="patternTransform" type="translate" from="0 0" to="20 20" dur="3.5s" repeatCount="indefinite"/>
@@ -48,7 +48,7 @@
     <a class="brand-link" href="https://dividedstates-project.com/" aria-label="The Divided States home"><img src="../assets/logo.png" alt="The Divided States" width="1156" height="512"></a>
     <div class="atlas-title">
       <h1>The Second American Civil War, 1940</h1>
-      <p>Four factions, one broken Union. Select a territory to read its story.</p>
+      <p>Three factions, one broken Union. Select a territory to read its story.</p>
     </div>
     <nav aria-label="Atlas controls"><button id="panel-toggle" type="button" aria-controls="panel" aria-expanded="true">Map key</button></nav>
   </header>

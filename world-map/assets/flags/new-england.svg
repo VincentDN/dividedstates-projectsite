@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="New England placeholder flag: a white pine tree on a green field">
-  <rect width="900" height="540" fill="#3f5335"/>
-  <rect width="900" height="540" fill="#000" opacity=".08"/>
-  <g fill="#f3efe2" opacity=".95">
-    <rect x="430" y="330" width="40" height="140"/>
-    <path d="M450 90 L360 260 H410 L330 380 H570 L490 260 H540 Z"/>
-  </g>
-</svg>

@@ -1,8 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Revolutionary States placeholder flag: a gold star and gear on a red field">
-  <rect width="900" height="540" fill="#7a2620"/>
-  <rect width="900" height="540" fill="#000" opacity=".1"/>
-  <g fill="#e7c56a">
-    <circle cx="450" cy="270" r="95" fill="none" stroke="#e7c56a" stroke-width="16"/>
-    <path d="M450 130 L474 230 L578 230 L494 292 L526 392 L450 330 L374 392 L406 292 L322 230 L426 230 Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Revolutionary States flag: a white gear and star on black, diagonal red and white stripes">
+  <defs>
+    <pattern id="rsa-stripes" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="60" height="60" fill="#c81e2c"/>
+      <rect width="20" height="60" fill="#f3efe2"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="540" fill="url(#rsa-stripes)"/>
+  <polygon points="0,0 640,0 0,430" fill="#111"/>
+  <g transform="translate(230,175)" fill="none" stroke="#f3efe2" stroke-width="14">
+    <circle r="92"/>
+    <circle r="92" stroke-dasharray="14 18"/>
   </g>
+  <path transform="translate(230,175)" fill="#f3efe2" d="M0 -58 L21 -17 L66 -17 L31 9 L45 52 L0 25 L-45 52 L-31 9 L-66 -17 L-21 -17 Z"/>
 </svg>

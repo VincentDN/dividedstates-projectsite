@@ -2,17 +2,27 @@
   "use strict";
 
   var FLAG_LINKS = {
-    // The only faction with a dedicated Flagmaker product today; the rest
-    // fall back to the general alt-history collection until one exists.
-    // See world-map/README.md.
-    "american-union-state": "https://flagmaker-print.com/products/american-union-state-flag-kaiserreich",
+    // Real Flagmaker product pages. Congressional States has none yet --
+    // see world-map/README.md -- so it falls back to COLLECTION_URL.
+    "loyalist-states": "https://flagmaker-print.com/products/american-union-state-flag-kaiserreich",
+    "revolutionary-states": "https://flagmaker-print.com/products/revolutionary-states-flag-the-divided-states",
   };
   var COLLECTION_URL = "https://flagmaker-print.com/collections/alt-history-flags";
+
+  // The real flag artwork supplied for Loyalist/Congressional is a raster
+  // (their Flagmaker vectors, rasterised); Revolutionary's is still a
+  // hand-drawn placeholder pending its own vector. Keyed by faction id so
+  // showDetails() can pick the right file per faction.
+  var FLAG_IMAGE_EXT = {
+    "loyalist-states": "png",
+    "congressional-states": "png",
+    "revolutionary-states": "svg",
+  };
 
   // Alaska and Hawaii: nominally under a faction's flag but not part of
   // the war, rendered with a moving diagonal hatch instead of a solid fill.
   var AFFILIATED_HATCH = {
-    "american-union-state": "url(#hatch-affiliated-american-union-state)",
+    "loyalist-states": "url(#hatch-affiliated-loyalist-states)",
     "congressional-states": "url(#hatch-affiliated-congressional-states)",
   };
 
@@ -65,8 +75,9 @@
 
     var flagImg = document.getElementById("detail-flag");
     if (props.kind === "faction" || props.kind === "affiliated") {
-      flagImg.src = "assets/flags/" + flagId + ".svg";
-      flagImg.alt = props.name + " flag (placeholder design)";
+      var ext = FLAG_IMAGE_EXT[flagId] || "svg";
+      flagImg.src = "assets/flags/" + flagId + "." + ext;
+      flagImg.alt = props.name + " flag" + (ext === "svg" ? " (placeholder design)" : "");
       flagImg.hidden = false;
     } else {
       flagImg.hidden = true;

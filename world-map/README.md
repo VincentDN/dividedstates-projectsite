@@ -31,53 +31,79 @@ with its Ukraine-flag emoji was showing through; `atlas.js` now sets
 `attributionControl: false` on the map and adds a single control reading
 "Map made with Leaflet".
 
-## The four factions and their borders — provisional, not canon
+## The three factions and their borders — provisional, not canon
 
-`scripts/build-territories.py` dissolves US state polygons (Natural Earth
-1:50m admin-1, public domain, copied from the AK atlas's own
-`sources/natural-earth-admin1-states.geojson` into this page's
-`sources/`) into four macro-regions, real 1940 state lines standing in for
-whatever the eventual in-universe borders turn out to be:
+Superseded the original four-way guess (New England / Revolutionary States
+/ American Union State / Congressional States) once the "Declassified"
+faction briefing cards were supplied: they establish a **three**-faction
+civil war, not four. `scripts/build-territories.py` dissolves US state
+polygons (Natural Earth 1:50m admin-1, public domain, copied from the AK
+atlas's own `sources/natural-earth-admin1-states.geojson` into this page's
+`sources/`) into three macro-regions, real 1940 state lines standing in
+for whatever the eventual in-universe borders turn out to be:
 
 | Faction | Colour | States |
 | --- | --- | --- |
-| New England | green `#5f7a4f` | ME, NH, VT, MA, RI, CT, NY, NJ |
-| Revolutionary States | red `#8c2c26` | PA, DE, MD, DC, WV, OH, MI, WI, IL, IN, MN, IA, MO, KS, NE, SD, ND, MT, WY, CO, UT, ID |
-| American Union State | blue-grey `#5a6b78` | VA, NC, SC, GA, FL, AL, MS, TN, KY, AR, LA, TX, OK, NM |
-| Congressional States | orange `#c98a2b` | WA, OR, CA, NV, AZ |
+| Loyalist States ("Blue States") | navy `#1f3a66` | ME, NH, VT, MA, RI, CT, NY, NJ, VA, NC, SC, GA, FL, AL, MS, TN, KY, AR, LA, TX, OK, NM |
+| Revolutionary States ("Red States" / R.S.A.) | red `#8c2c26` | PA, DE, MD, DC, WV, OH, MI, WI, IL, IN, MN, IA, MO, KS, NE, SD, ND, MT, WY, CO, UT, ID |
+| Congressional States ("Pacific States") | gold `#c98a2b` | WA, OR, CA, NV, AZ |
+
+The former separate New England and American Union State regions are now
+one Loyalist States faction -- the briefing card's own map shows Loyalist
+territory as a single contiguous claim from New England down through the
+South, capital Atlanta, not two unrelated regions. Revolutionary States and
+Congressional States keep the same states they already had; only their
+name, colour and lore changed.
 
 Alaska and Hawaii weren't states in 1940 and take no active part in the
 war, so instead of a solid fill each is drawn with a moving diagonal hatch
 (SVG `<pattern>` + SMIL `<animateTransform>`, defined inline at the top of
 `index.html`, applied by `atlas.js` setting `layer._path.style.fill` since
 Leaflet's own `fillColor` option can't take a `url(#...)` paint server) in
-shades of its nominal faction's colour: Alaska under the American Union
-State, Hawaii under the Congressional States. Their flag/buy-a-flag panel
-still points at that faction's real flag, via `atlas.js`'s `flagId` lookup.
+shades of its nominal faction's colour: Alaska under the Loyalist States,
+Hawaii under the Congressional States. Their flag/buy-a-flag panel still
+points at that faction's real flag, via `atlas.js`'s `flagId` lookup.
 
-This split is my best-effort reading of the reference screenshot plus the
-homepage's own copy — "Chicago **and Washington** have fallen" put DC (and
-Maryland with it) in Revolutionary hands rather than with the loyalist
-rump, which is why New England ends at the Hudson rather than covering the
-whole mid-Atlantic. It is **not** confirmed canon. To correct it: edit the
-`FACTIONS` dict in `scripts/build-territories.py` (state postal codes per
-faction) and rerun `python3 scripts/build-territories.py` from this
-directory (requires `shapely`) to regenerate `data/territories.geojson`.
+This split is still a best-effort reading, now of the briefing cards
+rather than the original reference screenshot -- and the cards are
+themselves propaganda-style illustrations (each faction's own map shows
+its own claimed territory, and those claims visibly overlap in the
+contested Northeast) rather than a clean partition, so don't take the
+exact state list as anything more than a reasonable resolution of that
+overlap. It is **not** confirmed canon. To correct it: edit the `FACTIONS`
+dict in `scripts/build-territories.py` (state postal codes per faction)
+and rerun `python3 scripts/build-territories.py` from this directory
+(requires `shapely`) to regenerate `data/territories.geojson`.
 
 ## Flags and Flagmaker links
 
-Only the American Union State has a real Flagmaker product today
-(`https://flagmaker-print.com/products/american-union-state-flag-kaiserreich`,
-already used on the homepage). `atlas.js`'s `FLAG_LINKS` map sends its
-"Purchase a flag" button straight there; the other three factions fall back
-to the general `/collections/alt-history-flags` collection link until they
-get dedicated product pages — add their URLs to `FLAG_LINKS` once they
-exist. This is the same follow-up tracked in the root `README.md` roadmap
-notes.
+Real flag art now exists for two of the three factions, supplied as
+Illustrator/PDF vectors and rasterised here (`pdftoppm`) rather than
+redrawn by hand:
 
-The four `assets/flags/*.svg` are original placeholder graphics (not
-sourced from any established design) standing in until real flag art
-exists, same pattern AK uses for its own provisional territories.
+- **Loyalist States** — `assets/flags/loyalist-states.png`, the supplied
+  AUS eagle-on-blue vector. Links to
+  `https://flagmaker-print.com/products/american-union-state-flag-kaiserreich`,
+  the same product already used on the homepage (that flag's real name is
+  evidently "American Union State" regardless of what this faction is
+  called on the map -- the two are the same design).
+- **Congressional States** — `assets/flags/congressional-states.png`, the
+  supplied Pacific States/PSA vector (white-red-gold bands, navy star and
+  bear). **No real Flagmaker product URL for this one yet** -- `FLAG_LINKS`
+  has no entry for it, so its "Purchase a flag" button falls back to the
+  general `/collections/alt-history-flags` collection link. Add the real
+  URL to `atlas.js`'s `FLAG_LINKS` once one exists.
+- **Revolutionary States** — `assets/flags/revolutionary-states.svg` is
+  still a hand-drawn placeholder (no vector was supplied for this one),
+  redrawn to approximate the briefing card's own flag icon: a black
+  panel with a white gear-and-star badge against diagonal red/white
+  stripes. Its "Purchase a flag" button already links to the real product,
+  `https://flagmaker-print.com/products/revolutionary-states-flag-the-divided-states`
+  -- the URL was supplied even though the artwork wasn't.
+
+`atlas.js`'s `FLAG_IMAGE_EXT` map records which extension (`png` vs `svg`)
+each faction's flag file uses, since `showDetails()` needs to build the
+right filename per faction rather than assuming one extension for all.
 
 ## Map detail: coastline, lakes, rivers, roads, capitals
 
@@ -106,9 +132,9 @@ territories, all clipped to a `lon -170..-50, lat 5..75` North America box:
   `sources/natural-earth-populated-places.geojson`'s `Admin-1 capital`
   rows. `atlas.js` only shows their markers/labels once you zoom in past
   `CAPITAL_MIN_ZOOM` (5) — at the default continental view they were just
-  50 overlapping labels. Marked with a small low-opacity diamond (`.capital-mark::before`,
-  not a star) and an 8px label, deliberately quiet map furniture rather
-  than a competing data layer.
+  50 overlapping labels. Styled as a small solid chip (`.capital-mark`) with
+  a star glyph and bold condensed text, echoing the briefing cards' own
+  "SACRAMENTO"-style capital callout rather than plain map text.
 
 Major highways are separate: `scripts/build-roads.py` filters Natural
 Earth's 1:10m roads (`type == "Major Highway"`, `sov_a3 == "USA"`) down to
@@ -124,7 +150,7 @@ everything except roads; `python3 scripts/build-roads.py` separately
 ## Files
 
 - `index.html`, `atlas.css`, `atlas.js` — the page.
-- `data/territories.geojson` — the four factions + affiliated AK/HI,
+- `data/territories.geojson` — the three factions + affiliated AK/HI,
   generated by `scripts/build-territories.py` (see above).
 - `data/land.geojson`, `data/lakes.geojson`, `data/rivers.geojson`,
   `data/capitals.geojson`, `data/roads.geojson` — base map layers (see
