@@ -4,22 +4,24 @@ Version 2.0.4 · 3 September 2026
 
 ## Roadmap notes (raise these next time we pick up site work)
 
-- **Full interactive map, for both the TDS site and the AK site.** This
-  site has no interactive map yet — it's the sister project to American
-  Kingdoms, whose `/medieval-america-map/` alpha atlas (see
-  `medieval-america-map/README.md` in that repo) is the closer reference
-  point for what "full interactive" could look like here (zoom depth,
-  faction/state coverage, mobile parity). Worth scoping what a TDS map
-  needs before starting, rather than assuming AK's approach transfers
-  directly.
+- **Full interactive map, for both the TDS site and the AK site.**
+  Underway: `/map-alpha/` (see `map-alpha/README.md`) is a first alpha —
+  four dissolved macro-regions (New England, Revolutionary States,
+  American Union State, Congressional States) over real 1940 state lines,
+  styled after the retro B&W newsreel reference art. It's orphaned
+  (`noindex`, not linked from the nav) and its state-to-faction borders
+  are explicitly a provisional placeholder pending confirmation — see
+  that README for how to correct them. Sibling AK atlas is at
+  `medieval-america-map/` in that repo, for comparison.
 - **Every flag should be purchasable via a direct link to its Flagmaker
-  product page**, not just the generic collection link. The one flag
-  currently featured on the homepage (American Union State) already
-  links straight to its Flagmaker product page — keep that pattern for
-  any faction/state flags added later (including ones that come with a
-  future interactive map), rather than falling back to the generic
-  `https://flagmaker-print.com/collections/alt-history-flags` collection
-  link used elsewhere on the page.
+  product page**, not just the generic collection link. The homepage's
+  American Union State flag already links straight to its Flagmaker
+  product page; `/map-alpha/` follows the same pattern but only has a
+  real product to link for that one faction so far — New England,
+  Revolutionary States and Congressional States still fall back to the
+  generic `https://flagmaker-print.com/collections/alt-history-flags`
+  collection link (see `map-alpha/atlas.js`'s `FLAG_LINKS`) until they
+  get dedicated product pages.
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
 framework, database, build process, or server-side application is required.

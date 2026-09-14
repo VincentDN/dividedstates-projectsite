@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The Divided States Map | The Second American Civil War, 1940</title>
+  <meta name="description" content="An alpha interactive map of the Second American Civil War: the Revolutionary States, the American Union State, the Congressional States and loyalist New England, 1940.">
+  <link rel="canonical" href="https://dividedstates-project.com/map-alpha/">
+  <link rel="icon" href="../favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/leaflet.css">
+  <link rel="stylesheet" href="atlas.css?v=1">
+  <script defer src="vendor/leaflet.js"></script>
+  <script defer src="atlas.js?v=1"></script>
+</head>
+<body>
+  <div id="alpha-banner" role="status">This map is an early alpha. Faction borders are a provisional placeholder, not confirmed canon &mdash; questions or corrections go to Vincent.</div>
+  <header>
+    <a class="brand-link" href="https://dividedstates-project.com/" aria-label="The Divided States home"><img src="../assets/logo.png" alt="The Divided States" width="1156" height="512"></a>
+    <div class="atlas-title">
+      <h1>The Second American Civil War, 1940</h1>
+      <p>Four factions, one broken Union. Select a territory to read its story.</p>
+    </div>
+    <nav aria-label="Atlas controls"><button id="panel-toggle" type="button" aria-controls="panel" aria-expanded="true">Map key</button></nav>
+  </header>
+  <main>
+    <div id="map" aria-label="Interactive map of the Divided States. Use arrow keys to pan and plus or minus to zoom."></div>
+    <aside id="panel" aria-labelledby="panel-title">
+      <div class="panel-heading"><h2 id="panel-title">Map key</h2><button id="panel-close" type="button" aria-label="Close map panel">&times;</button></div>
+      <div class="panel-body">
+        <section id="welcome" aria-labelledby="welcome-title">
+          <h2 id="welcome-title">Divided We Fall</h2>
+          <p>The year is 1940. Chicago and Washington have fallen. An American Red revolution has collapsed Federal authority, and former brothers now clash in the Second American Civil War.</p>
+          <p>Select any territory on the map, or the list below, to read its story and find its flag.</p>
+        </section>
+        <section id="details" hidden aria-live="polite">
+          <img id="detail-flag" hidden alt="">
+          <a id="detail-flag-buy" class="flag-buy" href="https://flagmaker-print.com/collections/alt-history-flags" target="_blank" rel="noopener" hidden>Purchase a flag on Flagmaker &amp; Print <span aria-hidden="true">&#8599;</span></a>
+          <h2 id="detail-name"></h2>
+          <p id="detail-description"></p>
+          <a id="detail-link" href="https://dividedstates-project.com/#divided">Read more about The Divided States <span aria-hidden="true">&#8599;</span></a>
+        </section>
+        <div id="key-content">
+          <p>Drag to explore. Scroll or pinch to zoom.</p>
+          <ul id="faction-list" class="faction-list" aria-label="Factions"></ul>
+          <fieldset>
+            <legend>Show on the map</legend>
+            <label><input id="toggle-territories" type="checkbox" checked> Factions</label>
+            <label><input id="toggle-labels" type="checkbox" checked> Labels</label>
+          </fieldset>
+          <a class="wiki" href="https://dividedstates-project.com/">Back to The Divided States</a>
+        </div>
+      </div>
+    </aside>
+  </main>
+  <noscript>This map needs JavaScript for zooming and territory information.</noscript>
+</body>
+</html>

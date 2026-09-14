@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Revolutionary States placeholder flag: a gold star and gear on a red field">
+  <rect width="900" height="540" fill="#7a2620"/>
+  <rect width="900" height="540" fill="#000" opacity=".1"/>
+  <g fill="#e7c56a">
+    <circle cx="450" cy="270" r="95" fill="none" stroke="#e7c56a" stroke-width="16"/>
+    <path d="M450 130 L474 230 L578 230 L494 292 L526 392 L450 330 L374 392 L406 292 L322 230 L426 230 Z"/>
+  </g>
+</svg>

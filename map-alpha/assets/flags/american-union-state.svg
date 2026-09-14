@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="American Union State placeholder flag: a white star on a slate-blue field with three bands">
+  <rect width="900" height="540" fill="#48545e"/>
+  <rect y="0" width="900" height="60" fill="#f3efe2" opacity=".8"/>
+  <rect y="480" width="900" height="60" fill="#f3efe2" opacity=".8"/>
+  <path fill="#f3efe2" d="M450 200 L470 260 L534 260 L482 296 L502 358 L450 320 L398 358 L418 296 L366 260 L430 260 Z"/>
+</svg>
