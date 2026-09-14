@@ -17,6 +17,7 @@
     "loyalist-states": "png",
     "congressional-states": "png",
     "revolutionary-states": "svg",
+    "new-england": "svg",
   };
 
   // Alaska and Hawaii: nominally under a faction's flag but not part of
@@ -42,6 +43,8 @@
   waterPane.style.zIndex = 360;
   var factionPane = map.createPane("factions");
   factionPane.style.zIndex = 400;
+  var statesPane = map.createPane("states");
+  statesPane.style.zIndex = 410;
   var roadPane = map.createPane("roads");
   roadPane.style.zIndex = 420;
   var labelPane = map.createPane("labels");
@@ -53,12 +56,19 @@
 
   function selectLayer(layer, feature) {
     if (selectedLayer) selectedLayer.setStyle({ });
-    document.querySelectorAll(".faction-fill.is-selected").forEach(function (el) {
+    document.querySelectorAll(".faction-fill.is-selected, .state-fill.is-selected").forEach(function (el) {
       el.classList.remove("is-selected");
     });
     if (layer && layer._path) {
       layer._path.classList.add("is-selected");
     }
+    // The per-state mosaic sits visually on top of this layer, so its own
+    // selection stroke would be hidden underneath -- highlight every state
+    // belonging to the same faction on that layer instead.
+    var fid = feature.properties.kind === "affiliated" ? feature.properties.faction : feature.properties.id;
+    document.querySelectorAll('.state-fill[data-faction="' + fid + '"]').forEach(function (el) {
+      el.classList.add("is-selected");
+    });
     selectedLayer = layer;
     showDetails(feature);
   }
@@ -149,23 +159,28 @@
       updateCapitalVisibility();
     });
 
-  // Capitals fade in gradually rather than snapping straight to full
-  // strength: barely-there at CAPITAL_MIN_ZOOM, full opacity by
-  // CAPITAL_FULL_ZOOM, so the map doesn't go from empty to 50 loud labels
-  // in one scroll tick.
+  // Capitals fade AND grow in gradually rather than snapping straight to
+  // full strength: tiny and barely-there at CAPITAL_MIN_ZOOM, full size
+  // and opacity by CAPITAL_FULL_ZOOM, so the map doesn't go from empty to
+  // 50 loud labels in one scroll tick.
   var CAPITAL_MIN_ZOOM = 5;
   var CAPITAL_FULL_ZOOM = 8;
   function updateCapitalVisibility() {
     var zoom = map.getZoom();
     var checked = document.getElementById("toggle-capitals").checked;
     var show = zoom >= CAPITAL_MIN_ZOOM && checked;
-    var opacity = Math.min(1, Math.max(0.3, (zoom - CAPITAL_MIN_ZOOM + 1) / (CAPITAL_FULL_ZOOM - CAPITAL_MIN_ZOOM + 1)));
+    var t = Math.min(1, Math.max(0, (zoom - CAPITAL_MIN_ZOOM) / (CAPITAL_FULL_ZOOM - CAPITAL_MIN_ZOOM)));
+    var opacity = Math.max(0.35, t);
+    var scale = 0.55 + t * 0.45;
     capitalMarkers.forEach(function (m) {
       var el = m.getElement();
       if (!el) return;
       el.style.display = show ? "" : "none";
       var mark = el.querySelector(".capital-mark");
-      if (mark) mark.style.opacity = opacity;
+      if (mark) {
+        mark.style.opacity = opacity;
+        mark.style.setProperty("--scale", scale);
+      }
     });
   }
   map.on("zoomend", updateCapitalVisibility);
@@ -241,6 +256,36 @@
       });
     });
 
+  // A per-state mosaic drawn on top of the flat faction fill: each state
+  // its own slight shade of the faction colour with a thin border between
+  // neighbours, so the map reads as individual states once zoomed in
+  // without changing what a click selects (that's still handled by the
+  // faction layer underneath -- these paths are interactive:false so
+  // clicks/hover fall straight through to it).
+  fetch("data/states.geojson")
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      var layer = L.geoJSON(geo, {
+        pane: "states",
+        interactive: false,
+        style: function (feature) {
+          return {
+            className: "state-fill",
+            fillColor: feature.properties.color,
+            fillOpacity: 1,
+            color: feature.properties.line,
+            weight: 0.7,
+            opacity: 0.5,
+          };
+        },
+      }).addTo(map);
+      layer.eachLayer(function (stateLayer) {
+        if (stateLayer._path) {
+          stateLayer._path.setAttribute("data-faction", stateLayer.feature.properties.faction);
+        }
+      });
+    });
+
   document.getElementById("panel-toggle").addEventListener("click", function () {
     var panel = document.getElementById("panel");
     var collapsed = panel.classList.toggle("panel-collapsed");
@@ -256,6 +301,9 @@
     Object.keys(factionLayers).forEach(function (id) {
       var layer = factionLayers[id];
       if (layer._path) layer._path.style.display = display;
+    });
+    document.querySelectorAll(".state-fill").forEach(function (el) {
+      el.style.display = display;
     });
   });
   document.getElementById("toggle-labels").addEventListener("change", function (e) {

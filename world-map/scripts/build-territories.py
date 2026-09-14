@@ -1,11 +1,24 @@
 #!/usr/bin/env python3
-"""Build data/territories.geojson for the Divided States world-map page.
+"""Build data/territories.geojson and data/states.geojson for the Divided
+States world-map page.
 
-Dissolves US state polygons (Natural Earth 1:50m admin-1, public domain,
-downloaded for the American Kingdoms atlas and copied into
-sources/natural-earth-admin1-states.geojson here) into three macro-region
-factions per the "Declassified" faction briefing cards supplied for this
-page, plus Alaska/Hawaii as affiliated-but-non-combatant territory.
+territories.geojson dissolves US state polygons (Natural Earth 1:50m
+admin-1, public domain, downloaded for the American Kingdoms atlas and
+copied into sources/natural-earth-admin1-states.geojson here) into
+macro-region factions per the "Declassified" faction briefing cards
+supplied for this page, plus Alaska/Hawaii as affiliated-but-non-combatant
+territory. It's the interactive layer (click/hover/fit-bounds/labels).
+
+states.geojson keeps each state as its own feature, tagged with its
+faction id and a small per-state shade of that faction's colour, plus a
+subtle stroke -- a purely visual mosaic drawn on top of territories.geojson
+so the flat macro-region reads as individual states once you zoom in,
+without changing what a click selects (that's still the faction).
+
+Both files have the Great Lakes cut out of them (not just data/land.geojson
+in build-map-layers.py) -- state/admin-1 polygons aren't clipped to the
+lakeshore, so without this the faction/state fill painted straight across
+the lakes instead of leaving them as open water.
 
 The state-to-faction assignment is a best-effort placeholder: the briefing
 cards' own maps are illustrative/propaganda-style (each faction's card
@@ -18,7 +31,9 @@ Requires shapely >= 2.
 Run from the repository root:
     python3 world-map/scripts/build-territories.py
 """
+import colorsys
 import json
+import zlib
 from pathlib import Path
 
 from shapely.geometry import shape, mapping
@@ -26,19 +41,33 @@ from shapely.ops import unary_union
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "sources" / "natural-earth-admin1-states.geojson"
+LAKES_SRC = ROOT / "sources" / "natural-earth-lakes.geojson"
 OUT = ROOT / "data" / "territories.geojson"
+STATES_OUT = ROOT / "data" / "states.geojson"
 
-# Three-way split per the briefing cards. The former separate "New England"
-# and "American Union State" regions from the first two passes are merged
-# into one Loyalist States faction -- the cards' own map shows Loyalist
-# territory as one contiguous claim from New England down through the
-# South, not two.
+GREAT_LAKES = {"Lake Superior", "Lake Michigan", "Lake Huron", "Lake Erie", "Lake Ontario"}
+
+# Four-way split per the briefing cards, with New England restored as its
+# own region (per direct request) rather than folded into Loyalist States --
+# the cards' own map put it all under one Loyalist claim, but New England
+# goes back to covering just the six New England states plus New York and
+# New Jersey, the same footprint it had before that merge.
 FACTIONS = {
+    "new-england": {
+        "name": "New England",
+        "color": "#5f7a4f",
+        "states": ["ME", "NH", "VT", "MA", "RI", "CT", "NY", "NJ"],
+        "summary": (
+            "Cut off from the capital when Washington fell, the loyalist "
+            "Federal government retreated to the Northeast Corridor. New "
+            "England remains the last stronghold flying the old flag, "
+            "hemmed in by the Revolutionary States to the west and south."
+        ),
+    },
     "loyalist-states": {
         "name": "Loyalist States",
         "color": "#1f3a66",
         "states": [
-            "ME", "NH", "VT", "MA", "RI", "CT", "NY", "NJ",
             "VA", "NC", "SC", "GA", "FL", "AL", "MS", "TN", "KY", "AR",
             "LA", "TX", "OK", "NM",
         ],
@@ -138,18 +167,44 @@ AFFILIATED_TERRITORIES = {
 }
 
 
+def load_great_lakes():
+    src = json.loads(LAKES_SRC.read_text())
+    lakes = [
+        shape(f["geometry"])
+        for f in src["features"]
+        if f["properties"].get("name") in GREAT_LAKES
+    ]
+    return unary_union(lakes).buffer(0.001)
+
+
+def shade(hex_color, postal):
+    """A small, deterministic per-state lightness offset of a faction's
+    base colour -- enough to read as a mosaic of individual states once
+    zoomed in, subtle enough to still read as one flat colour zoomed out."""
+    r, g, b = (int(hex_color[i : i + 2], 16) / 255 for i in (1, 3, 5))
+    h, l, s = colorsys.rgb_to_hls(r, g, b)
+    offset = ((zlib.crc32(postal.encode()) % 1000) / 1000 - 0.5) * 0.16  # +/-8%
+    l = min(0.92, max(0.08, l + offset))
+    r2, g2, b2 = colorsys.hls_to_rgb(h, l, s)
+    return "#{:02x}{:02x}{:02x}".format(round(r2 * 255), round(g2 * 255), round(b2 * 255))
+
+
 def main():
+    great_lakes = load_great_lakes()
     src = json.loads(SRC.read_text())
     us_by_postal = {}
+    state_geoms = {}  # postal -> (faction_id, cut geometry), for states.geojson
     territory = {}  # unassigned-but-US, kept neutral (Alaska, Hawaii)
     for feature in src["features"]:
         props = feature["properties"]
         if props.get("iso_a2") != "US":
             continue
         postal = props.get("postal")
-        geom = shape(feature["geometry"])
+        geom = shape(feature["geometry"]).difference(great_lakes)
         if postal in STATE_TO_FACTION:
-            us_by_postal.setdefault(STATE_TO_FACTION[postal], []).append(geom)
+            fid = STATE_TO_FACTION[postal]
+            us_by_postal.setdefault(fid, []).append(geom)
+            state_geoms[postal] = (fid, geom)
         else:
             territory[postal] = (props.get("name"), geom)
 
@@ -205,8 +260,8 @@ def main():
                     "color": "#9a9a90",
                     "summary": (
                         f"{name} is a U.S. territory in 1940, not yet a "
-                        "state and not claimed by any of the three "
-                        "factions in this civil war."
+                        "state and not claimed by any of the factions in "
+                        "this civil war."
                     ),
                     "states": [postal],
                 },
@@ -218,6 +273,24 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(fc))
     print(f"Wrote {len(features)} features to {OUT} ({OUT.stat().st_size} bytes)")
+
+    state_features = []
+    for postal, (fid, geom) in state_geoms.items():
+        state_features.append(
+            {
+                "type": "Feature",
+                "properties": {
+                    "postal": postal,
+                    "faction": fid,
+                    "color": shade(FACTIONS[fid]["color"], postal),
+                    "line": FACTIONS[fid]["color"],
+                },
+                "geometry": mapping(geom),
+            }
+        )
+    states_fc = {"type": "FeatureCollection", "features": state_features}
+    STATES_OUT.write_text(json.dumps(states_fc))
+    print(f"Wrote {len(state_features)} features to {STATES_OUT} ({STATES_OUT.stat().st_size} bytes)")
 
 
 if __name__ == "__main__":

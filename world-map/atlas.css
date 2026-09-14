@@ -21,16 +21,16 @@ a:hover{color:#f2b968}
 main{position:relative;flex:1;min-height:0;overflow:hidden}
 
 /* --- The retro newsreel map surface --- */
-/* Very dark sea, so the brighter land (and the coloured factions on top
-   of it) actually pops -- the reference newsreel stills are black ocean,
-   light-grey continents, not two shades of the same mud tone. */
-#map{position:absolute;inset:0;background:#121214}
-#map .leaflet-container{background:#121214}
+/* Dark grey sea with heavy grain rather than flat black -- pure black read
+   as a void; a dark grey ground lets the noise texture actually show up
+   over open water instead of disappearing into it. */
+#map{position:absolute;inset:0;background:#2b2b2e}
+#map .leaflet-container{background:#2b2b2e}
 /* film grain + vignette + faint scanlines, layered above the vector map,
    below the Leaflet panes' own z-index range (which start around 400/600) */
 #map::before{content:'';position:absolute;inset:0;z-index:390;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.5'/%3E%3C/svg%3E");
-  background-repeat:repeat;background-size:160px 160px;mix-blend-mode:overlay;opacity:.85}
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .65'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.6'/%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:160px 160px;mix-blend-mode:overlay;opacity:.9}
 /* Messy inked-paper fibre, not CRT scanlines: directional turbulence
    (different x/y frequencies) reads as streaky fibre grain rather than
    uniform cloud noise, multiply-blended so it darkens unevenly like ink
@@ -43,6 +43,17 @@ main{position:relative;flex:1;min-height:0;overflow:hidden}
 .faction-fill.is-affiliated{stroke-dasharray:3 3;stroke-width:1.2}
 .faction-fill:hover,.faction-fill.is-selected{stroke:#f2efe6;stroke-width:2.4;fill-opacity:1}
 .leaflet-interactive:focus{outline:none;stroke:#f2efe6;stroke-width:3}
+/* Per-state mosaic, drawn on top of .faction-fill: each state a slight
+   shade of its faction's colour (set inline per-feature by atlas.js, from
+   data/states.geojson) with a thin border between neighbours -- reads as
+   individual states once zoomed in, flat from a distance since the shade
+   difference is subtle. interactive:false in atlas.js means these paths
+   never receive clicks/hover themselves (both fall through to the
+   .faction-fill layer beneath); .is-selected is toggled by faction id
+   instead of relying on the (now-hidden-underneath) faction layer's own
+   selection stroke. */
+.state-fill{filter:saturate(.6) contrast(1.1) brightness(1.08)}
+.state-fill.is-selected{stroke-width:2px!important;stroke-opacity:.9!important}
 .land-base{fill:#b3ab9c;stroke:#5c5648;stroke-width:.6;fill-opacity:1}
 .river-line{fill:none;stroke:#6fa0b8;stroke-width:1.5;stroke-linecap:round;opacity:.9}
 .road-line{fill:none;stroke:#ab3232;stroke-width:1.1;stroke-linecap:round;opacity:.75;stroke-dasharray:1 3}
@@ -56,7 +67,8 @@ main{position:relative;flex:1;min-height:0;overflow:hidden}
    the diamond and the name text spilled out past it with no backing. */
 .capital-dot{background:none;border:0;pointer-events:none!important}
 .capital-mark{display:inline-flex;align-items:center;gap:5px;padding:2px 7px 2px 5px;white-space:nowrap;pointer-events:none;
-  background:#14110dd9;border:1px solid #00000080;border-radius:3px;transition:opacity .15s ease}
+  background:#14110dd9;border:1px solid #00000080;border-radius:3px;transition:opacity .15s ease,transform .15s ease;
+  --scale:.55;transform:scale(var(--scale));transform-origin:left center}
 .capital-mark::before{content:'\25C6';font-size:9px;line-height:1;color:#f2efe6}
 .capital-mark span{font:700 10px/1.1 var(--display-font);letter-spacing:.03em;text-transform:uppercase;color:#f2efe6}
 
@@ -72,7 +84,7 @@ main{position:relative;flex:1;min-height:0;overflow:hidden}
 .state-label-text{color:#f2efe6;font:800 11px/1.1 var(--display-font);letter-spacing:.03em;text-transform:uppercase;text-shadow:0 1px 3px #000,0 0 6px #000;white-space:nowrap;pointer-events:none}
 
 /* --- Info panel --- */
-#panel{position:absolute;left:22px;top:22px;width:300px;max-height:calc(100% - 66px);
+#panel{position:absolute;left:22px;top:22px;width:340px;max-height:calc(100% - 66px);
   display:flex;flex-direction:column;padding:0;overflow:hidden;z-index:800;
   background:var(--panel);border:1px solid var(--line);box-shadow:0 6px 26px #00000080}
 .panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:none;
@@ -98,7 +110,7 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 #details{margin:0 0 18px;padding:0 0 18px;border-bottom:1px solid var(--line)}
 #detail-name{font-size:1.15rem}
 #detail-description{white-space:pre-line}
-.flag-buy{display:inline-block;margin:0 0 12px;font:600 .82rem var(--body-font);color:#e6a24a;text-decoration:none;border-bottom:1px dotted #e6a24a}
+.flag-buy{display:inline-block;margin:0 0 12px;font:600 .8rem var(--body-font);color:#e6a24a;text-decoration:none;border-bottom:1px dotted #e6a24a;white-space:nowrap}
 .flag-buy:hover{color:#f2b968;border-color:#f2b968}
 #detail-flag{display:block;width:120px;height:72px;object-fit:cover;margin-bottom:10px;border:1px solid var(--line);box-shadow:0 2px 10px #00000080}
 #detail-link{display:inline-block;margin-top:2px;font-size:.9rem}
