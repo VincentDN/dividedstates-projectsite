@@ -16,7 +16,12 @@ request that put it here.
 
 The sea is now near-black (`#121214`) and land a bright warm grey
 (`#b3ab9c`), matching the reference newsreel stills' own high contrast --
-the first pass had both at similar muddy mid-tones. The Leaflet
+the first pass had both at similar muddy mid-tones. `#map::after`'s
+overlay was a `repeating-linear-gradient` scanline stripe (read as a CRT
+effect, not the intended film-print look); it's now a directional
+`feTurbulence` (`type="turbulence"`, uneven x/y `baseFrequency`) grain,
+`multiply`-blended so it darkens unevenly like ink soaking into paper
+fibre instead of a uniform overlay wash. The Leaflet
 attribution control was also being added twice (once automatically by
 `L.map()`'s default `attributionControl: true`, once explicitly for the
 custom prefix), which is why the live default-Leaflet "Leaflet" credit
@@ -79,9 +84,19 @@ The first alpha was criticized as too low-res/empty at any real zoom, so
 territories, all clipped to a `lon -170..-50, lat 5..75` North America box:
 
 - `data/land.geojson` — coastline, simplified at a finer 0.003° tolerance
-  than the first pass's 0.01° for visibly crisper detail.
-- `data/lakes.geojson` — same tolerance; this is what actually makes the
-  Great Lakes read as lakes instead of blank gaps in the land.
+  than the first pass's 0.01° for visibly crisper detail. The Great Lakes
+  are cut out of it as true holes (`land_raw.difference(lakes_raw)`,
+  *then* simplified once as a single geometry) rather than drawn as a
+  second, separately-simplified layer on top -- the original approach
+  left jagged sliver gaps wherever the two independently-simplified edges
+  didn't quite line up, worst around Georgian Bay's genuinely complex
+  coastline. One hole-by-construction has no second edge to drift out of
+  alignment with the first.
+- `data/lakes.geojson` — the lake footprint on its own (not diffed against
+  land), kept as data but not rendered as a separate map layer today,
+  since land's own holes already show the sea-black through with no seam
+  risk. Here in case a future pass wants water styled differently from
+  open sea.
 - `data/rivers.geojson` — Natural Earth rivers filtered to `scalerank<=5`
   (keeps the Mississippi/Missouri/Ohio/Columbia/Rio Grande tier, drops the
   minor tributaries that would just clutter the map at this scale).
@@ -89,7 +104,9 @@ territories, all clipped to a `lon -170..-50, lat 5..75` North America box:
   `sources/natural-earth-populated-places.geojson`'s `Admin-1 capital`
   rows. `atlas.js` only shows their markers/labels once you zoom in past
   `CAPITAL_MIN_ZOOM` (5) — at the default continental view they were just
-  50 overlapping labels.
+  50 overlapping labels. Marked with a small low-opacity diamond (`.capital-mark::before`,
+  not a star) and an 8px label, deliberately quiet map furniture rather
+  than a competing data layer.
 
 Major highways are separate: `scripts/build-roads.py` filters Natural
 Earth's 1:10m roads (`type == "Major Highway"`, `sov_a3 == "USA"`) down to

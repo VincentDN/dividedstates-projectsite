@@ -55,10 +55,27 @@ def write(name, geometry_or_features):
 def main():
     # Coastline -- finer tolerance than the first pass (0.003 vs 0.01) for a
     # visibly crisper edge at the zoom levels this page actually uses.
-    land = clip_dissolve("natural-earth-land.geojson", 0.003)
+    #
+    # The Great Lakes aren't holes in Natural Earth's land polygon (it's
+    # solid landmass there), so the first pass drew them as a *separate*
+    # lakes layer on top of land -- independently simplified, so its
+    # boundary didn't quite line up with land's, especially in the
+    # Georgian Bay / 30,000 Islands area, leaving jagged sliver gaps of
+    # bare sea colour between the two mismatched edges. Cutting the lakes
+    # out of land at full precision *before* simplifying instead (so the
+    # hole and the coastline share one topology, simplified together as a
+    # single pass) makes them holes by construction -- no second edge to
+    # ever drift out of alignment with the first.
+    land_raw = clip_dissolve("natural-earth-land.geojson", None)
+    lakes_raw = clip_dissolve("natural-earth-lakes.geojson", None)
+    land = land_raw.difference(lakes_raw).simplify(0.003, preserve_topology=True)
     write("land.geojson", land)
 
-    lakes = clip_dissolve("natural-earth-lakes.geojson", 0.003)
+    # Kept as its own file too (full lake footprint, not diffed against
+    # land) in case a future pass wants to style water separately from
+    # the sea -- not rendered as a map layer today, since land's own
+    # holes already reveal the sea-black beneath at zero seam risk.
+    lakes = lakes_raw.simplify(0.003, preserve_topology=True)
     write("lakes.geojson", lakes)
 
     rivers_src = json.loads((SRC / "natural-earth-rivers.geojson").read_text())

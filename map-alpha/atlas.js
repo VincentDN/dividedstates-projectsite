@@ -100,16 +100,6 @@
       }).addTo(map);
     });
 
-  fetch("data/lakes.geojson")
-    .then(function (r) { return r.json(); })
-    .then(function (geo) {
-      L.geoJSON(geo, {
-        pane: "water",
-        className: "lake-base",
-        interactive: false,
-      }).addTo(map);
-    });
-
   fetch("data/rivers.geojson")
     .then(function (r) { return r.json(); })
     .then(function (geo) {
@@ -260,7 +250,7 @@
   });
   document.getElementById("toggle-water").addEventListener("change", function (e) {
     var display = e.target.checked ? "" : "none";
-    document.querySelectorAll(".lake-base, .river-line").forEach(function (path) {
+    document.querySelectorAll(".river-line").forEach(function (path) {
       path.style.display = display;
     });
   });
