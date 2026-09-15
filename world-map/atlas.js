@@ -369,6 +369,27 @@
   }
   map.on("zoomend", updateMosaicOpacity);
 
+  var siteMenuToggle = document.getElementById("site-menu-toggle");
+  var siteMenu = document.getElementById("site-menu");
+  siteMenuToggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var expanded = this.getAttribute("aria-expanded") === "true";
+    this.setAttribute("aria-expanded", String(!expanded));
+    siteMenu.hidden = expanded;
+  });
+  document.addEventListener("click", function (e) {
+    if (!siteMenu.hidden && !siteMenu.contains(e.target) && e.target !== siteMenuToggle) {
+      siteMenu.hidden = true;
+      siteMenuToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !siteMenu.hidden) {
+      siteMenu.hidden = true;
+      siteMenuToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
   document.getElementById("panel-toggle").addEventListener("click", function () {
     var panel = document.getElementById("panel");
     var collapsed = panel.classList.toggle("panel-collapsed");

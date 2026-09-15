@@ -21,9 +21,9 @@
   <meta name="twitter:site" content="@kaisercatcinema">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vendor/leaflet.css">
-  <link rel="stylesheet" href="atlas.css?v=9">
+  <link rel="stylesheet" href="atlas.css?v=10">
   <script defer src="vendor/leaflet.js"></script>
-  <script defer src="atlas.js?v=10"></script>
+  <script defer src="atlas.js?v=11"></script>
 </head>
 <body>
   <!-- Animated diagonal fills for Alaska/Hawaii: nominally under a
@@ -43,14 +43,28 @@
       </pattern>
     </defs>
   </svg>
-  <div id="alpha-banner" role="status">This map is an early alpha. Faction borders are a provisional placeholder, not confirmed canon &mdash; questions or corrections go to Vincent.</div>
+  <div id="map-notice" role="status">Faction borders are a provisional placeholder, not confirmed canon &mdash; questions or corrections go to Vincent.</div>
   <header>
     <a class="brand-link" href="https://dividedstates-project.com/" aria-label="The Divided States home"><img src="../assets/logo.png" alt="The Divided States" width="1156" height="512"></a>
     <div class="atlas-title">
       <h1>The Second American Civil War, 1940</h1>
       <p>Four factions, one broken Union. Select a territory to read its story.</p>
     </div>
-    <nav aria-label="Atlas controls"><button id="panel-toggle" type="button" aria-controls="panel" aria-expanded="true">Map key</button></nav>
+    <nav aria-label="Atlas controls">
+      <div class="site-menu-wrap">
+        <button id="site-menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false">Site menu</button>
+        <ul id="site-menu" class="site-menu" hidden>
+          <li><a href="https://dividedstates-project.com/">Home</a></li>
+          <li><a href="https://dividedstates-project.com/#episodes">Episodes</a></li>
+          <li><a href="https://dividedstates-project.com/#gallery">Gallery</a></li>
+          <li><a href="https://dividedstates-project.com/#projects">Projects</a></li>
+          <li><a href="https://dividedstates-project.com/#crew">Crew</a></li>
+          <li><a href="https://dividedstates-project.com/#contact">Newsletter / Contact</a></li>
+          <li><a href="https://dividedstates-project.com/#merchandise">Merchandise</a></li>
+        </ul>
+      </div>
+      <button id="panel-toggle" type="button" aria-controls="panel" aria-expanded="true">Map key</button>
+    </nav>
   </header>
   <main>
     <div id="map" aria-label="Interactive map of the Divided States. Use arrow keys to pan and plus or minus to zoom."></div>
