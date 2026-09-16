@@ -56,18 +56,25 @@ restored as its own region on direct request -- back to its original
 footprint from the very first pass. The Loyalist faction was itself
 renamed from "Loyalist States" to **American Union State**, matching the
 real name of the flag supplied for it, keeping the same territory, colour
-and "Blue States" lore. `scripts/build-territories.py` dissolves US state polygons (Natural Earth
+and "Blue States" lore. The Congressional faction was later renamed from
+"Congressional States" to **Pacific States**, its own established
+nickname per the briefing cards, again keeping the same territory and
+colour -- "Congressional States" lives on as an "also known as" in its
+own lore text. `scripts/build-territories.py` dissolves US state polygons (Natural Earth
 1:50m admin-1, public domain, copied from the AK atlas's own
 `sources/natural-earth-admin1-states.geojson` into this page's `sources/`)
 into four macro-regions, real 1940 state lines standing in for whatever
-the eventual in-universe borders turn out to be:
+the eventual in-universe borders turn out to be. Table order below
+matches `FACTIONS`' own dict order in that script, which also drives the
+generated GeoJSON's feature order and so the map's own "Factions" sidebar
+list and the homepage carousel:
 
 | Faction | Colour | States |
 | --- | --- | --- |
-| New England | green `#5f7a4f` | ME, NH, VT, MA, RI, CT, NY, NJ |
 | American Union State ("Blue States") | navy `#1f3a66` | VA, NC, SC, GA, FL, AL, MS, TN, KY, AR, LA, TX, OK, NM |
 | Revolutionary States ("Red States" / R.S.A.) | red `#8c2c26` | PA, DE, MD, DC, WV, OH, MI, WI, IL, IN, MN, IA, MO, KS, NE, SD, ND, MT, WY, CO, UT, ID |
-| Congressional States ("Pacific States") | gold `#c98a2b` | WA, OR, CA, NV, AZ |
+| Pacific States ("Congressional States") | gold `#c98a2b` | WA, OR, CA, NV, AZ |
+| New England | green `#5f7a4f` | ME, NH, VT, MA, RI, CT, NY, NJ |
 
 The briefing card's own map put all of this under one Loyalist claim
 (capital Atlanta) reaching from New England down through the South; this
@@ -100,7 +107,7 @@ war, so instead of a solid fill each is drawn with a moving diagonal hatch
 `index.html`, applied by `atlas.js` setting `layer._path.style.fill` since
 Leaflet's own `fillColor` option can't take a `url(#...)` paint server) in
 shades of its nominal faction's colour: Alaska under the American Union State,
-Hawaii under the Congressional States. Their flag/buy-a-flag panel still
+Hawaii under the Pacific States. Their flag/buy-a-flag panel still
 points at that faction's real flag, via `atlas.js`'s `flagId` lookup.
 
 This split is still a best-effort reading, now of the briefing cards
@@ -117,7 +124,7 @@ and rerun `python3 scripts/build-territories.py` from this directory
 ## Flags and Flagmaker links
 
 Real flag art now exists for all four factions -- American Union
-State/Congressional States supplied as Illustrator/PDF vectors and
+State/Pacific States supplied as Illustrator/PDF vectors and
 rasterised here (`pdftoppm`); Revolutionary States/New England supplied
 directly as production JPG/PNG. Every faction links to its own real
 Flagmaker product page (`atlas.js`'s `FLAG_LINKS`) -- none fall back to the
@@ -130,10 +137,13 @@ generic collection link any more:
   fact renamed to "American Union State" specifically to match this real
   flag's actual name, having briefly been called "Loyalist States" per
   the briefing cards.
-- **Congressional States** — `assets/flags/congressional-states.png`, the
+- **Pacific States** — `assets/flags/pacific-states.png`, the
   supplied Pacific States/PSA vector (white-red-gold bands, navy star and
   bear). Links to
-  `https://flagmaker-print.com/products/pacific-states-bear-flag-the-divided-states`.
+  `https://flagmaker-print.com/products/pacific-states-bear-flag-the-divided-states`
+  -- this faction was likewise renamed from "Congressional States" to
+  "Pacific States" specifically to match this real flag's product name,
+  its own established nickname per the briefing cards.
 - **Revolutionary States** — `assets/flags/revolutionary-states.png`, the
   supplied production art: a black canton (white gear, star and crossed
   hammer-and-pick badge) against diagonal red/white stripes, split by a

@@ -5,7 +5,7 @@
     // Real Flagmaker product pages, every faction now linked directly.
     "american-union-state": "https://flagmaker-print.com/products/american-union-state-flag-kaiserreich",
     "revolutionary-states": "https://flagmaker-print.com/products/revolutionary-states-flag-the-divided-states",
-    "congressional-states": "https://flagmaker-print.com/products/pacific-states-bear-flag-the-divided-states",
+    "pacific-states": "https://flagmaker-print.com/products/pacific-states-bear-flag-the-divided-states",
     "new-england": "https://flagmaker-print.com/products/new-england-flag-kaiserreich",
     // Alaska/Hawaii show their own real 1940s-America state flags rather
     // than their nominal faction's, so they get their own product links.
@@ -29,7 +29,7 @@
   // showDetails() can pick the right file and extension.
   var FLAG_IMAGE_EXT = {
     "american-union-state": "png",
-    "congressional-states": "png",
+    "pacific-states": "png",
     "revolutionary-states": "png",
     "new-england": "jpg",
     "alaska": "svg",
@@ -40,7 +40,7 @@
   // the war, rendered with a moving diagonal hatch instead of a solid fill.
   var AFFILIATED_HATCH = {
     "american-union-state": "url(#hatch-affiliated-american-union-state)",
-    "congressional-states": "url(#hatch-affiliated-congressional-states)",
+    "pacific-states": "url(#hatch-affiliated-pacific-states)",
   };
 
   // Azimuthal equidistant, centred on the North Pole, rather than

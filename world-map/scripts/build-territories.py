@@ -47,26 +47,18 @@ STATES_OUT = ROOT / "data" / "states.geojson"
 
 GREAT_LAKES = {"Lake Superior", "Lake Michigan", "Lake Huron", "Lake Erie", "Lake Ontario"}
 
-# Four-way split per the briefing cards, with New England restored as its
-# own region (per direct request) rather than folded into the "Loyalist
-# States" -- the cards' own map put it all under one Loyalist claim, but
-# New England goes back to covering just the six New England states plus
-# New York and New Jersey, the same footprint it had before that merge.
-# "Loyalist States" was itself later renamed to "American Union State" --
-# the actual name of the flag supplied for it -- while keeping the same
-# territory, colour and "Blue States"/Loyalist lore.
+# Four-way split per the briefing cards. Order here drives both the
+# generated GeoJSON's feature order (so the map's own "Factions" sidebar
+# list reads in this order) and, by convention, the homepage carousel --
+# New England sits last, after Pacific States, rather than leading.
+# "Loyalist States" was renamed to "American Union State" early on -- the
+# actual name of the flag supplied for it -- while keeping the same
+# territory, colour and "Blue States"/Loyalist lore. "Congressional
+# States" was later renamed to "Pacific States" the same way, its own
+# established nickname (see the briefing cards) becoming the primary name;
+# "Congressional States" lives on as the "also known as" in its own
+# summary and the other factions' references to it below.
 FACTIONS = {
-    "new-england": {
-        "name": "New England",
-        "color": "#5f7a4f",
-        "states": ["ME", "NH", "VT", "MA", "RI", "CT", "NY", "NJ"],
-        "summary": (
-            "Cut off from the capital when Washington fell, the loyalist "
-            "Federal government retreated to the Northeast Corridor. New "
-            "England remains the last stronghold flying the old flag, "
-            "hemmed in by the Revolutionary States to the west and south."
-        ),
-    },
     "american-union-state": {
         "name": "American Union State",
         "color": "#1f3a66",
@@ -82,8 +74,8 @@ FACTIONS = {
             "the Labor Revolt against explicit orders from Congress, he "
             "was decried as a tyrant — and when he backed a military "
             "coup to remove Congress entirely, its surviving "
-            "representatives fled west to found the Congressional "
-            "States.\n\nBoth the American Union State and Congressional "
+            "representatives fled west to found the Pacific "
+            "States.\n\nBoth the American Union State and Pacific States "
             "governments still claim the title United States of America; "
             "their Rocky Mountain border has stood as a demilitarized "
             "zone since the Rocky Mountains Ceasefire. German arms have "
@@ -116,24 +108,35 @@ FACTIONS = {
             "Canadian Royalist blockade and German meddling to its south."
         ),
     },
-    "congressional-states": {
-        "name": "Congressional States",
+    "pacific-states": {
+        "name": "Pacific States",
         "color": "#c98a2b",
         "states": ["WA", "OR", "CA", "NV", "AZ"],
         "summary": (
-            "Also known as the ‘Pacific States,’ the "
-            "Congressional States are a loose alliance of moderate "
+            "Also known as the ‘Congressional States,’ the "
+            "Pacific States are a loose alliance of moderate "
             "Republicans and Democrats who fled President Langdon’s "
             "crackdown at the outbreak of the war, led by the remnants of "
             "Congress and anti-Langdon governors who claim to be the last "
             "holdout of true American democracy.\n\nNot at open war with "
-            "either side, the Congressional States hold a tenuous "
+            "either side, the Pacific States hold a tenuous "
             "ceasefire along the Rocky Mountains — a policy of "
             "non-intervention dating to Congress’s refusal to send "
             "the Federal military into Chicago at the start of the "
             "revolution. Though the smallest of the three factions, they "
             "enjoy support from the Republic of Japan and Royalist "
             "Canada."
+        ),
+    },
+    "new-england": {
+        "name": "New England",
+        "color": "#5f7a4f",
+        "states": ["ME", "NH", "VT", "MA", "RI", "CT", "NY", "NJ"],
+        "summary": (
+            "Cut off from the capital when Washington fell, the loyalist "
+            "Federal government retreated to the Northeast Corridor. New "
+            "England remains the last stronghold flying the old flag, "
+            "hemmed in by the Revolutionary States to the west and south."
         ),
     },
 }
@@ -145,8 +148,8 @@ STATE_TO_FACTION = {
 # Alaska and Hawaii weren't states in 1940 and sit outside the civil war
 # entirely, but each is nominally under one side's flag -- Alaska as
 # American Union State territory (the Gulf shipping lanes a territorial
-# government would have depended on), Hawaii under the Congressional
-# States' Pacific fleet. Neither actively participates, so they're tagged
+# government would have depended on), Hawaii under the Pacific States'
+# own fleet. Neither actively participates, so they're tagged
 # "affiliated" rather than "faction" and rendered with the animated
 # diagonal treatment instead of a solid fill.
 AFFILIATED_TERRITORIES = {
@@ -160,11 +163,11 @@ AFFILIATED_TERRITORIES = {
         ),
     },
     "HI": {
-        "faction": "congressional-states",
+        "faction": "pacific-states",
         "summary": (
-            "Hawaii falls under the Congressional States' Pacific claim, "
-            "home to their fleet -- but it isn't a state yet, and it "
-            "takes no active part in the war on the mainland."
+            "Hawaii falls under the Pacific States' own claim, home to "
+            "their fleet -- but it isn't a state yet, and it takes no "
+            "active part in the war on the mainland."
         ),
     },
 }

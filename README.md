@@ -6,10 +6,11 @@ Version 2.0.4 · 3 September 2026
 
 - **Full interactive map, for both the TDS site and the AK site.**
   Underway: `/world-map/` (see `world-map/README.md`) is a first alpha —
-  four dissolved macro-regions (New England, American Union State,
-  Revolutionary States, Congressional States, per the "Declassified"
-  faction briefing cards, with New England later restored as its own
-  region on request) over real 1940 state lines, each state also
+  four dissolved macro-regions (American Union State, Revolutionary
+  States, Pacific States, New England, per the "Declassified" faction
+  briefing cards, with New England later restored as its own region on
+  request and Congressional States later renamed to Pacific States, its
+  own established nickname) over real 1940 state lines, each state also
   showing as a subtle shade of its faction's colour once zoomed in.
   Styled after the retro B&W newsreel reference art. It's live in the
   main nav, the footer's Explore column, and a Map Promo section below
@@ -37,7 +38,11 @@ Version 2.0.4 · 3 September 2026
   dedicated piece; British Empire's poster link falls back to the general
   `althistory-posters` collection since no single product is a clean
   match (Union of Britain is the opposing revolutionary government, not
-  the exiled Empire).
+  the exiled Empire). Card order (and the map's own faction list, driven
+  by the same `FACTIONS` dict) is American Union State, Revolutionary
+  States, Pacific States, New England, then the four foreign powers.
+  Congressional States was renamed to Pacific States, its own established
+  nickname per the briefing cards -- see `world-map/README.md`.
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
 framework, database, build process, or server-side application is required.
