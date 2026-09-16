@@ -23,13 +23,21 @@ Version 2.0.4 · 3 September 2026
   now link straight to their real product pages (`world-map/atlas.js`'s
   `FLAG_LINKS`), and Alaska/Hawaii show and link their own real state flags
   rather than their nominal faction's — see `world-map/README.md`.
-- **The world map has a Factions carousel** below the map itself
-  (`#factions` in `world-map/index.html`), one card per faction with art,
-  a YouTube faction-intro link and a propaganda-poster buy link, modelled
-  on American Kingdoms' own `.faction-card` carousel. Revolutionary States'
-  YouTube link points at the "World of Kaiserreich - Combined Syndicates"
-  video — Revolutionary States is this universe's Combined Syndicates of
-  America, so it's the same underlying lore video rather than a separate one.
+- **The homepage has a Factions carousel** (`#factions`, below the Map
+  Promo section), eight cards sharing the Crew section's own sliding-carousel
+  mechanics (`initCarousel()` in `main.js`, now parameterised for both
+  rows): the four Divided States factions plus the great powers backing
+  each side -- German Empire, Soviet Union, Canada and the British Empire.
+  Each card links a YouTube faction-intro video and a `kaisercatcinema.com`
+  propaganda-poster product. Revolutionary States' video points at "World
+  of Kaiserreich - Combined Syndicates" -- Revolutionary States is this
+  universe's Combined Syndicates of America, so it's the same underlying
+  lore video rather than a separate one. The Soviet Union card's art
+  (`greyhounds-in-chicago.jpg`) is an explicit placeholder pending a
+  dedicated piece; British Empire's poster link falls back to the general
+  `althistory-posters` collection since no single product is a clean
+  match (Union of Britain is the opposing revolutionary government, not
+  the exiled Empire).
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
 framework, database, build process, or server-side application is required.
@@ -131,6 +139,11 @@ separates the footer from the newsletter section. The video-loading note is remo
   auto-rotates and respects reduced-motion preferences. Add members by copying a
   `crew-card` article inside `#crew-track`; all biographies remain readable and
   crawlable in the HTML, including without JavaScript. Printing shows every card.
+- The Factions section is the same carousel mechanics as Crew (`initCarousel()`
+  in `main.js` now serves both). Add a faction/power by copying a `faction-card`
+  article inside `#faction-track`, with a `--fc-color` inline style (an accent
+  colour for the card's top border only, never used as text colour so it stays
+  legible regardless of hue) and two `.faction-links` entries.
 - Add a gallery `button.gallery-item` using the existing examples, its image
   dimensions, caption and `data-full` path. The script discovers all items.
 - Add a `button.video-choice` with the YouTube ID, full title and a local thumbnail
@@ -181,8 +194,8 @@ together. Do not change the shared person/company IDs.
 ## Maintenance notes
 
 - No animations, automatic video playback, trackers or external font requests.
-- There are 25 gallery works, six video choices, two project posters and four
-  crew profiles. The New York image was removed from the gallery at the owner's
+- There are 25 gallery works, six video choices, two project posters, four
+  crew profiles and eight faction cards. The New York image was removed from the gallery at the owner's
   request but remains in use as the homepage hero background.
 - Editable HTML/CSS/JS revalidate; assets have a one-day cache, not immutable
   one-year caching. Rename an asset or purge its cache for an immediate update.

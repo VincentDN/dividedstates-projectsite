@@ -185,6 +185,31 @@ section{scroll-margin-top:20px}
 .crew-card p{font-size:14px;line-height:1.8;margin:0 22px 26px}
 .crew-card a{color:#ddd}
 
+.factions{padding:72px 0;background:#0a0a0a;border-block:1px solid #3a3a3a}
+.factions-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:32px}
+.factions-heading .section-title{margin:0;text-align:left}
+.factions-intro{margin-top:10px;color:#b8b8b8;font-size:15px;max-width:62ch}
+.factions-intro a{color:#ddd}
+.factions-intro a:hover{color:#fff}
+.faction-controls{display:flex;gap:10px}
+.faction-controls button{display:grid;place-items:center;width:46px;height:46px;padding:0;border:1px solid #666;background:transparent;color:#eee;font-size:30px;line-height:1}
+.faction-controls button:hover:not(:disabled){background:#292929;border-color:#eee}
+.faction-controls button:disabled{opacity:.3}
+.faction-track{display:grid;grid-auto-flow:column;grid-auto-columns:320px;gap:24px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#777 #222;padding-bottom:18px}
+.faction-track.is-draggable{cursor:grab}
+.faction-track.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+/* --fc-color is each card's own accent (a faction map colour, or a
+   representative shade for the foreign powers) -- used only for the top
+   edge and the link colour, never as photo/text colour, so it stays
+   legible against the dark card background regardless of hue. */
+.faction-card{min-width:0;background:#151515;border:1px solid #333;border-top:3px solid var(--fc-color,var(--accent));scroll-snap-align:start;display:flex;flex-direction:column}
+.faction-card img{width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:20px}
+.faction-card h3{font-size:19px;margin:0 22px 14px}
+.faction-card p{font-size:14px;line-height:1.75;margin:0 22px 20px}
+.faction-card .faction-links{margin:auto 22px 24px;display:flex;flex-direction:column;gap:8px}
+.faction-card .faction-links a{color:#ddd;font-size:13px;text-decoration:none;border-bottom:1px dotted #666;align-self:flex-start}
+.faction-card .faction-links a:hover{color:#fff;border-color:#fff}
+
 .contact{padding:68px 0 64px;background:#111 url("assets/contact-background.jpg") center/cover;text-align:center;border-block:1px solid #3a3a3a}
 .contact h2{font-size:26px;margin-bottom:30px}
 .contact-photo{width:66%;margin:0 auto 30px}
@@ -311,6 +336,11 @@ section{scroll-margin-top:20px}
   .crew-heading{gap:16px;margin-bottom:24px}
   .crew-track{grid-auto-columns:min(85%,320px);gap:18px}
   .crew-card p{font-size:15px}
+  .factions{padding:50px 0}
+  .factions-heading{flex-wrap:wrap;gap:16px;margin-bottom:24px}
+  .factions-intro{max-width:none}
+  .faction-track{grid-auto-columns:min(85%,320px);gap:18px}
+  .faction-card p{font-size:15px}
   .contact{padding-top:50px}
   .contact-photo{width:100%}
   .newsletter-socials{grid-template-columns:repeat(4,40px)}
@@ -335,5 +365,8 @@ section{scroll-margin-top:20px}
   .crew-controls{display:none!important}
   .crew-track{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
   .crew-card{background:none;break-inside:avoid}
+  .faction-controls{display:none!important}
+  .faction-track{grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
+  .faction-card{background:none;break-inside:avoid}
   .gallery{columns:3}
 }

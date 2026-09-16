@@ -182,58 +182,20 @@ the visitor scrolls the panel body down to the toggles -- and resets
 territory always brings its flag and name back into view rather than
 staying wherever the previous territory had it scrolled to.
 
-## Factions carousel
+## Factions carousel -- moved to the homepage
 
-Below the map (`#factions` in `index.html`), a horizontally-scrolling
-carousel of `.faction-card`s, one per faction, modelled on American
-Kingdoms' own `.faction-card`/`initCarousel` pattern
-(`americankingdoms-projectsite/index.html`) rather than copied wholesale --
-arrow buttons plus pointer drag-to-scroll, ported into `atlas.js` in this
-file's `var`/`function` style instead of AK's `const`/arrow functions.
+An earlier pass added a Factions carousel below the map on this page. It's
+since moved to the homepage instead (`#factions` in the root `index.html`,
+below the Map Promo section) and expanded to eight cards -- the four
+factions plus the German Empire, Soviet Union, Canada and the British
+Empire, the great powers backing each side. See the root `README.md` for
+that section's own notes; nothing faction-carousel-specific remains in
+this directory.
 
-The page itself needed restructuring to fit a scrolling section below a
-map that's otherwise pinned to one screen: `header`+`main` are now wrapped
-in `.atlas-app` (`height:100dvh`), with `body` no longer height-constrained,
-so `#factions` can sit below it as a normal, scrollable section rather than
-being clipped by `main`'s own `overflow:hidden` (needed to keep the Leaflet
-map itself from ever scrolling the page).
-
-Each card carries a `--fc-color` custom property (that faction's map
-colour) as an inline style, used only for the card's top accent border and
-its two link colours -- not as photo/text colour, since e.g. American Union
-State's navy reads poorly as text on the panel's dark background. Card
-art is existing homepage gallery photography (`../assets/gallery/`)
-picked per faction from what's already faction-relevant or already carries
-that faction's colour in-frame (several gallery pieces are grayscale scenes
-with one colourised in-universe banner/flag element):
-
-| Faction | Art | Why |
-| --- | --- | --- |
-| New England | `battle-for-the-brooklyn-bridge.jpg` | Brooklyn Bridge/NYC is New England territory per the state table above |
-| American Union State | `the-kingfish-rally.jpg` | Huey Long ("the Kingfish") rally under navy AUS eagle banners |
-| Revolutionary States | `raising-the-flag-over-chicago.jpg` | the RSA flag, red-colourised, raised over its Chicago heartland |
-| Congressional States | `flyover.jpg` | closest available Pacific/coastal-theme piece; no dedicated Congressional States gallery art exists yet |
-
-Each card's two links:
-
-- **"See the faction intro on YouTube"** — Kaiser Cat Cinema's "World of
-  Kaiserreich - US Civil War" YouTube series, one part per faction (part 3
-  American Union State, part 4 Pacific States, part 5 New England).
-  Revolutionary States links to part 2, "Combined Syndicates" -- this
-  faction *is* the Combined Syndicates of America, Kaiserreich's canonical
-  syndicalist-USA nation, under this project's own naming, so it's the same
-  video rather than a separate "Revolutionary States" one.
-- **"Buy the faction propaganda poster"** — a `kaisercatcinema.com`
-  propaganda-poster product per faction (American Union State's is the
-  Huey Long "Every Man a King" poster rather than the homepage's own "Up
-  with the Stars", which is a general Loyalist/USA piece rather than an
-  AUS-specific one).
-
-All four card links, plus every other outbound link on this page (site
-menu, "Back to The Divided States", "Read more about The Divided States",
-the flag buy link), open in a new tab (`target="_blank" rel="noopener"`)
--- this page is a tool people explore in place, not somewhere they want to
-navigate away from.
+Every outbound link on this page (site menu, "Back to The Divided States",
+"Read more about The Divided States", the flag buy link) still opens in a
+new tab (`target="_blank" rel="noopener"`) -- this page is a tool people
+explore in place, not somewhere they want to navigate away from.
 
 ## Map detail: coastline, lakes, rivers, roads, capitals
 
