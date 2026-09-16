@@ -19,13 +19,17 @@ Version 2.0.4 · 3 September 2026
   placeholder pending confirmation, per that README. Sibling AK atlas is
   at `medieval-america-map/` in that repo, for comparison.
 - **Every flag should be purchasable via a direct link to its Flagmaker
-  product page**, not just the generic collection link. American Union State
-  and Revolutionary States both link straight to their real product pages
-  now (`world-map/atlas.js`'s `FLAG_LINKS`); **Congressional States and
-  New England still need their real Flagmaker product URLs** — both fall
-  back to the generic
-  `https://flagmaker-print.com/collections/alt-history-flags` collection
-  link until they're supplied.
+  product page**, not just the generic collection link. All four factions
+  now link straight to their real product pages (`world-map/atlas.js`'s
+  `FLAG_LINKS`), and Alaska/Hawaii show and link their own real state flags
+  rather than their nominal faction's — see `world-map/README.md`.
+- **The world map has a Factions carousel** below the map itself
+  (`#factions` in `world-map/index.html`), one card per faction with art,
+  a YouTube faction-intro link and a propaganda-poster buy link, modelled
+  on American Kingdoms' own `.faction-card` carousel. Revolutionary States'
+  YouTube link points at the "World of Kaiserreich - Combined Syndicates"
+  video — Revolutionary States is this universe's Combined Syndicates of
+  America, so it's the same underlying lore video rather than a separate one.
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
 framework, database, build process, or server-side application is required.

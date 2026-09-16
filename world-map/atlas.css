@@ -1,6 +1,7 @@
 :root{--background:#050505;--surface:#161616;--panel:#1c1c1c;--text:#c9c5bd;--heading:#f2efe6;--accent:#ab3232;--line:#3a3a3a;--body-font:"Open Sans",Arial,sans-serif;--display-font:Barlow,Arial,sans-serif}
 *{box-sizing:border-box}
-body{margin:0;color:var(--text);font:16px/1.5 var(--body-font);height:100dvh;display:flex;flex-direction:column;background:var(--background)}
+body{margin:0;color:var(--text);font:16px/1.5 var(--body-font);background:var(--background)}
+.atlas-app{height:100dvh;display:flex;flex-direction:column}
 ::selection{background:var(--accent);color:#fff}
 [hidden]{display:none!important}
 header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:10px 22px;background:#0d0d0d;color:var(--heading);border-bottom:2px solid var(--accent);z-index:1000}
@@ -137,5 +138,46 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
   #panel{left:10px;right:10px;top:auto;bottom:14px;width:auto;max-height:min(50%,24rem)}
   .panel-body{font-size:15px;padding:12px 16px}
   .leaflet-control-attribution{font-size:10px}
+}
+
+/* --- Factions carousel: a full-width section below the map itself, not
+   part of the fixed-viewport #map/#panel app, so the page scrolls to it. --- */
+.factions{padding:48px 22px 64px;background:#0d0d0d;border-top:2px solid var(--accent)}
+.factions .wrap{max-width:1240px;margin:0 auto}
+.factions-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.factions-head h2{font-size:1.4rem}
+.factions-head p{margin:.5rem 0 0;font-size:.92rem;color:#9c968c}
+.factions-head p a{color:#e6a24a}
+.fc-controls{display:flex;gap:.6rem;flex:none}
+.fc-btn{width:44px;height:44px;flex:none;border:1px solid #4a4a4a;background:#191919;color:var(--heading);
+  cursor:pointer;display:flex;align-items:center;justify-content:center}
+.fc-btn:hover{background:#232323}
+.fc-btn:disabled{opacity:.3;cursor:default}
+.fc-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}
+.faction-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,300px);gap:1.4rem;
+  margin-top:1.8rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:1rem;
+  scrollbar-width:thin;scrollbar-color:var(--accent) transparent;cursor:grab}
+.faction-track.dragging{cursor:grabbing;scroll-snap-type:none}
+.faction-track::-webkit-scrollbar{height:6px}
+.faction-track::-webkit-scrollbar-thumb{background:var(--accent)}
+/* --fc-color is set per-card inline (each faction's map colour), and only
+   tints the top edge and the buy-link accent -- the photos themselves stay
+   as supplied rather than being colour-filtered, matching how the source
+   art already carries its own faction-coloured banners/flags. */
+.faction-card{scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);
+  border-top:4px solid var(--fc-color,var(--accent));display:flex;flex-direction:column}
+.faction-card .fc-photo{aspect-ratio:16/10;overflow:hidden;background:#0c0906}
+.faction-card .fc-photo img{width:100%;height:100%;object-fit:cover}
+.faction-card .fc-body{padding:1.2rem 1.2rem 1.4rem;display:flex;flex-direction:column;flex:1}
+.faction-card h3{margin:0 0 .6rem;font:800 1.15rem var(--display-font);text-transform:uppercase;letter-spacing:.01em}
+.faction-card p{font-size:.92rem;line-height:1.55;color:var(--text);margin:0 0 1rem}
+.faction-card .fc-links{margin-top:auto;display:flex;flex-direction:column;gap:.45rem}
+.faction-card .fc-links a{font:600 .82rem var(--body-font);color:#e6a24a;text-decoration:none;
+  border-bottom:1px dotted #e6a24a;align-self:flex-start}
+.faction-card .fc-links a:hover{color:#f2b968;border-color:#f2b968}
+@media(prefers-reduced-motion:reduce){.faction-track{scroll-behavior:auto}}
+@media(max-width:760px){
+  .factions{padding:36px 14px 48px}
+  .faction-track{grid-auto-columns:minmax(230px,78vw)}
 }
 @media(hover:none){.territory-tooltip{display:none!important}}

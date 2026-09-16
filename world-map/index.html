@@ -21,9 +21,9 @@
   <meta name="twitter:site" content="@kaisercatcinema">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vendor/leaflet.css">
-  <link rel="stylesheet" href="atlas.css?v=11">
+  <link rel="stylesheet" href="atlas.css?v=12">
   <script defer src="vendor/leaflet.js"></script>
-  <script defer src="atlas.js?v=11"></script>
+  <script defer src="atlas.js?v=12"></script>
 </head>
 <body>
   <!-- Animated diagonal fills for Alaska/Hawaii: nominally under a
@@ -43,8 +43,9 @@
       </pattern>
     </defs>
   </svg>
+  <div class="atlas-app">
   <header>
-    <a class="brand-link" href="https://dividedstates-project.com/" aria-label="The Divided States home"><img src="../assets/logo.png" alt="The Divided States" width="1156" height="512"></a>
+    <a class="brand-link" href="https://dividedstates-project.com/" target="_blank" rel="noopener" aria-label="The Divided States home"><img src="../assets/logo.png" alt="The Divided States" width="1156" height="512"></a>
     <div class="atlas-title">
       <h1>The Second American Civil War, 1940</h1>
       <p>Four factions, one broken Union. Select a territory to read its story.</p>
@@ -53,13 +54,13 @@
       <div class="site-menu-wrap">
         <button id="site-menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false">Site menu</button>
         <ul id="site-menu" class="site-menu" hidden>
-          <li><a href="https://dividedstates-project.com/">Home</a></li>
-          <li><a href="https://dividedstates-project.com/#episodes">Episodes</a></li>
-          <li><a href="https://dividedstates-project.com/#gallery">Gallery</a></li>
-          <li><a href="https://dividedstates-project.com/#projects">Projects</a></li>
-          <li><a href="https://dividedstates-project.com/#crew">Crew</a></li>
-          <li><a href="https://dividedstates-project.com/#contact">Newsletter / Contact</a></li>
-          <li><a href="https://dividedstates-project.com/#merchandise">Merchandise</a></li>
+          <li><a href="https://dividedstates-project.com/" target="_blank" rel="noopener">Home</a></li>
+          <li><a href="https://dividedstates-project.com/#episodes" target="_blank" rel="noopener">Episodes</a></li>
+          <li><a href="https://dividedstates-project.com/#gallery" target="_blank" rel="noopener">Gallery</a></li>
+          <li><a href="https://dividedstates-project.com/#projects" target="_blank" rel="noopener">Projects</a></li>
+          <li><a href="https://dividedstates-project.com/#crew" target="_blank" rel="noopener">Crew</a></li>
+          <li><a href="https://dividedstates-project.com/#contact" target="_blank" rel="noopener">Newsletter / Contact</a></li>
+          <li><a href="https://dividedstates-project.com/#merchandise" target="_blank" rel="noopener">Merchandise</a></li>
         </ul>
       </div>
       <button id="panel-toggle" type="button" aria-controls="panel" aria-expanded="true">Map key</button>
@@ -80,7 +81,7 @@
           <a id="detail-flag-buy" class="flag-buy" href="https://flagmaker-print.com/collections/alt-history-flags" target="_blank" rel="noopener" hidden>Purchase this flag on Flagmaker &amp; Print <span aria-hidden="true">&#8599;</span></a>
           <h2 id="detail-name"></h2>
           <p id="detail-description"></p>
-          <a id="detail-link" href="https://dividedstates-project.com/#divided">Read more about The Divided States <span aria-hidden="true">&#8599;</span></a>
+          <a id="detail-link" href="https://dividedstates-project.com/#divided" target="_blank" rel="noopener">Read more about The Divided States <span aria-hidden="true">&#8599;</span></a>
         </section>
         <div id="key-content">
           <p>Drag to explore. Scroll or pinch to zoom.</p>
@@ -93,11 +94,73 @@
             <label><input id="toggle-roads" type="checkbox" checked> Major highways</label>
             <label><input id="toggle-water" type="checkbox" checked> Rivers</label>
           </fieldset>
-          <a class="wiki" href="https://dividedstates-project.com/">Back to The Divided States</a>
+          <a class="wiki" href="https://dividedstates-project.com/" target="_blank" rel="noopener">Back to The Divided States</a>
         </div>
       </div>
     </aside>
   </main>
   <noscript>This map needs JavaScript for zooming and territory information.</noscript>
+  </div>
+
+  <section class="factions" id="factions" aria-labelledby="factions-title">
+    <div class="wrap">
+      <div class="factions-head">
+        <div>
+          <h2 id="factions-title">The Four Factions</h2>
+          <p>One broken Union, four claims on its flag. <a href="https://dividedstates-project.com/#divided" target="_blank" rel="noopener">Read more about The Divided States</a></p>
+        </div>
+        <div class="fc-controls" aria-hidden="true">
+          <button class="fc-btn" id="facPrev" type="button" aria-label="Previous faction"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="fc-btn" id="facNext" type="button" aria-label="Next faction"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+      <div class="faction-track" id="factionTrack" tabindex="0" aria-label="The four factions, scroll horizontally">
+        <article class="faction-card" style="--fc-color:#5f7a4f">
+          <div class="fc-photo"><img src="../assets/gallery/battle-for-the-brooklyn-bridge.jpg" alt="Loyalist troops defend the Brooklyn Bridge" loading="lazy" width="1920" height="1080"></div>
+          <div class="fc-body">
+            <h3>New England</h3>
+            <p>Cut off from the capital when Washington fell, the loyalist Federal government retreated to New England — the last stronghold still flying the old flag, hemmed in by the Revolutionary States on every landward side.</p>
+            <div class="fc-links">
+              <a href="https://www.youtube.com/watch?v=uTmRFPXgxyc" target="_blank" rel="noopener">See the faction intro on YouTube <span aria-hidden="true">&#8599;</span></a>
+              <a href="https://kaisercatcinema.com/products/world-of-kaiserreich-new-england-poster" target="_blank" rel="noopener">Buy the faction propaganda poster <span aria-hidden="true">&#8599;</span></a>
+            </div>
+          </div>
+        </article>
+        <article class="faction-card" style="--fc-color:#1f3a66">
+          <div class="fc-photo"><img src="../assets/gallery/the-kingfish-rally.jpg" alt="A crowd rallies beneath American Union State eagle banners" loading="lazy" width="1920" height="1080"></div>
+          <div class="fc-body">
+            <h3>American Union State</h3>
+            <p>Huey Long's American Union State, the &ldquo;Blue States,&rdquo; claims the legitimacy of the 1936 election and leans on German arms to push back the Red advance. With Washington retaken, it now moves to cut the Revolutionary States off from the sea.</p>
+            <div class="fc-links">
+              <a href="https://www.youtube.com/watch?v=wF4s9N4galU" target="_blank" rel="noopener">See the faction intro on YouTube <span aria-hidden="true">&#8599;</span></a>
+              <a href="https://kaisercatcinema.com/products/union-state-poster-every-man-a-king" target="_blank" rel="noopener">Buy the faction propaganda poster <span aria-hidden="true">&#8599;</span></a>
+            </div>
+          </div>
+        </article>
+        <article class="faction-card" style="--fc-color:#8c2c26">
+          <div class="fc-photo"><img src="../assets/gallery/raising-the-flag-over-chicago.jpg" alt="Revolutionary soldiers raise the Revolutionary States flag over Chicago" loading="lazy" width="1920" height="1080"></div>
+          <div class="fc-body">
+            <h3>Revolutionary States</h3>
+            <p>Born of the Chicago Uprising with Russian and French backing, the Revolutionary States' R.S.A. governs the Great Lakes as a federation of labor unions under a &ldquo;Third Pillar&rdquo; Chairman — the Combined Syndicates of America, to give them their full name.</p>
+            <div class="fc-links">
+              <a href="https://www.youtube.com/watch?v=bhnDwQGeUA0" target="_blank" rel="noopener">See the faction intro on YouTube <span aria-hidden="true">&#8599;</span></a>
+              <a href="https://kaisercatcinema.com/products/csa-poster" target="_blank" rel="noopener">Buy the faction propaganda poster <span aria-hidden="true">&#8599;</span></a>
+            </div>
+          </div>
+        </article>
+        <article class="faction-card" style="--fc-color:#c98a2b">
+          <div class="fc-photo"><img src="../assets/gallery/flyover.jpg" alt="A transport plane flies over ships bound for the Pacific coast" loading="lazy" width="1920" height="1080"></div>
+          <div class="fc-body">
+            <h3>Congressional States</h3>
+            <p>Fled from Langdon's crackdown, the Congressional States are the remnant of Congress and anti-Langdon governors holding a tenuous Rocky Mountains ceasefire — the smallest of the factions, but backed by Japan and Royalist Canada.</p>
+            <div class="fc-links">
+              <a href="https://www.youtube.com/watch?v=GivriuHU2zc" target="_blank" rel="noopener">See the faction intro on YouTube <span aria-hidden="true">&#8599;</span></a>
+              <a href="https://kaisercatcinema.com/products/world-of-kaiserreich-pacific-states-poster" target="_blank" rel="noopener">Buy the faction propaganda poster <span aria-hidden="true">&#8599;</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 </body>
 </html>

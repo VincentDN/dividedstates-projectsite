@@ -2,22 +2,38 @@
   "use strict";
 
   var FLAG_LINKS = {
-    // Real Flagmaker product pages. Congressional States has none yet --
-    // see world-map/README.md -- so it falls back to COLLECTION_URL.
+    // Real Flagmaker product pages, every faction now linked directly.
     "american-union-state": "https://flagmaker-print.com/products/american-union-state-flag-kaiserreich",
     "revolutionary-states": "https://flagmaker-print.com/products/revolutionary-states-flag-the-divided-states",
+    "congressional-states": "https://flagmaker-print.com/products/pacific-states-bear-flag-the-divided-states",
+    "new-england": "https://flagmaker-print.com/products/new-england-flag-kaiserreich",
+    // Alaska/Hawaii show their own real 1940s-America state flags rather
+    // than their nominal faction's, so they get their own product links.
+    "alaska": "https://flagmaker-print.com/products/alaska-state-flag-united-states",
+    "hawaii": "https://flagmaker-print.com/products/hawaii-state-flag-united-states",
   };
   var COLLECTION_URL = "https://flagmaker-print.com/collections/alt-history-flags";
 
+  // Alaska and Hawaii aren't active belligerents (see AFFILIATED_HATCH
+  // below); the info panel shows their own real state flag rather than
+  // their nominal faction's, so showDetails() swaps the flag id for these
+  // two territory ids instead of using feature.properties.faction.
+  var AFFILIATED_OWN_FLAG = {
+    "territory-ak": "alaska",
+    "territory-hi": "hawaii",
+  };
+
   // The real flag artwork supplied for American Union State/Congressional
-  // is a raster (their Flagmaker vectors, rasterised); Revolutionary's is
-  // still a hand-drawn placeholder pending its own vector. Keyed by
-  // faction id so showDetails() can pick the right file per faction.
+  // is a raster (their Flagmaker vectors, rasterised); the rest are vector
+  // artwork redrawn to match the supplied reference flags. Keyed by
+  // faction/flag id so showDetails() can pick the right file.
   var FLAG_IMAGE_EXT = {
     "american-union-state": "png",
     "congressional-states": "png",
     "revolutionary-states": "svg",
     "new-england": "svg",
+    "alaska": "svg",
+    "hawaii": "svg",
   };
 
   // Alaska and Hawaii: nominally under a faction's flag but not part of
@@ -117,14 +133,22 @@
     details.hidden = false;
     document.getElementById("detail-name").textContent = props.name;
     document.getElementById("detail-description").textContent = props.summary || "";
+    // The panel heading otherwise just reads "Map key" even once a
+    // territory is selected, and it's the one part of the panel that
+    // stays put when the body below is scrolled back to top -- showing
+    // the selected name there too means it's still visible even if the
+    // visitor scrolls back down past the flag.
+    document.getElementById("panel-title").textContent = props.name;
 
-    var flagId = props.kind === "affiliated" ? props.faction : props.id;
+    var flagId = props.kind === "affiliated"
+      ? (AFFILIATED_OWN_FLAG[props.id] || props.faction)
+      : props.id;
 
     var flagImg = document.getElementById("detail-flag");
     if (props.kind === "faction" || props.kind === "affiliated") {
       var ext = FLAG_IMAGE_EXT[flagId] || "svg";
       flagImg.src = "assets/flags/" + flagId + "." + ext;
-      flagImg.alt = props.name + " flag" + (ext === "svg" ? " (placeholder design)" : "");
+      flagImg.alt = props.name + " flag";
       flagImg.hidden = false;
     } else {
       flagImg.hidden = true;
@@ -139,6 +163,10 @@
     }
 
     openPanel();
+    // Selecting a new territory should bring its flag and name back into
+    // view even if the visitor had scrolled the panel body down (e.g. to
+    // the display toggles) before tapping the next territory.
+    document.querySelector("#panel .panel-body").scrollTop = 0;
   }
 
   function openPanel() {
@@ -428,4 +456,54 @@
       path.style.display = display;
     });
   });
+
+  // Factions carousel below the map: arrow buttons + drag-to-scroll, same
+  // pattern as the American Kingdoms site's own faction/crew carousels.
+  var factionTrack = document.getElementById("factionTrack");
+  var facPrev = document.getElementById("facPrev");
+  var facNext = document.getElementById("facNext");
+  if (factionTrack && facPrev && facNext) {
+    var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var cardStep = function () {
+      var card = factionTrack.querySelector(".faction-card");
+      return card ? card.getBoundingClientRect().width + 22 : 300;
+    };
+    var updateCarouselButtons = function () {
+      facPrev.disabled = factionTrack.scrollLeft < 8;
+      facNext.disabled = factionTrack.scrollLeft >= factionTrack.scrollWidth - factionTrack.clientWidth - 8;
+    };
+    facPrev.addEventListener("click", function () {
+      factionTrack.scrollBy({ left: -cardStep(), behavior: reduceMotion ? "auto" : "smooth" });
+    });
+    facNext.addEventListener("click", function () {
+      factionTrack.scrollBy({ left: cardStep(), behavior: reduceMotion ? "auto" : "smooth" });
+    });
+    factionTrack.addEventListener("scroll", updateCarouselButtons, { passive: true });
+    window.addEventListener("resize", updateCarouselButtons);
+    updateCarouselButtons();
+
+    var dragging = false, dragStartX = 0, dragStartScroll = 0, dragMoved = false;
+    factionTrack.addEventListener("pointerdown", function (e) {
+      dragging = true;
+      dragMoved = false;
+      dragStartX = e.clientX;
+      dragStartScroll = factionTrack.scrollLeft;
+      factionTrack.classList.add("dragging");
+    });
+    factionTrack.addEventListener("pointermove", function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - dragStartX;
+      if (Math.abs(dx) > 4) dragMoved = true;
+      factionTrack.scrollLeft = dragStartScroll - dx;
+    });
+    var endDrag = function () {
+      dragging = false;
+      factionTrack.classList.remove("dragging");
+    };
+    factionTrack.addEventListener("pointerup", endDrag);
+    factionTrack.addEventListener("pointerleave", endDrag);
+    factionTrack.addEventListener("click", function (e) {
+      if (dragMoved) e.preventDefault();
+    }, true);
+  }
 })();

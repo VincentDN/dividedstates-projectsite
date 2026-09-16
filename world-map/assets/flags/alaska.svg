@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Flag of Alaska: eight gold stars on a dark blue field, seven forming the Big Dipper and one the North Star">
+  <rect width="900" height="540" fill="#00468C"/>
+  <g fill="#FFC72C">
+    <path transform="translate(660,150) scale(1.35)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+    <path transform="translate(150,345)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+    <path transform="translate(235,310)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+    <path transform="translate(285,385)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+    <path transform="translate(195,410)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+    <path transform="translate(340,275)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+    <path transform="translate(410,225)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+    <path transform="translate(470,175)" d="M0 -30 L11 -9 L35 -9 L16 5 L24 27 L0 13 L-24 27 L-16 5 L-35 -9 L-11 -9 Z"/>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="Flag of Hawaii: eight horizontal white, red and blue stripes with a Union Jack canton">
+  <defs>
+    <clipPath id="hi-canton-clip">
+      <rect x="0" y="0" width="380" height="270"/>
+    </clipPath>
+  </defs>
+  <g>
+    <rect x="0" y="0" width="900" height="67.5" fill="#f3efe2"/>
+    <rect x="0" y="67.5" width="900" height="67.5" fill="#c81e2c"/>
+    <rect x="0" y="135" width="900" height="67.5" fill="#1a3a6b"/>
+    <rect x="0" y="202.5" width="900" height="67.5" fill="#f3efe2"/>
+    <rect x="0" y="270" width="900" height="67.5" fill="#c81e2c"/>
+    <rect x="0" y="337.5" width="900" height="67.5" fill="#1a3a6b"/>
+    <rect x="0" y="405" width="900" height="67.5" fill="#f3efe2"/>
+    <rect x="0" y="472.5" width="900" height="67.5" fill="#c81e2c"/>
+  </g>
+  <g clip-path="url(#hi-canton-clip)">
+    <rect x="0" y="0" width="380" height="270" fill="#1a3a6b"/>
+    <g stroke="#f3efe2" stroke-width="52">
+      <line x1="-40" y1="-40" x2="420" y2="310"/>
+      <line x1="420" y1="-40" x2="-40" y2="310"/>
+    </g>
+    <g stroke="#c81e2c" stroke-width="20">
+      <line x1="-40" y1="-40" x2="420" y2="310"/>
+      <line x1="420" y1="-40" x2="-40" y2="310"/>
+    </g>
+    <g stroke="#f3efe2" stroke-width="76">
+      <line x1="190" y1="0" x2="190" y2="270"/>
+      <line x1="0" y1="135" x2="380" y2="135"/>
+    </g>
+    <g stroke="#c81e2c" stroke-width="30">
+      <line x1="190" y1="0" x2="190" y2="270"/>
+      <line x1="0" y1="135" x2="380" y2="135"/>
+    </g>
+  </g>
+</svg>
