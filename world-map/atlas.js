@@ -23,15 +23,15 @@
     "territory-hi": "hawaii",
   };
 
-  // The real flag artwork supplied for American Union State/Congressional
-  // is a raster (their Flagmaker vectors, rasterised); the rest are vector
-  // artwork redrawn to match the supplied reference flags. Keyed by
-  // faction/flag id so showDetails() can pick the right file.
+  // Real flag artwork now exists for every faction (Flagmaker vectors,
+  // rasterised, or the supplied production art); only Alaska/Hawaii's own
+  // state flags are still vector redraws. Keyed by faction/flag id so
+  // showDetails() can pick the right file and extension.
   var FLAG_IMAGE_EXT = {
     "american-union-state": "png",
     "congressional-states": "png",
-    "revolutionary-states": "svg",
-    "new-england": "svg",
+    "revolutionary-states": "png",
+    "new-england": "jpg",
     "alaska": "svg",
     "hawaii": "svg",
   };

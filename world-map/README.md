@@ -116,12 +116,12 @@ and rerun `python3 scripts/build-territories.py` from this directory
 
 ## Flags and Flagmaker links
 
-Real flag art now exists for two of the four factions, supplied as
-Illustrator/PDF vectors and rasterised here (`pdftoppm`) rather than
-redrawn by hand; the other two are vector redraws matching supplied
-reference art. Every faction links to its own real Flagmaker product page
-(`atlas.js`'s `FLAG_LINKS`) -- none fall back to the generic collection
-link any more:
+Real flag art now exists for all four factions -- American Union
+State/Congressional States supplied as Illustrator/PDF vectors and
+rasterised here (`pdftoppm`); Revolutionary States/New England supplied
+directly as production JPG/PNG. Every faction links to its own real
+Flagmaker product page (`atlas.js`'s `FLAG_LINKS`) -- none fall back to the
+generic collection link any more:
 
 - **American Union State** — `assets/flags/american-union-state.png`, the
   supplied AUS eagle-on-blue vector. Links to
@@ -134,15 +134,19 @@ link any more:
   supplied Pacific States/PSA vector (white-red-gold bands, navy star and
   bear). Links to
   `https://flagmaker-print.com/products/pacific-states-bear-flag-the-divided-states`.
-- **Revolutionary States** — `assets/flags/revolutionary-states.svg`,
-  redrawn to match supplied reference art: a black canton (white gear,
-  star and crossed hammer-and-pick badge) against diagonal red/white
-  stripes, split by a white bevel band. Links to
+- **Revolutionary States** — `assets/flags/revolutionary-states.png`, the
+  supplied production art: a black canton (white gear, star and crossed
+  hammer-and-pick badge) against diagonal red/white stripes, split by a
+  white bevel band. Links to
   `https://flagmaker-print.com/products/revolutionary-states-flag-the-divided-states`.
-- **New England** — `assets/flags/new-england.svg`, redrawn to match
-  supplied reference art: a white canton with a green pine tree on a green
-  field, six white stars in a ring to its right. Links to
+- **New England** — `assets/flags/new-england.jpg`, the supplied
+  production art: a white canton with a green pine tree on a green field,
+  six white stars in a ring to its right. Links to
   `https://flagmaker-print.com/products/new-england-flag-kaiserreich`.
+
+(An earlier pass shipped hand-drawn SVG placeholders for these two,
+redrawn from reference screenshots pending the real files -- replaced here
+now that the actual production art has been supplied.)
 
 Alaska and Hawaii aren't active belligerents (see below) and show their
 own real 1940s-America state flags in the info panel rather than their
