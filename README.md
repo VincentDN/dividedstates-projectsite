@@ -25,24 +25,25 @@ Version 2.0.4 · 3 September 2026
   `FLAG_LINKS`), and Alaska/Hawaii show and link their own real state flags
   rather than their nominal faction's — see `world-map/README.md`.
 - **The homepage has a Factions carousel** (`#factions`, below the Map
-  Promo section), eight cards sharing the Crew section's own sliding-carousel
+  Promo section), seven cards sharing the Crew section's own sliding-carousel
   mechanics (`initCarousel()` in `main.js`, now parameterised for both
   rows): the four Divided States factions plus the great powers backing
-  each side -- German Empire, Soviet Union, Canada and the British Empire.
-  Each card links a YouTube faction-intro video and a `kaisercatcinema.com`
-  propaganda-poster product. Revolutionary States' video points at "World
-  of Kaiserreich - Combined Syndicates" -- Revolutionary States is this
-  universe's Combined Syndicates of America, so it's the same underlying
-  lore video rather than a separate one. The Soviet Union card's art
+  each side -- German Empire, Soviet Union, and Canada (merged with the
+  British Empire into one "Canada (British Exiles)" card, muted-purple
+  accent, since in Kaiserreich canon the Dominion of Canada *is* where the
+  exiled British crown sits). Each card links a YouTube faction-intro
+  video and a `kaisercatcinema.com` propaganda-poster product.
+  Revolutionary States' video points at "World of Kaiserreich - Combined
+  Syndicates" -- Revolutionary States is this universe's Combined
+  Syndicates of America, so it's the same underlying lore video rather
+  than a separate one. The Soviet Union card's art
   (`greyhounds-in-chicago.jpg`) is an explicit placeholder pending a
-  dedicated piece; British Empire's poster link falls back to the general
-  `althistory-posters` collection since no single product is a clean
-  match (Union of Britain is the opposing revolutionary government, not
-  the exiled Empire). Card order (and the map's own faction list, driven
+  dedicated piece. Card order (and the map's own faction list, driven
   by the same `FACTIONS` dict) is American Union State, Revolutionary
-  States, Pacific States, New England, then the four foreign powers.
+  States, Pacific States, New England, then the three foreign powers.
   Congressional States was renamed to Pacific States, its own established
-  nickname per the briefing cards -- see `world-map/README.md`.
+  nickname per the briefing cards -- see `world-map/README.md`. Card
+  text avoids em dashes throughout.
 
 A single, hand-written static homepage. No WordPress, Divi, jQuery, npm dependencies,
 framework, database, build process, or server-side application is required.
@@ -200,7 +201,7 @@ together. Do not change the shared person/company IDs.
 
 - No animations, automatic video playback, trackers or external font requests.
 - There are 25 gallery works, six video choices, two project posters, four
-  crew profiles and eight faction cards. The New York image was removed from the gallery at the owner's
+  crew profiles and seven faction cards. The New York image was removed from the gallery at the owner's
   request but remains in use as the homepage hero background.
 - Editable HTML/CSS/JS revalidate; assets have a one-day cache, not immutable
   one-year caching. Rename an asset or purge its cache for an immediate update.
