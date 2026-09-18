@@ -1,6 +1,6 @@
 # The Divided States
 
-Version 2.0.4 · 3 September 2026
+Version 2.0.5 · 18 September 2026
 
 ## Roadmap notes (raise these next time we pick up site work)
 
@@ -91,6 +91,29 @@ short-lived (~24h) access token on every request via the `client_credentials`
 OAuth grant.
 
 See `.dev.vars.example` for local development with `wrangler pages dev`.
+
+## Conversion tracking
+
+Two Cloudflare dashboard features, no build step or extra script tags needed:
+
+- **Cloudflare Web Analytics** — pageviews, referrers and Core Web Vitals.
+  Enable it on the Pages project: **Workers & Pages → this project → Metrics
+  → Web Analytics → Enable**. Cloudflare injects the beacon on the next
+  deployment; nothing to add here.
+- **Cloudflare Zaraz** — the actual conversion events (newsletter signups,
+  video plays, outbound clicks to the Shopify-backed merch/flag stores).
+  Enable it on the zone that fronts this site (dividedstates-project.com →
+  **Zaraz → Enable**), add a destination tool there (e.g. Google Analytics
+  4), then create an **Event** trigger for each name below and point it at
+  that tool. `main.js` already calls `zaraz.track(name, props)` at every
+  conversion point via its `track()` helper; the calls no-op safely until
+  Zaraz is turned on, so no further code changes are needed:
+  - `newsletter_signup` — `{ form }`, fired on a successful `/api/subscribe` response.
+  - `video_play` — `{ video_id, title }` (episode player) or `{ title }`
+    (Shorts carousel), fired when a video is activated.
+  - `outbound_click` — `{ url, label, section }`, fired on any click through
+    to `kaisercatcinema.com` or `flagmaker-print.com` (the purchase funnel,
+    which completes off-site on Shopify).
 
 ## Deploy on the existing Cloudflare Pages project
 

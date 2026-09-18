@@ -3,6 +3,14 @@
   'use strict';
   document.documentElement.classList.add('enhanced');
 
+  // Conversion tracking via Cloudflare Zaraz (zaraz.track), enabled per-zone
+  // in the Cloudflare dashboard with a destination (e.g. GA4) configured
+  // there. No-ops until Zaraz is turned on, so this ships ahead of that
+  // dashboard step. See README "Conversion tracking".
+  const track = (name, props) => {
+    try { window.zaraz && window.zaraz.track(name, props); } catch (_) {}
+  };
+
   const menuToggle = document.querySelector('.menu-toggle');
   const menu = document.querySelector('#navigation-links');
   function closeMenu() {
@@ -39,6 +47,7 @@
     player.replaceChildren(frame);
     caption.textContent = choice.dataset.title;
     choices.forEach(item => item.setAttribute('aria-pressed', String(item === choice)));
+    track('video_play', { video_id: videoId, title: choice.dataset.title });
   }
   document.querySelector('.play-video').addEventListener('click', () => playVideo(choices[0]));
   choices.forEach(choice => choice.addEventListener('click', () => playVideo(choice)));
@@ -210,6 +219,7 @@
         frame.allowFullscreen = true;
         shortVideo.replaceChildren(frame);
         shortVideo.dataset.playing = 'true';
+        track('video_play', { title: shortVideo.dataset.title });
       };
       shortVideo.addEventListener('click', playShort);
       shortVideo.addEventListener('keydown', event => {
@@ -334,6 +344,7 @@
         if (response.ok && data.ok) {
           widget.innerHTML = '<div class="newsletter-success"><p class="newsletter-success-title">Thanks for subscribing!</p><p class="newsletter-success-copy">You will receive an email confirmation shortly.</p></div>';
           try { localStorage.setItem(popupKey, '1'); } catch (_) {}
+          track('newsletter_signup', { form: widget.id || form.id || 'newsletter' });
         } else {
           error.textContent = data.error || 'Something went wrong. Please try again.';
           error.hidden = false;
@@ -347,6 +358,20 @@
           submit.textContent = originalLabel;
         }
       }
+    });
+  });
+
+  // Outbound conversion-link tracking: clicks on links to the Shopify-backed
+  // merch/flag stores (the actual purchase funnel, off-site). Delegated so
+  // new links are picked up automatically without extra wiring per button.
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if (!link) return;
+    if (!/^https?:\/\/([\w-]+\.)?(kaisercatcinema|flagmaker-print)\.com/.test(link.href)) return;
+    track('outbound_click', {
+      url: link.href,
+      label: (link.textContent || link.getAttribute('aria-label') || '').trim().slice(0, 80),
+      section: link.closest('section[id]')?.id || ''
     });
   });
 
